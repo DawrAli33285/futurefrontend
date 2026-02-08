@@ -44,8 +44,8 @@ import {
 import SacredPage from './sacred';
 import OphiuchusInAstrology from './ophichus';
 
-const stripePromise = loadStripe('pk_live_51SOf9PF2ZpC0D5XRyQ0zxZt7dD1NjS35N96b4MbZVnzdl2LbrUNi23MUsm2ubgkw91R1dVcplSxLOXivDZf9EhkN005twLIZcj');
-
+//const stripePromise = loadStripe('pk_live_51SOf9PF2ZpC0D5XRyQ0zxZt7dD1NjS35N96b4MbZVnzdl2LbrUNi23MUsm2ubgkw91R1dVcplSxLOXivDZf9EhkN005twLIZcj');
+const stripePromise = loadStripe('pk_test_51SOf9XJvg5goDQYJPE0RiLj0MkFU8S3RQpQd3nPEDjD4W8nmXNv3RDkFcsmhN5Mg9k4uQOuLhR3AAvkX4IeecPfN00b7KHAY7s');
 
 
 
