@@ -157,7 +157,7 @@ function Layout() {
           <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center">
   <img 
-    src="./logo.png" 
+    src="https://res.cloudinary.com/dbjwbveqn/image/upload/v1770580111/logo_fpte9x.png" 
     alt="Logo"
     className="h-12 sm:h-14 md:h-16 object-contain"
   />
