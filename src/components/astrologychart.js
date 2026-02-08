@@ -24,14 +24,14 @@ const AstrologyChart = ({ data: responseData }) => {
     { name: 'Pisces', symbol: '♓', color: '#AD1457', start: 351.49, end: 360, width: 8.51 }
   ];
 
-  // Convert tropical longitude to sidereal
+
 const toSidereal = (tropicalLongitude) => {
   let sidereal = tropicalLongitude - AYANAMSA_2025;
   if (sidereal < 0) sidereal += 360;
   return sidereal;
 };
 
-// Get zodiac sign info from sidereal longitude
+
 const getZodiacSign = (siderealLongitude) => {
   const normalized = ((siderealLongitude % 360) + 360) % 360;
   

@@ -94,13 +94,10 @@ const [subscribed,setSubsribed]=useState(false)
     const shouldShowAllPlanets = !displayPlanets || displayPlanets === undefined;
     const shouldHideAllPlanets = Array.isArray(displayPlanets) && displayPlanets.length === 0;
     
-    console.log('Display Planets Setting:', displayPlanets);
-    console.log('Should Show All Planets:', shouldShowAllPlanets);
-    console.log('Should Hide All Planets:', shouldHideAllPlanets);
-    
+
   
     if (shouldHideAllPlanets) {
-      console.log('Hiding all planets due to empty displayPlanets array');
+     
       return [];
     }
     const planets = [];
@@ -178,7 +175,7 @@ const [subscribed,setSubsribed]=useState(false)
 
   const getAspectsFromData = () => {
     if (!chartData || !chartData.aspects) {
-      console.log('No chart data or aspects');
+
       return [];
     }
   
@@ -187,15 +184,8 @@ const [subscribed,setSubsribed]=useState(false)
     const shouldShowAllAspects = !enabledAspects || enabledAspects === undefined;
     const shouldHideAllAspects = Array.isArray(enabledAspects) && enabledAspects.length === 0;
     
-    console.log('Enabled Aspects Setting:', enabledAspects);
-    console.log('Chart aspects data:', {
-      natal_to_progressed: chartData.aspects.natal_to_progressed?.length,
-      natal_to_transit: chartData.aspects.natal_to_transit?.length,
-      progressed_to_transit: chartData.aspects.progressed_to_transit?.length
-    });
-    
     if (shouldHideAllAspects) {
-      console.log('Hiding all aspects due to empty enabledAspects array');
+    
       return [];
     }
 
@@ -293,23 +283,23 @@ const [subscribed,setSubsribed]=useState(false)
       });
     }
 
-    console.log('Total aspects processed:', aspects.length);
+    
     return aspects.slice(0, 30);
   };
   
   useEffect(() => {
     if (settings && Object.keys(settings).length > 0) {
-      console.log('Settings updated in component:', settings);
+    
     }
   }, [settings]);
   
   const planets = useMemo(() => {
-    console.log('Recalculating planets with settings:', settings?.wheelSettings?.displayPlanets);
+ 
     return getPlanetsFromData();
   }, [chartData, settings]);
   
   const aspects = useMemo(() => {
-    console.log('Recalculating aspects with settings:', settings?.aspects?.enabledAspects);
+   
     return getAspectsFromData();
   }, [chartData, settings]);
 
@@ -451,7 +441,7 @@ const zodiacSigns = getZodiacSigns();
       const result = await response.json();
       
       if (result.success && result.data) {
-        // ADD THIS: Store birth info in chartData before clearing formData
+       
         result.data.birthInfo = {
           name: formData.name,
           day: formData.day,
@@ -465,7 +455,7 @@ const zodiacSigns = getZodiacSigns();
         setChartResponse(result.data);
         setChartData(result.data);
         
-        // Now clear formData
+     
         setFormData({
           ...formData,
           name: '',
@@ -489,98 +479,9 @@ const zodiacSigns = getZodiacSigns();
     }
   };
 
-  // const handleCalculate = async () => {
-  //   if (!formData.day || !formData.month || !formData.year || !formData.hour || !formData.minute) {
-  //     setError('Please fill in all date and time fields');
-  //     return;
-  //   }
-  
-  //   setLoading(true);
-  //   setError(null);
-    
-  //   try {
-  //     const monthIndex = months.indexOf(formData.month) + 1;
-  //   const birthDate = `${formData.year}-${String(monthIndex).padStart(2, '0')}-${String(formData.day).padStart(2, '0')}`;
-  //   const birthTime = `${String(formData.hour).padStart(2, '0')}:${String(formData.minute).padStart(2, '0')}`;
-    
-  //   const response = await fetch(`${BASE_URL}/chart/transit`, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       birth_date: birthDate,
-  //       birth_time: birthTime,
-  //       latitude: formData.latitude || 40.7128,
-  //       longitude: formData.longitude || -74.0060,
-  //       timezone: timezone,
-  //       transit_date: new Date().toISOString().split('T')[0],
-  //       transit_time: "12:00",
-       
-       
-  //       zodiac_system: settings?.zodiacSystem || 'Tropical',
-  //       house_system: settings?.houseSystem || 'Placidus',
-  //       coordinate_system: settings?.coordinateSystem || 'Geocentric',
-        
-       
-  //       include_ophiuchus: settings?.trueSiderealSettings?.includeOphiuchus || false,
-  //       ayanamsa: settings?.trueSiderealSettings?.ayanamsa || 'Fagan-Bradley',
-  //       constellation_boundaries: settings?.trueSiderealSettings?.constellationBoundaries || 'IAU 1976',
-  //       precession_correction: settings?.trueSiderealSettings?.precessionCorrection || true,
-  //       nutation_correction: settings?.trueSiderealSettings?.nutationCorrection || true,
-        
-     
-  //       ophiuchus_start_degree: settings?.ophiuchusSettings?.position?.startDegree || 237,
-  //       ophiuchus_end_degree: settings?.ophiuchusSettings?.position?.endDegree || 265,
-        
-     
-  //       aspect_orbs: settings?.aspects?.orbs || {},
-        
-       
-  //       enabled_aspects: (settings?.aspects?.enabledAspects && settings.aspects.enabledAspects.length > 0) 
-  //         ? settings.aspects.enabledAspects 
-  //         : null, 
-        
-       
-  //       display_planets: (settings?.wheelSettings?.displayPlanets && settings.wheelSettings.displayPlanets.length > 0)
-  //         ? settings.wheelSettings.displayPlanets
-  //         : null,
-  //     })
-  //   });
-  //     if (!response.ok) {
-  //       throw new Error('Failed to calculate chart');
-  //     }
-      
-  //     const result = await response.json();
-  //     console.log(result)
-  //     console.log("result")
-  //     setChartResponse(result.data)
-  //     setFormData({
-  //       ...formData,
-  //       name: '',
-  //       day: '',
-  //       month: 'January',
-  //       year: '',
-  //       hour: '',
-  //       minute: '',
-  //       location: '',
-  //       latitude: null,
-  //       longitude: null,
-  //     })
-  //     if (result.success && result.data) {
-  //       setChartData(result.data);
-  //     } else {
-  //       throw new Error('Invalid response from server');
-  //     }
-  //     setError(null)
-  //   } catch (err) {
-  //     setError(err.message || 'Failed to calculate chart');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
 
   const handleView = () => {
-    console.log('View clicked', chartData);
+   
   };
 
   const handleSave = async() => {
@@ -604,7 +505,7 @@ const zodiacSigns = getZodiacSigns();
         chart_type: chartResponse.chart_type || "Transit (Triwheel)",
         chartName: formData.chartName,
         chartname: 'main',
-        // ADD THIS LINE:
+        
         birthInfo: chartResponse.birthInfo || {},
         aspects: chartResponse.aspects || {
           natal_to_progressed: [],
@@ -760,9 +661,9 @@ if(e?.response?.data?.error){
     }
   })
   window.location.href=response.data.url
-  console.log(response.data)
+ 
     }catch(e){
-      console.log(e.message)
+   
     }
   }
   
@@ -871,24 +772,15 @@ setSubsribed(response.data.found)
         }
       })
 
-      console.log('=== ACTIVE SETTINGS LOADED ===')
-      console.log('Full Settings:', response.data.data)
-      console.log('Display Planets:', response.data.data?.wheelSettings?.displayPlanets)
-      console.log('Enabled Aspects:', response.data.data?.aspects?.enabledAspects)
-      console.log('Planet Degrees Format:', response.data.data?.wheelSettings?.planetDegrees)
-      console.log('Ascendant Display:', response.data.data?.wheelSettings?.ascendantDisplay)
-      console.log('Display Points:', response.data.data?.graphSettings?.displayPoints)
-      console.log('================================')
-
+     
       setSettings(response.data.data)
     }catch(e){
-      console.log("settings error")
-      console.log(e.message)
+      
     }
   }
 
 
-  // Get a detailed interpretation for a given Ascendant (Rising Sign)
+
   const getAscendantInterpretation = (sign) => {
     const interpretations = {
       'Aries': 'With Aries rising, you meet life head-on with courage, independence, and initiative. You exude confidence and act quickly, often blazing trails for others. Your challenge is to balance assertiveness with patience and empathy.',
@@ -913,7 +805,6 @@ setSubsribed(response.data.found)
   };
   
 
-// Get a detailed interpretation for a given Sun sign
 const getSunSignInterpretation = (sign) => {
   const interpretations = {
     'Aries': 'With the Sun in Aries, you’re bold, pioneering, and full of life. You thrive on challenges and move fearlessly toward your goals. Leadership comes naturally to you, though learning patience and cooperation helps balance your fiery energy.',
@@ -939,7 +830,7 @@ const getSunSignInterpretation = (sign) => {
 
 
   
-  // Get a detailed interpretation for the Sun's house placement
+ 
   const getSunHouseInterpretation = (house) => {
     const interpretations = {
       1: 'Your Sun in the 1st house makes self-expression and personal identity central to your life. You shine through individuality, confidence, and leadership. Your growth involves learning to balance self-focus with awareness of others.',
@@ -964,8 +855,7 @@ const getSunSignInterpretation = (sign) => {
   };
   
 
-  
-// Get a detailed interpretation for a given Moon sign
+
 const getMoonSignInterpretation = (sign) => {
   const interpretations = {
     'Aries': 'With the Moon in Aries, your emotions are fiery, spontaneous, and direct. You feel things quickly and act on instinct, often wearing your heart on your sleeve. You thrive on excitement but benefit from learning patience and emotional reflection.',
@@ -991,7 +881,7 @@ const getMoonSignInterpretation = (sign) => {
 
 
   
- // Get a detailed interpretation for the Moon's house placement
+
  const getMoonHouseInterpretation = (house) => {
   const interpretations = {
     1: 'Your Moon in the 1st house makes emotions a visible part of your identity. You instinctively express how you feel and respond quickly to your environment. Your lesson is to balance emotional responsiveness with self-awareness, so feelings don’t rule your direction.',
@@ -1038,7 +928,6 @@ const getPlanetSignInterpretation = (planet, sign) => {
   return `Your ${planet} in ${sign} influences how you channel ${planet} energy. ${base}`;
 };
 
-// Get a detailed interpretation for any planet in any house
 const getPlanetHouseInterpretation = (planet, house) => {
   const houseInterpretations = {
     1: `With ${planet} in your 1st house, this energy expresses itself through your self-presentation, appearance, and personal drive. You radiate this planet’s qualities outwardly, shaping how others perceive you.`,
@@ -1136,12 +1025,7 @@ const getHouseInterpretation = (houseNum) => {
   const selectSavedChart=(id)=>{
     try{
 let chart=savedCharts.find(u=>u._id==id)
-console.log("SELECTED CHART DATA:")
-    console.log(chart)
-    console.log("Aspects in chart:", chart.aspects)
-    console.log("Natal planets:", chart.natal?.planets)
-    console.log("Progressed planets:", chart.progressed?.planets)
-    console.log("Transit planets:", chart.transit?.planets)
+
 setChartData(chart)
     }catch(e){
 
@@ -1156,9 +1040,7 @@ setChartData(chart)
       let response=await axios.get(`${BASE_URL}/getMainChart?page=${pageNum}&limit=5`,{headers:{
         Authorization:`Bearer ${token}`
       }})
-      console.log(response.data)
-      console.log("man")
-      
+    
       if (append) {
         setSavedCharts(prev => [...prev, ...response.data.charts]);
       } else {
@@ -1168,7 +1050,7 @@ setChartData(chart)
       setHasMore(response.data.hasMore);
       setPage(pageNum);
     }catch(e){
-      console.log(e.message)
+    
     } finally {
       setLoadingMore(false);
     }
@@ -1196,11 +1078,11 @@ setChartData(chart)
     
    
     if (Array.isArray(displayPoints) && displayPoints.length === 0) {
-      console.log(`Hiding display point ${point} due to empty displayPoints array`);
+  
       return false;
     }
     
-    console.log(`Checking display point ${point}:`, displayPoints.includes(point));
+ 
     return displayPoints.includes(point);
   };
   return (
@@ -1219,7 +1101,7 @@ setChartData(chart)
       )}
 
     
-  <div className="relative w-full max-w-3xl mx-auto mb-6" style={{ aspectRatio: '1/1' }}>
+<div className="relative w-full max-w-xl mx-auto mb-6" style={{ aspectRatio: '1/1' }}>
         <svg viewBox="0 0 600 600" className="w-full h-full">
           {zodiacSigns.map((sign,index) => {
             const startAngle = sign.start - 90;
@@ -1840,7 +1722,8 @@ setChartData(chart)
 <div className="mb-8">
  
   <div className="bg-gray-50 p-4 rounded-lg">
-    <div className="relative w-full max-w-2xl mx-auto" style={{ aspectRatio: '1/1' }}>
+  <div className="relative w-full max-w-lg mx-auto" style={{ aspectRatio: '1/1' }}>
+
       <svg viewBox="0 0 600 600" className="w-full h-full">
       
         {zodiacSigns.map((sign, index) => {

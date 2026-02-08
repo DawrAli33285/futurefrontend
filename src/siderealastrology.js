@@ -95,7 +95,7 @@ const SiderealAstrologyPage = () => {
         </div>
 
         <p className="mb-8 text-sm md:text-base leading-relaxed">
-          Here at Mastering the Zodiac, we use true sidereal astrology. But, it is fair to say that both are accurate for their purposes.
+          Here at Truesky Psychology, we use true sidereal astrology. But, it is fair to say that both are accurate for their purposes.
         </p>
 
    

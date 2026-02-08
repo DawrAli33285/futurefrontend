@@ -86,7 +86,7 @@ const AdminChat = () => {
 
       socketRef.current = socket;
       socketRef.current.on('messageSend', (data) => {
-        console.log("received message:", data);
+        
         setMessages((prev) => {
         
           const exists = prev.some(msg => msg.id === data.id);
@@ -112,8 +112,7 @@ const AdminChat = () => {
     try {
       let userInfo = localStorage.getItem('userInfo');
       userInfo = JSON.parse(userInfo);
-      console.log('Current User Info:', userInfo);
-      
+     
       setCurrentUser({
         avatar: userInfo.imageUrl,
         name: userInfo.name,
@@ -129,9 +128,7 @@ const AdminChat = () => {
         }
       });
       
-      console.log("Fetched Messages:", response.data);
-
-     
+  
       const apiMessages = response.data.messages.map((msg) => ({
         id: msg._id,
         user: msg.user.name,

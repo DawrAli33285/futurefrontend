@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 export default function FAQPage() {
-  const [openItems, setOpenItems] = useState(['report-vs-readings']);
+  const [openItems, setOpenItems] = useState([]);
 
   const toggleItem = (id) => {
     setOpenItems(prev => 
@@ -69,161 +69,340 @@ export default function FAQPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-4 py-12">
      
-        <h1 className="text-[26px] md:text-[30px] font-light text-center mb-4">MTZ FAQ</h1>
+        <h1 className="text-[26px] md:text-[30px] font-light text-center mb-4">TRUE SKY PSYCHOLOGY — FAQ</h1>
         <p className="text-center text-sm tracking-widest uppercase text-gray-600 mb-8">
           Answers To The Most Common Questions
         </p>
         
         <div className="border-t border-gray-300 mb-12"></div>
 
-        <p className="text-center mb-12">
-          <b>For general questions about sidereal please read our in-depth article on{' '}
-          <a href="https://masteringthezodiac.com/sidereal-astrology" className="text-blue-600 hover:underline">
-            sidereal astrology
-          </a>
-          . It answers all common questions about sidereal astrology and the true sidereal zodiac.</b>
-        </p>
-
-   
+        
         <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 tracking-wide">
-          TRUE SIDEREAL ASTROLOGY
+          BIG 3 (SUN, MOON, RISING)
         </h2>
 
-        <FAQItem id="signs-different" question="Why are my signs different?">
+        <FAQItem id="sun-sign" question="What does my Sun sign really say about me?">
           <p>
-            Your signs are different because{' '}
-            <a href="https://masteringthezodiac.com#learnmore" className="text-blue-600 hover:underline">
-              true sidereal astrology
-            </a>{' '}
-            uses the <b>actual location of the planets in the sky</b>. Mainstream western astrology (tropical) doesn't use where the planets actually are - it uses a{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology#vs-tropical" className="text-blue-600 hover:underline">
-              seasonal calendar system
-            </a>{' '}
-            instead.
-          </p>
-          <p>
-            We believe the true sidereal chart is the most foundational chart in astrology. It shows what constellations the planets were actually in at the time of your birth - the same sky our ancestors looked at for thousands of years before simplified calendar systems.
+            Your Sun sign shows your core life force, identity, and purpose. It reflects how you express your will, creativity, and consciousness over time. In True Sidereal astrology, your Sun sign is based on the actual constellation behind the Sun, giving a more astronomically accurate picture of your nature and growth path.
           </p>
         </FAQItem>
 
-        <FAQItem id="ophiuchus" question="What is Ophiuchus? What is this symbol ⛎︎?">
+        <FAQItem id="moon-sign" question="How does my Moon sign affect my emotions and daily moods?">
           <p>
-            <a href="https://masteringthezodiac.com/ophiuchus-in-astrology" className="text-blue-600 hover:underline">
-              Ophiuchus
-            </a>{' '}
-            is the <b>13th sign of the zodiac</b> and shares the same part of the sky as Scorpio. Because Ophiuchus is situated on the ecliptic (the path through which the planets orbit the Sun), it is considered a zodiac sign.
-          </p>
-          <p>
-            Both Ophiuchus and Scorpio carry 8th house energies of transformation and depth. The Sun passes through Ophiuchus from December 7th-18th in our{' '}
-            <a href="https://masteringthezodiac.com/midpoint-method" className="text-blue-600 hover:underline">
-              Midpoint Method
-            </a>
-            .
+            Your Moon sign governs your emotional body, subconscious patterns, instincts, and how you process experiences internally. It influences your needs for safety, comfort, and connection, and it often shows how you react emotionally before logic kicks in.
           </p>
         </FAQItem>
 
-        <FAQItem id="sun-sign-dates" question="What are the true sidereal Sun Sign dates?">
+        <FAQItem id="rising-sign" question="Why is my Rising sign so important in first impressions and energy?">
           <p>
-            True sidereal dates are <b>different from both tropical and mainstream sidereal systems</b>. We use the actual uneven sizes of the constellations - some signs last only 18 days (Cancer) while others last up to 50 days (Virgo) because of their respective size in the sky. We also include Ophiuchus, the 13th sign.
-          </p>
-          <p>
-            View all the{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology-dates" className="text-blue-600 hover:underline">
-              true sidereal sun sign dates
-            </a>{' '}
-            to find your actual Sun Sign.
+            Your Rising (Ascendant) sign represents how you meet the world and how the world meets you. It affects your physical presence, mannerisms, and the energetic "filter" through which you experience life. It also sets up the structure of your entire birth chart.
           </p>
         </FAQItem>
 
-        <FAQItem id="why-sidereal" question="Why do you use true sidereal astrology?">
+        <FAQItem id="big3-interaction" question="How do the Big 3 interact in my life?">
+          <p>Think of the Big 3 as a system:</p>
           <p>
-            We use{' '}
-            <a href="https://masteringthezodiac.com#learnmore" className="text-blue-600 hover:underline">
-              true sidereal
-            </a>{' '}
-            because it shows the <b>actual placement of the planets</b> in the constellations at your birth. This is the most ancient form of astrology - before calendars and clocks, we simply looked up at the night sky and noticed patterns with our lives.
+            <b>Sun</b> = who you are becoming<br />
+            <b>Moon</b> = how you feel and react<br />
+            <b>Rising</b> = how you appear and initiate
           </p>
           <p>
-            While we think tropical is accurate as a secondary system, true sidereal is the most foundational chart in astrology. It shows what our ancestors saw for thousands of years, not a simplified calendar system.
+            When aligned, life feels coherent. When in tension, you may feel pulled in different directions. Their interaction shapes your personality, relationships, and growth themes.
           </p>
         </FAQItem>
 
-    
+        <FAQItem id="override" question="Can my Moon or Rising sign override my Sun sign?">
+          <p>
+            They don't override it, but they can dominate in certain situations. Emotional moments activate the Moon. Social or unfamiliar environments activate the Rising sign. Over time, the Sun becomes more expressed as you grow into yourself.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="sidereal-big3" question="How does True Sidereal astrology change my Big 3 interpretation?">
+          <p>
+            True Sidereal astrology uses the real sky positions of the Sun, Moon, and planets instead of a fixed seasonal zodiac. This often shifts people's signs and produces interpretations that match lived experience more closely.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="aspects" question="How do planetary aspects affect my Sun, Moon, or Rising?">
+          <p>
+            Aspects show how planets interact with your Big 3. Supportive aspects enhance confidence and flow, while challenging aspects create pressure that leads to growth, self-mastery, and integration.
+          </p>
+        </FAQItem>
+
+      
         <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
-          CHART INTERPRETATION & LEARNING
+          CHAKRAS & PLANET ALIGNMENT
         </h2>
 
-        <FAQItem id="interpretations" question="Do you use different interpretations than tropical astrology?">
+        <FAQItem id="chakra-planets" question="Which planets rule which chakras?">
+          <p>A common energetic mapping:</p>
           <p>
-            No, <b>we use the same interpretations as mainstream Western astrology</b>. The tropical and sidereal interpretations are practically identical.
+            <b>Root Chakra — Saturn</b><br />
+            Grounding, survival, structure, karma, time, discipline
           </p>
           <p>
-            The main difference is how we interpret the angles like the ascendant. While traditional astrology sees the ascendant as your "persona," we view the sidereal ascendant as who you are <b>becoming</b> - not what you were born with, but what life helps you develop. This is also true for the other angles such as the Midheaven, whereby the angle shows the life experiences not the personality characteristics.
+            <b>Sacral Chakra — Venus</b><br />
+            Desire, pleasure, creativity, emotional bonding
+          </p>
+          <p>
+            <b>Solar Plexus — Sun & Mars</b><br />
+            Willpower, identity, action, confidence, vitality
+          </p>
+          <p>
+            <b>Heart Chakra — Venus</b><br />
+            Love, harmony, beauty, relational balance
+          </p>
+          <p>
+            <b>Throat Chakra — Mercury</b><br />
+            Voice, truth, language, thought made sound
+          </p>
+          <p>
+            <b>Third Eye — Jupiter</b><br />
+            Wisdom, vision, higher mind, meaning, philosophy
+          </p>
+          <p>
+            <b>Crown Chakra — Moon</b><br />
+            Divine mind, cosmic consciousness, psychic field, universal memory
           </p>
         </FAQItem>
 
-        <FAQItem id="oppositions" question="How do you interpret oppositions that aren't opposite signs?">
+        <FAQItem id="transits-chakra" question="How do planetary transits affect my chakra energy?">
           <p>
-            In true sidereal, we still read them as oppositions - specifically, the <b>opposing parts</b> of those signs.
-          </p>
-          <p>
-            <b>Example:</b> Leo opposite Pisces<br />
-            • The Leo part in opposition to Pisces emphasizes self-oriented, passionate desires and pursuits<br />
-            • The Pisces part in opposition to Leo emphasizes selflessness and surrender to what life wants for us
-          </p>
-          <p>
-            You don't need to get too technical - simply view them as opposites and you'll see how these energies can be balanced, even though they're not classically opposite signs.
+            Planetary transits stimulate the chakra related to that planet's function. Mercury affects communication and the throat. Saturn affects safety and the root. The Moon influences emotional processing through the sacral and heart centers.
           </p>
         </FAQItem>
 
-        <FAQItem id="birth-chart" question="What's the most important thing to look at in my birth chart?">
+        <FAQItem id="misaligned-chakra" question="Can misaligned chakras make planetary influences stronger or weaker?">
           <p>
-            We recommend starting with your{' '}
-            <a href="https://masteringthezodiac.com/north-node-south-node-in-astrology" className="text-blue-600 hover:underline">
-              North and South Nodes
-            </a>{' '}
-            (Rahu and Ketu). They are the most important energies for life direction and cultivating balance between physical and spiritual needs.
+            Yes. A blocked chakra can exaggerate or distort planetary energy, while an aligned chakra allows that energy to express cleanly and constructively.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="retrogrades-chakra" question="How do retrogrades influence chakra energy?">
+          <p>
+            Retrogrades turn energy inward for review and healing. Mercury retrograde highlights throat chakra themes and nervous system regulation. Venus retrograde works through the heart and self-worth. Mars retrograde affects willpower and solar plexus integration.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="align-chakras" question="How can I align my chakras with current planetary energies?">
+          <p>
+            Through breathwork, sound healing, meditation, movement, intention-setting, and frequency practices timed with planetary cycles.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="eclipses-moons" question="How do eclipses or full moons affect energy centers?">
+          <p>
+            Eclipses initiate deep resets stored in the chakras. Full moons heighten emotional sensitivity, especially in the heart and solar plexus, often bringing buried material to the surface for integration.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="signs-chakra" question="Can my Sun, Moon, or Rising sign influence chakra strengths or blocks?">
+          <p>
+            Yes. Fire and air signs often activate upper chakras (throat, third eye, crown). Earth and water signs tend to emphasize lower and heart centers (root, sacral, heart).
+          </p>
+        </FAQItem>
+
+        <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
+          TRUE SIDEREAL / SCIENCE-BASED ASTROLOGY
+        </h2>
+
+        <FAQItem id="sky-differ" question="How does the sky today differ from the zodiac I learned in school?">
+          <p>
+            Due to Earth's slow axial wobble (precession), the constellations have shifted. The zodiac taught in school no longer aligns with the actual sky.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="visible-planets" question="Which planets are actually visible in the sidereal sky right now?">
+          <p>
+            Visibility changes monthly, but the Sun, Moon, Venus, Mars, Jupiter, and Saturn are often observable depending on season and location.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="constellations-2026" question="How do constellations line up with astrology in 2026?">
+          <p>
+            The Sun continues moving through the real constellations rather than symbolic sign divisions, creating greater astronomical alignment.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="science-energy" question="How do we measure astrology scientifically without ignoring energy work?">
+          <p>
+            Astronomical positions are measurable. Energetic influence is observed through resonance, biological rhythms, and long-term pattern correlation.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="belief" question="Can astrology affect my life even if I don't believe in it?">
+          <p>
+            Yes. Just as gravity works regardless of belief, planetary cycles influence Earth systems whether consciously acknowledged or not.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="precession" question="How does the precession of the equinoxes shift signs over time?">
+          <p>
+            It moves the equinox point backward through the constellations over about 26,000 years, causing the tropical zodiac to drift from the stars.
+          </p>
+        </FAQItem>
+
+       
+        <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
+          TRUE 13-SIGN / SIDEREAL ASTROLOGY
+        </h2>
+
+        <FAQItem id="13th-sign" question="Why is there a 13th sign in astrology, and what is it?">
+          <p>
+            Ophiuchus is the 13th zodiac constellation the Sun actually passes through along the ecliptic. It has always existed astronomically but was excluded from symbolic systems.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="ophiuchus-change" question="How does Ophiuchus change my zodiac sign?">
+          <p>
+            It can shift your Sun sign and changes the spacing of the zodiac based on real constellation sizes rather than equal divisions.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="tropical-vs-sidereal" question="What's the difference between Tropical astrology and Sidereal astrology?">
+          <p>
+            Tropical astrology is seasonal and symbolic. Sidereal astrology is based on actual star positions in the sky.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="accuracy" question="How accurate is Tropical astrology today compared to Sidereal?">
+          <p>
+            Tropical astrology is approximately 24 degrees off from the real sky. Sidereal reflects true astronomical placement.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="planetary-positions" question="How do planetary positions today align with real constellations?">
+          <p>
+            Sidereal astrology tracks planets within their actual star fields instead of symbolic seasonal signs.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="find-chart" question="How do I find my true 13-sign chart?">
+          <p>
+            By generating a chart using real-sky sidereal calculations rather than tropical software.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="both-signs" question="Can someone be influenced by both the 'old' sign and the 13th sign?">
+          <p>
+            Yes. Psychological identity may remain tied to the learned sign, while the true sign reflects the deeper energetic blueprint.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="readings-effect" question="How does True Sidereal astrology affect personality, love, and career readings?">
+          <p>
+            It refines emotional compatibility, vocational strengths, and life timing by aligning them with real cosmic positions.
+          </p>
+        </FAQItem>
+
+        <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
+          ABOUT TRUE SIDEREAL ASTROLOGY
+        </h2>
+
+        <FAQItem id="what-is-sidereal" question="What is True Sidereal Astrology?">
+          <p>
+            True Sidereal Astrology uses the visible sky as it actually exists.
           </p>
           <p>
-            In your chart, look for two horseshoe symbols - the 'n' is the North Node and the 'u' is the South Node. Note their house and sign placements. This is by far the most powerful part of the chart and what our readings are centered around.
+            Most Western astrology is based on tropical astrology, which is fixed to the seasons rather than the real positions of stars and constellations. Over the past 2,000 years, the sky has shifted due to precession, meaning tropical signs are now often one to two signs off from astronomical reality.
           </p>
           <p>
-            For a tutorial on how to read your birth chart check out our in-depth article on{' '}
-            <a href="https://masteringthezodiac.com/how-to-read-a-birth-chart" className="text-blue-600 hover:underline">
-              how to read a birth chart
-            </a>
-            .
+            True Sidereal astrology restores the original relationship between humans and the cosmos by reading the actual positions of the Sun, Moon, planets, and constellations at the moment of birth. This is not a new system — it is a return to sky-based astrology used for millennia.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="why-sidereal" question="Why do you use True Sidereal astrology?">
+          <p>
+            We use True Sidereal astrology because it reflects what was truly overhead when you were born.
+          </p>
+          <p>
+            This is the most ancient and observational form of astrology — long before symbolic calendars existed, humans simply looked at the sky. While tropical astrology can function symbolically, True Sidereal is the foundational chart.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="sun-dates" question="What are the True Sidereal Sun sign dates?">
+          <p>
+            True Sidereal astrology honors the uneven astronomical sizes of constellations. Some signs span short time periods, while others are much longer. True Sidereal also includes Ophiuchus, the 13th constellation the Sun visibly travels through.
+          </p>
+          <p>
+            <b>Aries</b> (Apr 21 — May 11)<br />
+            <b>Taurus</b> (May 12 — Jun 18)<br />
+            <b>Gemini</b> (Jun 19 — Jul 19)<br />
+            <b>Cancer</b> (Jul 20 — Aug 6)<br />
+            <b>Leo</b> (Aug 7 — Sep 15)<br />
+            <b>Virgo</b> (Sep 16 — Nov 4)<br />
+            <b>Libra</b> (Nov 5 — Nov 23)<br />
+            <b>Scorpio</b> (Nov 24 — Dec 6)<br />
+            <b>Ophiuchus</b> (Dec 7 — Dec 18)<br />
+            <b>Sagittarius</b> (Dec 19 — Jan 20)<br />
+            <b>Capricorn</b> (Jan 21 — Feb 14)<br />
+            <b>Aquarius</b> (Feb 15 — Mar 9)<br />
+            <b>Pisces</b> (Mar 10 — Apr 20)
+          </p>
+          <p><i>*Virgo spans the entire month of October*</i></p>
+        </FAQItem>
+
+        <FAQItem id="signs-different" question="Why are my signs different than what I was told before?">
+          <p>
+            Because mainstream astrology uses a seasonal framework that no longer matches the sky.
+          </p>
+          <p>
+            True Sidereal corrects this by showing where the planets actually were astronomically when you were born.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="ophiuchus-symbol" question="What is Ophiuchus and what does the symbol look like? ⛎">
+          <p>
+            Ophiuchus is the 13th zodiac constellation located along the ecliptic.
+          </p>
+          <p>
+            It expresses transformation, healing, death-rebirth cycles, and deep psychological insight.
+          </p>
+        </FAQItem>
+
+      
+        <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
+          CHART BASICS & INTERPRETATION
+        </h2>
+
+        <FAQItem id="important-chart" question="What are the most important things to look at in my birth chart?">
+          <p>
+            • North & South Nodes (karmic growth)<br />
+            • Sun (identity)<br />
+            • Moon (emotional body)<br />
+            • Ascendant (life approach)<br />
+            • Aspects<br />
+            • Stelliums
+          </p>
+        </FAQItem>
+
+        <FAQItem id="moon-in-sun" question="What does it mean when the Moon is in my Sun sign?">
+          <p>
+            It activates your core identity and emotional alignment. These are ideal days for intention-setting, self-honoring rituals, and emotional clarity.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="moon-in-moon" question="What does it mean when the Moon is in my Moon sign?">
+          <p>
+            This is your monthly emotional reset. Sensitivity increases, and self-care becomes essential for nervous system regulation.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="conflicting-signs" question="What if my Sun and Moon are in conflicting signs?">
+          <p>
+            This indicates tension between conscious goals and emotional needs. Growth comes from integrating both rather than choosing one over the other.
+          </p>
+        </FAQItem>
+
+        <FAQItem id="node-vs-ascendant" question="How is the North Node different from the Ascendant?">
+          <p>
+            The North Node represents karmic development. The Ascendant reflects personality expression and life navigation.
           </p>
         </FAQItem>
 
         <FAQItem id="no-birth-time" question="What if I don't know my birth time?">
-          <p>Without birth time, you can still see:</p>
           <p>
-            • <b>Planet signs</b> - Your personality characteristics<br />
-            • <b>Planetary aspects</b> - Your strengths and challenges
-          </p>
-          <p>
-            What's missing are the houses, which show specific life areas like relationships and career. We still recommend a{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology-readings" className="text-blue-600 hover:underline">
-              reading
-            </a>{' '}
-            without birth time if you want to know more about your true self and personality. You'll get about two-thirds of your chart's insights.
-          </p>
-          <p>
-            If you are reading your own chart, you can also set the Sun as the ascendant to get house interpretations for the outer-consciousness perspective.
-          </p>
-        </FAQItem>
-
-        <FAQItem id="node-vs-ascendant" question="How is the north node different from the ascendant?">
-          <p>The key difference is <b>karma</b>:</p>
-          <p>
-            <b>The nodes</b> are karmic points. The north node represents karma you're building in this life. It requires careful balance with the south node to avoid extremes. Going too far into either node creates challenges.
-          </p>
-          <p>
-            <b>The ascendant and chart ruler</b> are simply this life's experiences without karmic weight. They're beneficial to develop without the same risk of imbalance.
-          </p>
-          <p>
-            The nodes teach us balance through repeated cycles and life lessons. The angles like the ascendant show straightforward growth and development.
+            You can still analyze planetary signs and aspects. Houses are missing, but core chart themes remain accessible.
           </p>
         </FAQItem>
 
@@ -232,203 +411,88 @@ export default function FAQPage() {
           TECHNICAL QUESTIONS
         </h2>
 
-        <FAQItem id="degrees" question="Do you use degrees with true sidereal astrology?">
-          <p>
-            You can. However, we personally don't use degrees with true sidereal. Since true sidereal uses the <b>actual uneven sizes of the constellations</b>, degrees become ambiguous. Degrees are useful when signs are an even 30-degrees, but in true sidereal the signs are different sizes, so degrees don't have practical meaning.
-          </p>
-          <p>
-            If you purchase the{' '}
-            <a href="https://masteringthezodiac.com/sidereal-report" className="text-blue-600 hover:underline">
-              report
-            </a>{' '}
-            and would like to see degrees, we can generate your chart with degrees upon request.
-          </p>
-        </FAQItem>
-
-        <FAQItem id="iau-dates" question="Are the IAU dates (Nov 30 - Dec 17 for Ophiuchus) correct?">
-          <p>
-            The IAU boundaries you see on Wikipedia are <b>for astronomy, not astrology</b>. They don't reference the ecliptic (the Sun's path). We use the{' '}
-            <a href="https://masteringthezodiac.com/midpoint-method" className="text-blue-600 hover:underline">
-              Midpoint Method
-            </a>
-            , which is more accurate for astrology as it references the ecliptic. With this method, the Sun is in Ophiuchus from <b>December 7th-18th</b>.
-          </p>
-          <p>
-            Also please keep in mind that there are no visible divisions in the sky. Dates within three days of two signs are a blend of both signs.
-          </p>
-        </FAQItem>
-
         <FAQItem id="13-houses" question="If there's a 13th sign, why not 13 houses?">
           <p>
-            We use 12 houses because <b>Scorpio and Ophiuchus share the same part of the sky</b> - the 8th house region.
-          </p>
-          <p>
-            If you look at the constellations, they span above and below each other perfectly along the ecliptic. Both carry 8th house energies of transformation and depth. This is why the 12-house system remains accurate even with 13 zodiac signs.
-          </p>
-          <p>
-            If you were to include a 13th house it would be the second half of the 8th - where Ophiuchus sits in the sky.
+            Because houses represent life areas, not constellations. Scorpio and Ophiuchus share the same sky region related to transformation.
           </p>
         </FAQItem>
 
-        <FAQItem id="equal-house" question="Why do you use Equal House system instead of Placidus?">
+        <FAQItem id="oppositions" question="How do you interpret oppositions that aren't perfectly opposite?">
           <p>
-            We prefer Equal House because it shows <b>the sky as we actually see it</b>. Other systems stretch and shrink houses to fit other points in the chart. For example, quadrant house systems like Placidus stretch and shrink the houses to North, East, South, and West. Another example is the Whole Sign house system which sets the houses to the zodiac signs. While these systems are accurate, Equal House provides a more fundamental view by keeping the sky's natural proportions.
-          </p>
-          <p>
-            We still find other house systems like Placidus accurate. We just find that Equal House best represents the visible sky without distortion.
+            Oppositions are read between opposing constellation regions rather than strict degrees.
           </p>
         </FAQItem>
 
-        <FAQItem id="astrocartography" question="Is sidereal astrocartography different from tropical?">
-          <p><b>No, they're identical.</b></p>
+        <FAQItem id="retrograde" question="How do retrograde planets affect my chart?">
           <p>
-            Astrocartography charts reference the <b>houses</b> planets are in, not the signs. The planetary lines show where planets fall on the four angles (North, East, South, West) - their house positions.
-          </p>
-          <p>
-            Since houses remain the same in both systems, your astrocartography map is unchanged whether using tropical or sidereal.
+            They express inwardly first and emphasize reflection, depth, and unconventional processing.
           </p>
         </FAQItem>
 
-        
+        <FAQItem id="planet-vs-ruling" question="What's the difference between a planet in a sign vs. ruling a sign?">
+          <p>
+            A planet in a sign adapts to that environment. A ruling planet governs that sign's expression.
+          </p>
+        </FAQItem>
+
+      
         <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
-          SOFTWARE & TOOLS
+          APPLICATION & HEALING
         </h2>
 
-        <FAQItem id="true-sky" question="What is True Sky astrology software?">
+        <FAQItem id="integration" question="How does True Sky Psychology integrate astrology with healing?">
           <p>
-            <a href="https://masteringthezodiac.com/online-astrology-software" className="text-blue-600 hover:underline">
-              True Sky
-            </a>{' '}
-            is our <b>online astrology software</b> designed for everyone - from complete beginner to professional astrologer. No astrology knowledge is needed thanks to its one-click design and built-in interpretations.
-          </p>
-          <p>
-            Works instantly on any device - Mac, PC, tablet, or phone. Simply login and get <b>all chart types calculated with one click</b> (natal, transit, progression, return, synastry, composite). Save up to 5,000 charts that sync across all your devices. Free tier available or $15/month.
+            It combines astrology with nervous system awareness, somatic practices, and Sacred Psychology principles.
           </p>
         </FAQItem>
 
-        <FAQItem id="true-sky-tropical" question="Why does True Sky astrology software default to tropical?">
+        <FAQItem id="predict-future" question="Can astrology predict my future?">
           <p>
-            <a href="https://masteringthezodiac.com/online-astrology-software" className="text-blue-600 hover:underline">
-              True Sky
-            </a>{' '}
-            astrology software defaults to tropical settings when first loaded. The software is for all forms of astrology and tropical is still the expected standard. To use our <b>true sidereal system</b>, go to the SETTINGS section and switch to:
-          </p>
-          <p>
-            • Zodiac: Midpoint (true sidereal)<br />
-            • House: Equal<br />
-            • Coordinate: Topocentric
-          </p>
-          <p>
-            These settings will give you accurate true sidereal calculations using our{' '}
-            <a href="https://masteringthezodiac.com/midpoint-method" className="text-blue-600 hover:underline">
-              Midpoint Method
-            </a>
-            .
+            Astrology shows patterns and potential, not fixed fate.
           </p>
         </FAQItem>
 
-        <FAQItem id="prometheus" question="Are you still offering Prometheus software?">
+        <FAQItem id="reading-frequency" question="How often should I get an astrology reading?">
           <p>
-            Yes, we still recommend{' '}
-            <a href="https://masteringthezodiac.com/prometheus-astrology-software" className="text-blue-600 hover:underline">
-              Prometheus
-            </a>{' '}
-            for those that want a technical desktop software with true sidereal functionality. However, the Prometheus server is currently down and we're unable to issue new licenses at this time. The developer is aware of the issue, though there's no ETA for resolution.
-          </p>
-          <p>
-            We recommend using our{' '}
-            <a href="https://masteringthezodiac.com/online-astrology-software" className="text-blue-600 hover:underline">
-              True Sky
-            </a>{' '}
-            astrology software for all of your true sidereal astrology calculations. It's available for all devices, including mobile, tablet, and Mac.
+            One natal reading, yearly updates, and transition-period check-ins are recommended.
           </p>
         </FAQItem>
 
-        <FAQItem id="human-design" question="Where can I calculate my true sidereal Human Design chart?">
+        <FAQItem id="children-charts" question="Do you work with children's charts?">
           <p>
-            We recommend using{' '}
-            <a href="https://www.geneticmatrix.com/" className="text-blue-600 hover:underline" target="_blank" rel="nofollow noopener">
-              GeneticMatrix
-            </a>{' '}
-            (paid version) for true sidereal HD charts. Under Astro HD Sidereal settings, use:
-          </p>
-          <p>
-            • Ayanamsa: User Defined SVP<br />
-            • Fixed Sidereal Vernal Point: 31.2836<br />
-            • Yearly Incremental SVP: 0.00<br />
-            • Reference Year: 2000<br />
-            Then choose the true sidereal-M (Midpoint) setting.
+            Yes, focusing on temperament and support needs rather than rigid outcomes.
           </p>
         </FAQItem>
 
-     
+        <FAQItem id="get-started" question="How do I start working with True Sky Psychology?">
+          <p>
+            Begin by generating your True Sidereal chart and exploring foundational teachings and community resources.
+          </p>
+        </FAQItem>
+
+      
         <h2 className="text-[26px] md:text-[30px] font-light text-center mb-8 mt-16 tracking-wide">
-          SERVICES & RESOURCES
+          PHILOSOPHICAL FOUNDATIONS
         </h2>
 
-        <FAQItem id="report-vs-readings" question="How is the report different from personal readings?">
+        <FAQItem id="as-above" question="Why emphasize 'as above, so below'?">
           <p>
-            <b>The Report:</b> A comprehensive printout of all your placements with detailed interpretations. Perfect for understanding your personality, strengths, and challenges.
-          </p>
-          <p>
-            <b>Personal Readings:</b> Focused on your unique life path and how to align with it for greater fulfillment. Provides personalized guidance for working with your chart.
-          </p>
-          <p>
-            Choose the{' '}
-            <a href="https://masteringthezodiac.com/sidereal-report" className="text-blue-600 hover:underline">
-              report
-            </a>{' '}
-            for detailed self-knowledge, or a{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology-readings" className="text-blue-600 hover:underline">
-              reading
-            </a>{' '}
-            for customized life path guidance.
+            Because reality is holographic. The sky mirrors the psyche.
           </p>
         </FAQItem>
 
-        <FAQItem id="books" question="What astrology books do you recommend?">
+        <FAQItem id="modern-psychology" question="How does this relate to modern psychology?">
           <p>
-            We recommend four books for learning the basics of astrology. Although written by tropical astrologers, these books provide an excellent starting point. Starting from least to more complex:
-          </p>
-          <p>
-            •{' '}
-            <a href="https://amzn.to/3WtLNf7" className="text-blue-600 hover:underline" target="_blank" rel="noopener">
-              Astrology for Yourself
-            </a>
-            <br />
-            •{' '}
-            <a href="https://amzn.to/3XyrEpt" className="text-blue-600 hover:underline" target="_blank" rel="noopener">
-              Chart Interpretation Handbook
-            </a>
-            <br />
-            •{' '}
-            <a href="https://amzn.to/3XAELpZ" className="text-blue-600 hover:underline" target="_blank" rel="noopener">
-              Predictive Astrology
-            </a>
-            <br />
-            •{' '}
-            <a href="https://amzn.to/3XVTP19" className="text-blue-600 hover:underline" target="_blank" rel="noopener">
-              The Changing Sky
-            </a>
+            Sacred Psychology treats the chart as a whole-self map — conscious, unconscious, ancestral, and energetic.
           </p>
         </FAQItem>
 
-        <FAQItem id="chart-questions" question="I have questions about my chart - who can help?">
+        <FAQItem id="scientific-validity" question="Is this scientifically valid?">
           <p>
-            For questions or interpretations of your chart, we recommend booking a reading with our astrologer{' '}
-            <a href="https://masteringthezodiac.com/annamaria-bio" className="text-blue-600 hover:underline">
-              Annamaria Rajko
-            </a>
-            . She specializes in Evolutionary Astrology using true sidereal astrology.
-          </p>
-          <p>
-            Visit our{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology-readings" className="text-blue-600 hover:underline">
-              readings page
-            </a>{' '}
-            to learn more about the different types of readings she offers for understanding your unique chart and life path.
+            True Sky Psychology aligns with observational astronomy, frequency research, archetypal psychology, and resonance theory.
           </p>
         </FAQItem>
+
       </div>
     </div>
   );

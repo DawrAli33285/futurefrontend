@@ -41,13 +41,14 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import SacredPage from './sacred';
+import OphiuchusInAstrology from './ophichus';
 
-// const stripePromise = loadStripe('pk_test_51OwuO4LcfLzcwwOYdssgGfUSfOgWT1LwO6ewi3CEPewY7WEL9ATqH6WJm3oAcLDA3IgUvVYLVEBMIEu0d8fUwhlw009JwzEYmV');
 const stripePromise = loadStripe('pk_live_51SOf9PF2ZpC0D5XRyQ0zxZt7dD1NjS35N96b4MbZVnzdl2LbrUNi23MUsm2ubgkw91R1dVcplSxLOXivDZf9EhkN005twLIZcj');
 
 
 
-// Wrapper component for admin routes with BirthdateModal
+
 const AdminWithBirthdateModal = ({ element }) => (
   <>
     <BirthdateModal />
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
       { path: '/sidereal-astrology', element: <App /> },
       { path: '/faq', element: <FAQPage /> },
       { path: '/team', element: <TeamPage /> },
+      {path:'/sacred',element:<SacredPage/>},
       { path: '/team/:name', element: <MemberBioPage /> },
       { path: '/terms', element: <App /> },
       { path: '/free-report', element: <App /> },
@@ -86,7 +88,9 @@ const router = createBrowserRouter([
       { path:'/joinnewsletter', element: <JoinNewsletterPage />},
       { path:'/appearance', element: <MediaAppearancesPage />},
       { path:'/siderealastrology', element: <SiderealAstrologyPage />},
-      {path:'/sidereal-signs',element:<SiderealSignCalculator/>}
+      {path:'/sidereal-signs',element:<SiderealSignCalculator/>},
+      {path:'/ophiuchus-in-astrology',element:<OphiuchusInAstrology/>},
+      
     ],
   },
   {

@@ -4,8 +4,6 @@ const AstrologyPlacements = ({ data: responseData }) => {
 
   const data = responseData?.data || responseData;
   const personName = responseData?.personName;
-  console.log("DATA IS")
-  console.log(data)
 
 
   const signColors = {

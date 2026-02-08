@@ -97,7 +97,6 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast.error('Please fill in all fields', { containerId: 'contactus' });
       return;

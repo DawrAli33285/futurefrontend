@@ -105,17 +105,10 @@ const ChartCalculator = () => {
     
             const response = await axios.post(`${BASE_URL}/chart/natal`, payload);
     
-            console.log("=== FULL API RESPONSE ===");
-            console.log(response.data);
-            console.log("Has nested data?", response.data.data ? "YES" : "NO");
-            
-           
+        
             const apiData = response.data.data || response.data;
             
-            console.log("=== EXTRACTED API DATA ===");
-            console.log("planets:", apiData.planets);
-            console.log("ascendant:", apiData.ascendant);
-            console.log("chart_wheel:", apiData.chart_wheel);
+         
             
             const enhancedChartData = {
                 ...apiData,
@@ -131,12 +124,7 @@ const ChartCalculator = () => {
                 },
                 personName: formData.name
             };
-            
-            console.log("=== ENHANCED CHART DATA ===");
-            console.log("Has planets?", enhancedChartData.planets ? "YES" : "NO");
-            console.log("Has chart_wheel?", enhancedChartData.chart_wheel ? "YES" : "NO");
-            console.log(enhancedChartData);
-            
+           
             setChartData(enhancedChartData);
         } catch (err) {
             console.error('Error:', err);

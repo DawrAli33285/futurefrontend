@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { BASE_URL } from './baseurl';
 
 const CLIENT_ID = '90321078061-0170dr3h7mknf595o674b7ctu70av45u.apps.googleusercontent.com';
-const REDIRECT_URI = 'http://localhost:3000/software';
+const REDIRECT_URI = 'https://trueskypsychology.com/software';
 
 export default function TrueSkyLanding() {
   const navigate = useNavigate();
@@ -63,8 +63,7 @@ export default function TrueSkyLanding() {
         
         
         let loginOrCreate=await axios.post(`${BASE_URL}/googleLogin`,userInfo)
-        console.log(loginOrCreate)
-        console.log("LOGIN")
+   
        
        if(loginOrCreate.data.newuser){
         localStorage.setItem('newuser',true)
@@ -73,9 +72,7 @@ export default function TrueSkyLanding() {
         localStorage.setItem('token',JSON.stringify(loginOrCreate.data.token))
         setUserInfo(userInfo);
         
-        console.log('Login successful!', userInfo);
-        
-       
+ 
         setTimeout(() => {
           navigate('/admin/main');
         }, 500);
@@ -101,9 +98,7 @@ export default function TrueSkyLanding() {
       });
     
       const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
-      console.log('Redirecting to:', authUrl);
-      console.log('Redirect URI:', REDIRECT_URI);
-      
+     
       window.location.href = authUrl;
     } catch (error) {
       setError('Error initiating login: ' + error.message);
@@ -114,7 +109,7 @@ export default function TrueSkyLanding() {
  
   useEffect(() => {
     const savedUserInfo = localStorage.getItem('userInfo');
-    console.log(savedUserInfo)
+  
     if (savedUserInfo) {
       setUserInfo(JSON.parse(savedUserInfo));
     }

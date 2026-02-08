@@ -8,7 +8,7 @@ export default function BirthdateModal() {
   const [savedDate, setSavedDate] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if user has birth_date on mount
+ 
   useEffect(() => {
 
     checkUserBirthDate();
@@ -20,7 +20,7 @@ export default function BirthdateModal() {
     try {
       let token = localStorage.getItem('token');
       token = JSON.parse(token);
-      console.log("CALLING")
+     
       const response = await fetch(`${BASE_URL}/getUser`, {
         method: 'GET',
         headers: {
@@ -29,14 +29,12 @@ export default function BirthdateModal() {
         }
       });
       
-      console.log(response.data)
-      console.log("HEY")
+  
 
       if (response.ok) {
         const data = await response.json();
-        console.log('User data:', data);
-        
-        // If user doesn't have birth_date, show modal
+       
+   
         if (!data.birth_date) {
           setIsOpen(true);
         } else {
@@ -69,7 +67,7 @@ export default function BirthdateModal() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Birth date saved successfully:', data);
+         
           setSavedDate(birthdate);
           setIsOpen(false);
         } else {
@@ -87,17 +85,17 @@ export default function BirthdateModal() {
     setIsOpen(false);
   };
 
-  // Don't render anything while loading
+ 
   if (loading) {
     return null;
   }
 
-  // If modal is not open and we have a saved date, don't show anything
+  
   if (!isOpen && savedDate) {
     return null;
   }
 
-  // If modal is not open, don't show anything
+ 
   if (!isOpen) {
     return null;
   }
@@ -105,7 +103,7 @@ export default function BirthdateModal() {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-2xl max-w-md w-full">
-        {/* Header */}
+   
         <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Calendar className="w-6 h-6 text-white" />

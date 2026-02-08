@@ -75,7 +75,7 @@ const LocationSuggestionField = ({ value, onChange, name = "location", required 
     return () => clearTimeout(debounceTimer);
   }, [value]);
 
-  // Get a detailed interpretation for a given Ascendant (Rising Sign)
+ 
   const getAscendantInterpretation = (sign) => {
     const interpretations = {
       'Aries': 'With Aries rising, you meet life head-on with courage, independence, and initiative. You exude confidence and act quickly, often blazing trails for others. Your challenge is to balance assertiveness with patience and empathy.',
@@ -100,7 +100,7 @@ const LocationSuggestionField = ({ value, onChange, name = "location", required 
   };
   
 
-// Get a detailed interpretation for a given Sun sign
+
 const getSunSignInterpretation = (sign) => {
   const interpretations = {
     'Aries': 'With the Sun in Aries, you’re bold, pioneering, and full of life. You thrive on challenges and move fearlessly toward your goals. Leadership comes naturally to you, though learning patience and cooperation helps balance your fiery energy.',
@@ -126,7 +126,7 @@ const getSunSignInterpretation = (sign) => {
 
 
   
-  // Get a detailed interpretation for the Sun's house placement
+ 
   const getSunHouseInterpretation = (house) => {
     const interpretations = {
       1: 'Your Sun in the 1st house makes self-expression and personal identity central to your life. You shine through individuality, confidence, and leadership. Your growth involves learning to balance self-focus with awareness of others.',
@@ -152,7 +152,7 @@ const getSunSignInterpretation = (sign) => {
   
 
   
-// Get a detailed interpretation for a given Moon sign
+
 const getMoonSignInterpretation = (sign) => {
   const interpretations = {
     'Aries': 'With the Moon in Aries, your emotions are fiery, spontaneous, and direct. You feel things quickly and act on instinct, often wearing your heart on your sleeve. You thrive on excitement but benefit from learning patience and emotional reflection.',
@@ -178,7 +178,7 @@ const getMoonSignInterpretation = (sign) => {
 
 
   
- // Get a detailed interpretation for the Moon's house placement
+ 
  const getMoonHouseInterpretation = (house) => {
   const interpretations = {
     1: 'Your Moon in the 1st house makes emotions a visible part of your identity. You instinctively express how you feel and respond quickly to your environment. Your lesson is to balance emotional responsiveness with self-awareness, so feelings don’t rule your direction.',
@@ -225,7 +225,7 @@ const getPlanetSignInterpretation = (planet, sign) => {
   return `Your ${planet} in ${sign} influences how you channel ${planet} energy. ${base}`;
 };
 
-// Get a detailed interpretation for any planet in any house
+
 const getPlanetHouseInterpretation = (planet, house) => {
   const houseInterpretations = {
     1: `With ${planet} in your 1st house, this energy expresses itself through your self-presentation, appearance, and personal drive. You radiate this planet’s qualities outwardly, shaping how others perceive you.`,
@@ -422,12 +422,9 @@ const TransitGraph = () => {
     const shouldShowAllPlanets = !displayPlanets || displayPlanets === undefined;
     const shouldHideAllPlanets = Array.isArray(displayPlanets) && displayPlanets.length === 0;
     
-    console.log('Display Planets Setting:', displayPlanets);
-    console.log('Should Show All Planets:', shouldShowAllPlanets);
-    console.log('Should Hide All Planets:', shouldHideAllPlanets);
-    
+   
     if (shouldHideAllPlanets) {
-      console.log('Hiding all planets due to empty displayPlanets array');
+ 
       return [];
     }
   
@@ -441,7 +438,7 @@ const TransitGraph = () => {
   };
   
   const dummyPlanets = useMemo(() => {
-    console.log('Recalculating planets with settings:', settings?.wheelSettings?.displayPlanets);
+   
     return getPlanetsFromData();
   }, [settings]);
   const getPlanetSpeed = (planet) => {
@@ -541,8 +538,7 @@ const TransitGraph = () => {
     const start = new Date(`${startDate}T${startTime || '00:00'}`);
     const end = new Date(`${endDate}T${endTime || '23:59'}`);
     
-    console.log(`Generating transit data for timezone: ${selectedTimezone}`);
-    
+   
     const daysDiff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     const intervals = Math.min(daysDiff + 1, 30);
     
@@ -626,8 +622,7 @@ const TransitGraph = () => {
         setLoading(false);
       }, 800);
       
-      console.log('Calculating transits with timezone:', timezone);
-      
+
     } catch (error) {
       console.error('Error calculating transits:', error);
       setErrors({ general: 'An error occurred while calculating transits' });
@@ -758,9 +753,9 @@ const TransitGraph = () => {
     }
   })
   window.location.href=response.data.url
-  console.log(response.data)
+
     }catch(e){
-      console.log(e.message)
+    
     }
   }
   
@@ -875,8 +870,7 @@ const TransitGraph = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("API Response:", response.data);
-      console.log("Saved charts:", response.data.charts);
+   
       
       if (append) {
         setSavedCharts(prev => [...prev, ...(response.data.charts || [])]);
@@ -887,7 +881,7 @@ const TransitGraph = () => {
       setHasMore(response.data.hasMore);
       setPage(pageNum);
     } catch (e) {
-      console.log("Error fetching saved charts:", e.message);
+      
       setSavedCharts([]);
     } finally {
       setLoadingMore(false);
@@ -911,10 +905,10 @@ const TransitGraph = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("Settings loaded:", response.data);
+     
       setSettings(response.data.data);
     } catch (e) {
-      console.log("Settings error:", e.message);
+    
     }
   };
 
@@ -940,7 +934,8 @@ setSubsribed(response.data.found)
 
 
     <div className="lg:max-w-6xl mx-auto lg:p-8">
-      <div className="relative w-full max-w-3xl mx-auto mb-6" style={{ aspectRatio: '1/1' }}>
+    <div className="relative w-full max-w-xl mx-auto mb-6" style={{ aspectRatio: '1/1' }}>
+
         {chartData.length > 0 ? (
           <div className="w-full h-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -1265,13 +1260,13 @@ setSubsribed(response.data.found)
       </div>
 
       <div className="overflow-y-auto max-h-[calc(90vh-100px)] p-6">
-        {/* Chart Overview */}
+   
         <div className="mb-8">
   <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
     Transit Movement Visualization
   </h3>
   <div className="bg-gray-50 p-4 rounded-lg">
-    <div className="relative w-full max-w-2xl mx-auto">
+  <div className="relative w-full max-w-lg mx-auto">
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={chartData}>
           <XAxis 
@@ -1347,7 +1342,7 @@ setSubsribed(response.data.found)
           </div>
         </div>
 
-        {/* Understanding Transit Graphs - Move to top */}
+       
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
             Understanding Transit Graphs
@@ -1371,7 +1366,7 @@ setSubsribed(response.data.found)
           </div>
         </div>
 
-        {/* Planetary Interpretations */}
+      
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
             Planetary Energies During This Period
@@ -1383,7 +1378,7 @@ setSubsribed(response.data.found)
               const movement = ((lastPoint - firstPoint + 360) % 360).toFixed(1);
               const speed = getPlanetSpeed(planet);
               
-              // Determine which zodiac signs the planet passed through
+             
               const startSign = Math.floor(firstPoint / 30);
               const endSign = Math.floor(lastPoint / 30);
               const zodiacNames = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
@@ -1447,7 +1442,6 @@ setSubsribed(response.data.found)
           </div>
         </div>
 
-        {/* Planetary Speed Categories */}
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
             Understanding Planetary Speeds
@@ -1515,7 +1509,7 @@ setSubsribed(response.data.found)
           </div>
         </div>
 
-        {/* How to Use This Information */}
+    
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
             How to Use This Information
@@ -1546,7 +1540,6 @@ setSubsribed(response.data.found)
           </div>
         </div>
 
-        {/* Practical Applications */}
         <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
           <h4 className="font-semibold text-gray-800 mb-3">Practical Applications</h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-700">

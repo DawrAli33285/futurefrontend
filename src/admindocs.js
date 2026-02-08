@@ -101,7 +101,7 @@ const AdminDocs = () => {
     { 
       id: 'credits',
       title: 'Credits & Acknowledgments',
-      content: 'True Sky is developed by the Mastering the Zodiac team. Special thanks to Swiss Ephemeris for astronomical calculations, our beta testers, and the astrology community. Astrological symbols and glyphs are based on traditional standards.'
+      content: 'True Sky is developed by the Truesky Psychology team. Special thanks to Swiss Ephemeris for astronomical calculations, our beta testers, and the astrology community. Astrological symbols and glyphs are based on traditional standards.'
     },
   ];
 

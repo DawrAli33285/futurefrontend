@@ -227,7 +227,7 @@ export default function SiderealCalculator() {
         location: coordinates.display_name
       };
 
-      console.log('Request Body:', requestBody);
+   
 
       const response = await fetch(`${BASE_URL}/chart/natal`, {
         method: 'POST',
@@ -243,7 +243,6 @@ export default function SiderealCalculator() {
       }
 
       const data = await response.json();
-      console.log('API Response:', data);
       
     
       const planetsData = data.data?.planets || data.planets || {};

@@ -125,7 +125,8 @@ function Layout() {
     ABOUT: [
       { name: 'Sidereal Astrology', path: '/sidereal-astrology' },
       { name: 'FAQ', path: '/faq' },
-      { name: 'The Team', path: '/team' }
+      { name: 'The Team', path: '/team' },
+      {name:'Sacred Psychology',path:'/sacred'}
     ],
     CHARTS: [
       { name: 'Chart Calculator', path: '/chart-calculator' },
@@ -134,6 +135,7 @@ function Layout() {
     LEARN:[
       { name: 'Chart Dictionary', path: '/chart-dictionary' },
       { name: 'Sidereal Courses', path: '/chart-course' },
+      {name:"Ophiuchus Astrology",path:'/ophiuchus-in-astrology'}
     ],
     MORE:[
         {name:'Latest NewsLetter', path:'/newsletter'},
@@ -149,16 +151,17 @@ function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-900">
    <ScrollMiddleware/>
-   dawar
+  
       <header className="bg-white shadow-md relative z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-           
-            <Link to="/" className="flex items-center">
-              <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white font-bold text-xl">
-                MTZ
-              </div>
-            </Link>
+          <Link to="/" className="flex items-center">
+  <img 
+    src="./logo.png" 
+    alt="Logo"
+    className="h-12 sm:h-14 md:h-16 object-contain"
+  />
+</Link>
 
       
             <nav className="hidden lg:flex items-center space-x-8">
@@ -320,7 +323,7 @@ function Layout() {
               </Link>
               
               <div className="text-sm text-gray-400">
-                © 2025 MASTERING THE ZODIAC
+                © 2025 Truesky Psychology
               </div>
             </div>
 
@@ -375,7 +378,7 @@ function Layout() {
             </div>
 
             <div className="text-center text-sm text-gray-400">
-              © 2025 MASTERING THE ZODIAC
+              © 2025 Truesky Psychology
             </div>
           </div>
         </div>

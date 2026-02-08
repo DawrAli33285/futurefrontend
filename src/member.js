@@ -23,10 +23,10 @@ const teamData = {
     title: 'FOUNDER & SIDEREAL ASTROLOGY EXPERT',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
     fullBio: [
-      "Athen Chimenti is the founder of Mastering the Zodiac and leading expert in the field of true sidereal astrology. He is passionate about helping others gain clarity and direction in their lives using this nature-based form of astrology.",
+      "Athen Chimenti is the founder of Truesky Psychology and leading expert in the field of true sidereal astrology. He is passionate about helping others gain clarity and direction in their lives using this nature-based form of astrology.",
       "Athen pioneered the return to sky-based astrology, reintroducing this timeless system that aligns with the actual constellations. He regularly appears on podcasts and other media channels to help spread the word about true sidereal astrology.",
       "His approach combines ancient wisdom with modern understanding, helping clients connect with their authentic path through precise astronomical calculations and deep spiritual insight.",
-      "Through his work at Mastering the Zodiac, Athen has helped thousands of people discover the accuracy and transformative power of working with the true positions of the stars and planets."
+      "Through his work at Truesky Psychology, Athen has helped thousands of people discover the accuracy and transformative power of working with the true positions of the stars and planets."
     ],
     hasLinks: false
   }

@@ -197,10 +197,10 @@ const AdminSettings = () => {
 
       if (response.data.success && response.data.data) {
         setSettings(response.data.data);
-        console.log('Settings loaded:', response.data.data);
+       
       }
     } catch (e) {
-      console.log('Error loading settings:', e.message);
+    
     } finally {
       setIsLoading(false);
     }
@@ -230,7 +230,7 @@ const AdminSettings = () => {
       toast.error(e.response?.data?.message || 'Failed to save settings', {
         containerId: 'settings'
       });
-      console.log('Save error:', e.message);
+     
     }
   };
 

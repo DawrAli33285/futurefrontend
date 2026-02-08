@@ -107,7 +107,7 @@ const [timezoneLoading, setTimezoneLoading] = useState(false);
   },[formData.person1_location]);
 
 
-  // Get a detailed interpretation for a given Ascendant (Rising Sign)
+
   const getAscendantInterpretation = (sign) => {
     const interpretations = {
       'Aries': 'With Aries rising, you meet life head-on with courage, independence, and initiative. You exude confidence and act quickly, often blazing trails for others. Your challenge is to balance assertiveness with patience and empathy.',
@@ -132,7 +132,7 @@ const [timezoneLoading, setTimezoneLoading] = useState(false);
   };
   
 
-// Get a detailed interpretation for a given Sun sign
+
 const getSunSignInterpretation = (sign) => {
   const interpretations = {
     'Aries': 'With the Sun in Aries, you’re bold, pioneering, and full of life. You thrive on challenges and move fearlessly toward your goals. Leadership comes naturally to you, though learning patience and cooperation helps balance your fiery energy.',
@@ -158,7 +158,7 @@ const getSunSignInterpretation = (sign) => {
 
 
   
-  // Get a detailed interpretation for the Sun's house placement
+  
   const getSunHouseInterpretation = (house) => {
     const interpretations = {
       1: 'Your Sun in the 1st house makes self-expression and personal identity central to your life. You shine through individuality, confidence, and leadership. Your growth involves learning to balance self-focus with awareness of others.',
@@ -183,8 +183,6 @@ const getSunSignInterpretation = (sign) => {
   };
   
 
-  
-// Get a detailed interpretation for a given Moon sign
 const getMoonSignInterpretation = (sign) => {
   const interpretations = {
     'Aries': 'With the Moon in Aries, your emotions are fiery, spontaneous, and direct. You feel things quickly and act on instinct, often wearing your heart on your sleeve. You thrive on excitement but benefit from learning patience and emotional reflection.',
@@ -210,7 +208,7 @@ const getMoonSignInterpretation = (sign) => {
 
 
   
- // Get a detailed interpretation for the Moon's house placement
+ 
  const getMoonHouseInterpretation = (house) => {
   const interpretations = {
     1: 'Your Moon in the 1st house makes emotions a visible part of your identity. You instinctively express how you feel and respond quickly to your environment. Your lesson is to balance emotional responsiveness with self-awareness, so feelings don’t rule your direction.',
@@ -257,7 +255,7 @@ const getPlanetSignInterpretation = (planet, sign) => {
   return `Your ${planet} in ${sign} influences how you channel ${planet} energy. ${base}`;
 };
 
-// Get a detailed interpretation for any planet in any house
+
 const getPlanetHouseInterpretation = (planet, house) => {
   const houseInterpretations = {
     1: `With ${planet} in your 1st house, this energy expresses itself through your self-presentation, appearance, and personal drive. You radiate this planet’s qualities outwardly, shaping how others perceive you.`,
@@ -478,20 +476,13 @@ useEffect(() => {
       });
   
       const result = await response.json();
-      console.log("RESULT OF COMPOSITE")
-      console.log(result);
-      
-      // if (result.success) {
-      //   setChartData(result.data);
-      //   setChartResponse(result.data.person1 || result.data.composite);
-      // } else {
-      //   setError(result.error || 'Failed to generate chart');
-      // }
+   
+    
 
 
 
       if (result.success) {
-        // Ensure aspects are properly included in the chart data
+       
         const formattedData = {
           person1: {
             ...result.data.person1,
@@ -670,7 +661,7 @@ const getDisplayPlanets = (planetsData) => {
   const shouldHideAllPlanets = Array.isArray(displayPlanets) && displayPlanets.length === 0;
   
   if (shouldHideAllPlanets) {
-    console.log('Hiding all planets due to empty displayPlanets array');
+   
     return {};
   }
   
@@ -700,56 +691,52 @@ const debugPlanetNames = () => {
   const aspectsData = displayData?.aspects;
   
   if (displayPlanets && Array.isArray(aspectsData) && aspectsData.length > 0) {
-    console.log('=== PLANET NAME MISMATCH DEBUG ===');
-    console.log('Display Planets Keys:', Object.keys(displayPlanets));
-    
+   
     const uniqueAspectPlanets = new Set();
     aspectsData.forEach(aspect => {
       uniqueAspectPlanets.add(aspect.planet1);
       uniqueAspectPlanets.add(aspect.planet2);
     });
     
-    console.log('Planets in Aspects:', Array.from(uniqueAspectPlanets));
+
     
-    // Check mismatches
     uniqueAspectPlanets.forEach(planet => {
       const exists = Object.keys(displayPlanets).some(p => p.toLowerCase() === planet.toLowerCase());
-      console.log(`Aspect planet "${planet}" exists in displayPlanets:`, exists);
+     
     });
   }
 };
 
-// SIMPLIFIED - Show all enabled aspects regardless of planet filter
+
 const getDisplayAspects = (aspectsData) => {
   if (!aspectsData) return null;
   
   const enabledAspects = settings?.aspects?.enabledAspects;
   
-  console.log('Enabled Aspects Setting:', enabledAspects);
   
-  // Check if we should hide all aspects
+
   const shouldHideAllAspects = Array.isArray(enabledAspects) && enabledAspects.length === 0;
   
   if (shouldHideAllAspects) {
-    console.log('Hiding all aspects due to empty enabledAspects array');
+   
     return [];
   }
   
-  // Handle array format (from API)
+ 
   if (Array.isArray(aspectsData)) {
     let filtered = aspectsData;
     
-    // ONLY filter by enabled aspect types - IGNORE planet filtering
+   
     if (enabledAspects && Array.isArray(enabledAspects) && enabledAspects.length > 0) {
       filtered = filtered.filter(aspect => enabledAspects.includes(aspect.aspect));
-      console.log('After aspect type filtering:', filtered.length);
+     
     }
     
-    console.log('Total aspects to display:', filtered.length);
+  
     return filtered;
   }
   
-  // Handle object format (legacy)
+ 
   const filtered = {};
   Object.keys(aspectsData).forEach(aspectType => {
     if (enabledAspects && Array.isArray(enabledAspects) && !enabledAspects.includes(aspectType)) {
@@ -898,7 +885,7 @@ if(formData.chartName.length==0){
         ? chartData.person1.houses
         : []);
     
-    // Transform aspects from array to object format matching schema
+    
     const transformAspectsToSchema = (aspectsArray) => {
       if (!Array.isArray(aspectsArray)) return {};
       
@@ -965,9 +952,7 @@ let saveChart = {
   aspects: aspectsToSave
 };
 
-console.log("Aspects being saved:", aspectsToSave);
-    
-    console.log("Saving composite chart data:", saveChart); 
+
 
 let response=await axios.post(`${BASE_URL}/saveChart`,saveChart,{
 headers:{
@@ -1021,9 +1006,9 @@ let response=await axios.get(`${BASE_URL}/subscribe`,{
   }
 })
 window.location.href=response.data.url
-console.log(response.data)
+
   }catch(e){
-    console.log(e.message)
+
   }
 }
 
@@ -1039,8 +1024,7 @@ const getCompositeChart=async(pageNum = 1, append = false)=>{
     let response=await axios.get(`${BASE_URL}/getCompositeChart?page=${pageNum}&limit=5`,{headers:{
       Authorization:`Bearer ${token}`
     }})
-    console.log(response.data)
-    console.log("man")
+   
     
     if (append) {
       setSavedCharts(prev => [...prev, ...response.data.charts]);
@@ -1051,7 +1035,7 @@ const getCompositeChart=async(pageNum = 1, append = false)=>{
     setHasMore(response.data.hasMore);
     setPage(pageNum);
   }catch(e){
-    console.log(e.message)
+ 
   } finally {
     setLoadingMore(false);
   }
@@ -1092,13 +1076,11 @@ useEffect(()=>{
     }
   })
   
-  console.log(response.data)
-  console.log("SETTINGS")
+ 
   
   setSettings(response.data.data)
   }catch(e){
-        console.log("settings error")
-        console.log(e.message)
+       
       }
     }
   
@@ -1113,8 +1095,7 @@ useEffect(()=>{
      
 
         <div className=" rounded-lg shadow-sm p-6 mb-8">
-        <div className="relative w-full max-w-3xl mx-auto mb-6" style={{ aspectRatio: '1/1' }}>
-
+        <div className="relative w-full max-w-xl mx-auto mb-6" style={{ aspectRatio: '1/1' }}>  
         {displayData ? (
             <>
               
@@ -1208,15 +1189,14 @@ useEffect(()=>{
                
                   {displayAspects && Array.isArray(displayAspects) && displayData?.planets && displayAspects
   .map((aspect, idx) => {
-    // Use all planets from the data without any filtering
+    
     const allPlanets = displayData.planets;
     const planet1 = allPlanets[aspect.planet1];
     const planet2 = allPlanets[aspect.planet2];
     
-    // Render aspect line regardless - don't skip even if planet data is missing
-    // This ensures aspects display independent of planet visibility
+   
     if (!planet1?.longitude || !planet2?.longitude) {
-      return null; // Only skip if we literally can't get positions
+      return null; 
     }
     
     const pos1 = getPosition(parseFloat(planet1.longitude), innerRadius - 10);
@@ -1788,7 +1768,7 @@ setFormData({
       onClick={() => {
         setSelectedChart(val._id);
         
-        // Transform aspects from object format back to array format
+  
         const transformAspectsToArray = (aspectsObject) => {
           if (!aspectsObject || typeof aspectsObject !== 'object') return [];
           
@@ -1914,12 +1894,12 @@ setFormData({
       </div>
 
       <div className="overflow-y-auto max-h-[calc(90vh-100px)] p-6">
-        {/* Chart Visualization */}
+
         <div className="mb-8">
           <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="relative w-full max-w-2xl mx-auto" style={{ aspectRatio: '1/1' }}>
+          <div className="relative w-full max-w-lg mx-auto" style={{ aspectRatio: '1/1' }}>
               <svg viewBox="0 0 600 600" className="w-full h-full">
-                {/* Zodiac Signs Outer Ring */}
+               
                 {zodiacSigns.map((sign, index) => {
                   const startAngle = sign.start - 90;
                   const nextSign = zodiacSigns[(index + 1) % zodiacSigns.length];
@@ -1948,7 +1928,7 @@ setFormData({
                   );
                 })}
 
-                {/* Outer degree markers */}
+                
                 <circle cx="300" cy="300" r="258" fill="white" stroke="#ccc" strokeWidth="1" />
                 {Array.from({ length: 360 }).map((_, degree) => {
                   if (degree % 1 === 0) {
@@ -1972,7 +1952,7 @@ setFormData({
                   return null;
                 })}
 
-                {/* Middle ring for Person 2 planets (if composite) */}
+               
                 <circle cx="300" cy="300" r="258" fill="white" stroke="#ccc" strokeWidth="1" />
                 {Array.from({ length: 360 }).map((_, degree) => {
                   if (degree % 1 === 0) {
@@ -1996,7 +1976,7 @@ setFormData({
                   return null;
                 })}
 
-                {/* Person 2 Planets (if composite) */}
+           
                 {chartData.person2 && displayPlanets && Object.entries(chartData.person2.planets || {}).map(([planetName, planetData], index) => {
                   const angle = parseFloat(planetData.longitude) - 90;
                   const radius = 247;
@@ -2030,10 +2010,10 @@ setFormData({
                   );
                 })}
 
-                {/* Inner circle and houses */}
+        
                 <circle cx="300" cy="300" r="230" fill="white" stroke="#ccc" strokeWidth="2" />
 
-                {/* Aspect lines */}
+               
                 {displayAspects && Array.isArray(displayAspects) && displayAspects.map((aspect, index) => {
                   const allPlanets = displayData?.planets || {};
                   const planet1 = allPlanets[aspect.planet1];
@@ -2059,7 +2039,7 @@ setFormData({
                   );
                 })}
 
-                {/* House lines */}
+               
                 {displayData?.houses && Array.from({ length: 12 }).map((_, index) => {
                   const house = displayData.houses[index];
                   if (!house) return null;
@@ -2079,7 +2059,7 @@ setFormData({
                   );
                 })}
 
-                {/* House numbers with colored segments */}
+               
                 {zodiacSigns.map((sign, index) => {
                   const angle = (sign.start + 15) - 90;
                   const radius = 155;
@@ -2112,7 +2092,6 @@ setFormData({
                   );
                 })}
 
-                {/* Person 1 / Composite Planets */}
                 {displayPlanets && Object.entries(displayPlanets).map(([planetName, planetData]) => {
                   const angle = parseFloat(planetData.longitude) - 90;
                   const radius = 205;
@@ -2135,10 +2114,10 @@ setFormData({
                   );
                 })}
 
-                {/* Center circle */}
+         
                 <circle cx="300" cy="300" r="75" fill="white" stroke="#ccc" strokeWidth="2" />
 
-                {/* Ascendant line */}
+             
                 {displayData?.ascendant && settings?.graphSettings?.displayPoints?.includes('AS') && (
                   <>
                     <line 
@@ -2160,7 +2139,6 @@ setFormData({
                   </>
                 )}
 
-                {/* MC line */}
                 {displayData?.ascendant && settings?.graphSettings?.displayPoints?.includes('MC') && (
                   <>
                     <line 
@@ -2186,7 +2164,7 @@ setFormData({
           </div>
         </div>
 
-        {/* Chart Overview */}
+    
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
             Chart Overview
@@ -2218,7 +2196,6 @@ setFormData({
           </div>
         </div>
 
-        {/* Ascendant Section */}
         {displayData?.ascendant?.sign && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
@@ -2232,7 +2209,7 @@ setFormData({
           </div>
         )}
 
-        {/* Core Luminaries */}
+       
         {displayData?.planets?.Sun && displayData?.planets?.Moon && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
@@ -2281,7 +2258,7 @@ setFormData({
           </div>
         )}
 
-        {/* Other Planetary Positions */}
+    
         {displayPlanets && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
@@ -2321,7 +2298,7 @@ setFormData({
           </div>
         )}
 
-        {/* Midheaven */}
+     
         {displayData?.houses?.[9]?.sign && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
@@ -2335,7 +2312,7 @@ setFormData({
           </div>
         )}
 
-        {/* House Cusps */}
+       
         {displayData?.houses && displayData.houses.length > 0 && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
@@ -2357,7 +2334,7 @@ setFormData({
           </div>
         )}
 
-        {/* Aspects */}
+     
         {displayAspects && Array.isArray(displayAspects) && displayAspects.length > 0 && (
           <div className="mb-8">
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-green-500 pb-2">

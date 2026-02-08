@@ -17,8 +17,7 @@ export default function FullAstrologyReport() {
         const base64Decoded = atob(encodedData);
         const uriDecoded = decodeURIComponent(base64Decoded);
         const decoded = JSON.parse(uriDecoded);
-        
-        console.log('Successfully decoded chart data:', decoded);
+       
         setChartData(decoded);
         setLoading(false);
       } catch (error) {
@@ -36,82 +35,84 @@ export default function FullAstrologyReport() {
     'Aries': {
       element: 'Fire',
       quality: 'Cardinal',
-      ruler: 'Mars',
+      ruler: 'Mars ♂',
       traits: 'Bold, pioneering, energetic, assertive'
     },
     'Taurus': {
       element: 'Earth',
       quality: 'Fixed',
-      ruler: 'Venus',
+      ruler: 'Venus ♀',
       traits: 'Grounded, reliable, sensual, patient'
     },
     'Gemini': {
       element: 'Air',
       quality: 'Mutable',
-      ruler: 'Mercury',
+      ruler: 'Mercury ☿',
       traits: 'Communicative, versatile, curious, adaptable'
     },
     'Cancer': {
       element: 'Water',
       quality: 'Cardinal',
-      ruler: 'Moon',
+      ruler: 'Moon ☽',
       traits: 'Nurturing, intuitive, emotional, protective'
     },
     'Leo': {
       element: 'Fire',
       quality: 'Fixed',
-      ruler: 'Sun',
+      ruler: 'Sun ☉',
       traits: 'Confident, creative, generous, dramatic'
     },
     'Virgo': {
       element: 'Earth',
       quality: 'Mutable',
-      ruler: 'Mercury',
+      ruler: 'Mercury ☿',
       traits: 'Analytical, precise, practical, helpful'
     },
     'Libra': {
       element: 'Air',
       quality: 'Cardinal',
-      ruler: 'Venus',
+      ruler: 'Venus ♀',
       traits: 'Diplomatic, balanced, harmonious, social'
     },
-    'Scorpio': {
-      element: 'Water',
-      quality: 'Fixed',
-      ruler: 'Pluto',
-      traits: 'Intense, transformative, passionate, mysterious'
-    },
+   'Scorpius': { 
+    element: 'Water',
+    quality: 'Fixed',
+    ruler: 'Mars ♂',
+    traits: 'Intense, transformative, passionate, mysterious'
+  },
+
     'Ophiuchus': {
       element: 'Water',
       quality: 'Fixed',
-      ruler: 'Pluto',
+      ruler: 'Mars ♂',
       traits: 'Healing, wisdom-seeking, transformative, intuitive'
     },
     'Sagittarius': {
       element: 'Fire',
       quality: 'Mutable',
-      ruler: 'Jupiter',
+      ruler: 'Jupiter ♃',
       traits: 'Optimistic, philosophical, adventurous, honest'
     },
-    'Capricorn': {
-      element: 'Earth',
-      quality: 'Cardinal',
-      ruler: 'Saturn',
-      traits: 'Ambitious, disciplined, responsible, strategic'
-    },
+  'Capricornus': {  
+    element: 'Earth',
+    quality: 'Cardinal',
+    ruler: 'Saturn ♄',
+    traits: 'Ambitious, disciplined, responsible, strategic'
+  },
     'Aquarius': {
       element: 'Air',
       quality: 'Fixed',
-      ruler: 'Uranus',
+      ruler: 'Uranus ♅',
       traits: 'Innovative, humanitarian, independent, visionary'
     },
     'Pisces': {
       element: 'Water',
       quality: 'Mutable',
-      ruler: 'Neptune',
+      ruler: 'Neptune ♆',
       traits: 'Compassionate, imaginative, intuitive, artistic'
     }
   };
+  
 
   const aspectInterpretations = {
     'Conjunction': { angle: 0, nature: 'Merging', color: 'text-yellow-400' },
@@ -433,11 +434,11 @@ export default function FullAstrologyReport() {
                     <div className="flex items-center gap-3">
                       <span className="text-2xl font-bold">{aspect.planet1}</span>
                       <span className={`text-xl ${aspectInterpretations[aspect.aspect]?.color || 'text-purple-400'}`}>
-                        {aspect.aspect === 'Conjunction' && '☌'}
-                        {aspect.aspect === 'Opposition' && '☍'}
-                        {aspect.aspect === 'Trine' && '△'}
-                        {aspect.aspect === 'Square' && '□'}
-                        {aspect.aspect === 'Sextile' && '⚹'}
+                      {aspect.aspect === 'Conjunction' && '☌'}
+{aspect.aspect === 'Opposition' && '☍'}
+{aspect.aspect === 'Trine' && '△'}
+{aspect.aspect === 'Square' && '□'}
+{aspect.aspect === 'Sextile' && '⚹'}
                       </span>
                       <span className="text-2xl font-bold">{aspect.planet2}</span>
                     </div>
