@@ -475,7 +475,7 @@ export default function OphiuchusInAstrology() {
                 <div className="my-10 flex justify-center">
                   <div className="max-w-2xl w-full">
                     <img 
-                      src="/chartthree.png" 
+                      src="/ophichusone.webp" 
                       alt="Clean 13-sign zodiac wheel with constellation symbols" 
                       className="rounded-lg shadow-xl w-full"
                     />
