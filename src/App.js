@@ -176,29 +176,7 @@ function App() {
         </div>
       </section>
 
-      <section className="py-[40px] px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-[26px] md:text-[30px] font-light text-center mb-16">
-            IN THE MEDIA
-          </h2>
-          <hr className="border-gray-300 mb-16" />
-
-          <div className="media-logos grid grid-cols-1 md:grid-cols-4 gap-8 items-center justify-around">
-            <a href="https://www.refinery29.com/en-gb/stargazing-sky-watching-astrology-tips" target="_blank" rel="nofollow noopener" className="grayscale hover:grayscale-0 py-[10px] px-[15px] transition-all flex justify-center items-center">
-              <img src={fst} alt="Refinery29 logo" className="max-w-[150px]" loading="lazy" />
-            </a>
-            <a href="https://www.womenshealthmag.com/life/a45468393/sidereal-astrology/" target="_blank" rel="nofollow noopener" className="grayscale hover:grayscale-0 py-[10px] px-[15px] transition-all flex justify-center items-center">
-              <img src={scnd} alt="Women's Health logo" className="max-w-[150px]" loading="lazy" />
-            </a>
-            <a href="https://thoughtcatalog.com/january-nelson/2019/01/sidereal-astrology/" target="_blank" rel="nofollow noopener" className="grayscale hover:grayscale-0 py-[10px] px-[15px] transition-all flex justify-center items-center">
-              <img src={thd} alt="Thought Catalog logo" className="max-w-[150px]" loading="lazy" />
-            </a>
-            <a href="https://en.wikipedia.org/wiki/Sidereal_and_tropical_astrology" target="_blank" rel="nofollow noopener" className="grayscale hover:grayscale-0 py-[10px] px-[15px] transition-all flex justify-center items-center">
-              <img src={four} alt="Wikipedia logo" className="max-w-[150px]" loading="lazy" />
-            </a>
-          </div>
-        </div>
-      </section>
+     
 
       <section className="py-20 px-4 bg-gradient-to-b from-indigo-900 to-purple-900 text-white">
         <div className="max-w-7xl mx-auto">

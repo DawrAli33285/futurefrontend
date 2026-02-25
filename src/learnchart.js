@@ -202,7 +202,7 @@ const LearnChartPage = () => {
             </p>
             <p className="text-sm md:text-base text-gray-700 mb-3">
                 If you want to take the analysis further, you can look at the associations between these four components and other planets in the chart. These associations are called aspects. The aspects are the lines in the center of the chart. Here is a PDF of what the different{' '}
-                <a href="#" className="text-indigo-600 hover:underline">aspects mean</a>, for your further analysis.
+                <p>aspects mean</p>, for your further analysis.
             </p>
             <p className="text-sm md:text-base text-gray-700 mb-3">
                 Next, you can look at the inner planets: Mercury, Venus, and Mars. The middle planets: Jupiter and Saturn. The outer planets: Uranus and Neptune. Then Chiron and Pluto. Read their house and sign placements.
@@ -212,7 +212,7 @@ const LearnChartPage = () => {
             </p>
             <p className="text-sm md:text-base text-gray-700 mb-3">
                 Pay attention to any planets in the first house, they will come through strongly in the personality. Here is a list of the{' '}
-                <a href="#" className="text-indigo-600 hover:underline">major planets</a>, it shows what elements of the self they represent.
+                <p>major planets</p>, it shows what elements of the self they represent.
             </p>
             <p className="text-sm md:text-base text-gray-700">
                 By focusing on the four main components of the birth chart... you now know how to analyze a birth chart accurately in a matter of minutes.
@@ -231,111 +231,13 @@ const LearnChartPage = () => {
     
     <p className="text-sm md:text-base text-gray-700 mt-4">
         To see our full interpretation of your natal chart get your{' '}
-        <a href="#" className="text-indigo-600 hover:underline font-semibold">full report with e-reading</a>.
+        <p className="font-semibold">full report with e-reading</p>.
     </p>
 </section>
 
-<section className="mb-8 md:mb-12">
-    <h2 className="text-xl md:text-2xl font-bold mb-6">VIDEO RESOURCES:</h2>
-    
-    <div className="grid md:grid-cols-2 gap-8 items-start">
-       
-        <div className="space-y-3">
-            <p>
-                <a 
-                    href="/sidereal-birth-chart-calculator" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    Birth Chart Calculator
-                </a>
-            </p>
-            <p>
-                <a 
-                    href="/sidereal-astrology" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    What is Sidereal Astrology?
-                </a>
-            </p>
-            <p>
-                <a 
-                    href="/pdfs/astrology-house-meanings.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    House Meanings List
-                </a>
-            </p>
-            <p>
-                <a 
-                    href="/pdfs/astrology-sign-meanings.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    Sign Meanings List
-                </a>
-            </p>
-            <p>
-                <a 
-                    href="/pdfs/astrology-ruler-list.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    Ruler List
-                </a>
-            </p>
-            <p>
-                <a 
-                    href="/pdfs/astrology-aspect-meanings.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    Aspect Meanings List
-                </a>
-            </p>
-            <p>
-                <a 
-                    href="/pdfs/astrology-planet-meanings.pdf" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-indigo-600 hover:underline text-sm md:text-base"
-                >
-                    Planet Meanings List
-                </a>
-            </p>
-        </div>
-        
-       
-        <div className="flex justify-center md:justify-end items-start">
-            <img
-                src="./how-to-read-a-birth-chart.png"
-                alt="How to Read a Birth Chart"
-                className="max-w-full h-auto rounded-lg shadow-lg"
-            />
-        </div>
-    </div>
-</section>
 
 
-                <section className="text-center py-8 md:py-12 border-t border-gray-200">
-                    <h2 className="text-xl md:text-2xl font-normal mb-4">
-                        GET THE FULL INTERPRETATION OF YOUR NATAL CHART
-                    </h2>
-                    <a
-                        href="#"
-                        className="text-lg md:text-xl text-indigo-600 hover:text-indigo-700 font-semibold hover:underline"
-                    >
-                        FULL REPORT WITH E-READING
-                    </a>
-                </section>
+
             </div>
         </div>
     );

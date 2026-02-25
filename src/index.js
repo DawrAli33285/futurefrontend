@@ -43,6 +43,10 @@ import {
 } from '@stripe/react-stripe-js';
 import SacredPage from './sacred';
 import OphiuchusInAstrology from './ophichus';
+import SoulSystem from './SoulSystem';
+import SacredPsychology from './SacredPsychology';
+import TrueSkyFramework from './trueskyframework';
+import Astrology101 from './astrology101';
 
 //const stripePromise = loadStripe('pk_live_51SOf9PF2ZpC0D5XRyQ0zxZt7dD1NjS35N96b4MbZVnzdl2LbrUNi23MUsm2ubgkw91R1dVcplSxLOXivDZf9EhkN005twLIZcj');
 const stripePromise = loadStripe('pk_test_51SOf9XJvg5goDQYJPE0RiLj0MkFU8S3RQpQd3nPEDjD4W8nmXNv3RDkFcsmhN5Mg9k4uQOuLhR3AAvkX4IeecPfN00b7KHAY7s');
@@ -65,8 +69,8 @@ const router = createBrowserRouter([
       { path: '/about', element: <App /> },
       { path: '/charts', element: <App /> },
       { path: '/learn', element: <App /> },
-      {path:'/readings',element:<Readings/>},
-      { path: '/software', element: <TrueSkyLanding /> },
+      {path:'/research',element:<Readings/>},
+      { path: '/login', element: <TrueSkyLanding /> },
       { path: '/more', element: <App /> },
       { path: '/contact', element: <ContactPage /> },
       { path: '/true-signs', element: <App /> },
@@ -84,9 +88,13 @@ const router = createBrowserRouter([
       { path: '/full-report', element: <AstrologyReport /> },
       { path: '/chart-dictionary', element: <LearnChartPage /> },
       { path:'/chart-course', element: <CoursesPage />},
+      {path:"/sacredpsychology",element:<SacredPsychology/>},
       { path:'/horoscope', element: <HoroscopePage />},
+      {path:'/trueskyframework',element:<TrueSkyFramework/>},
       { path:'/joinnewsletter', element: <JoinNewsletterPage />},
+      {path:'/astrology101',element:<Astrology101/>},
       { path:'/appearance', element: <MediaAppearancesPage />},
+      {path:'/soul-system',element:<SoulSystem/>},
       { path:'/siderealastrology', element: <SiderealAstrologyPage />},
       {path:'/sidereal-signs',element:<SiderealSignCalculator/>},
       {path:'/ophiuchus-in-astrology',element:<OphiuchusInAstrology/>},

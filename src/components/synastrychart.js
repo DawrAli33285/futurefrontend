@@ -468,20 +468,22 @@ const getHouseInterpretation = (houseNum) => {
 
     
     const zodiacSigns = [
-      { name: 'Aries', symbol: '♈', start: 0, color: '#FF6B6B' },
-      { name: 'Taurus', symbol: '♉', start: 30, color: '#4ECDC4' },
-      { name: 'Gemini', symbol: '♊', start: 60, color: '#FFE66D' },
-      { name: 'Cancer', symbol: '♋', start: 90, color: '#95E1D3' },
-      { name: 'Leo', symbol: '♌', start: 120, color: '#F38181' },
-      { name: 'Virgo', symbol: '♍', start: 150, color: '#AA96DA' },
-      { name: 'Libra', symbol: '♎', start: 180, color: '#FCBAD3' },
-      { name: 'Scorpio', symbol: '♏', start: 210, color: '#A8D8EA' },
-      { name: 'Ophiuchus', symbol: '⛎', start: 240, color: '#9B59B6' },
-      { name: 'Sagittarius', symbol: '♐', start: 263, color: '#FFD93D' },
-      { name: 'Capricorn', symbol: '♑', start: 293, color: '#6BCB77' },
-      { name: 'Aquarius', symbol: '♒', start: 321, color: '#4D96FF' },
-      { name: 'Pisces', symbol: '♓', start: 351, color: '#C8B6FF' },
-    ]
+      { name: 'Aries',       symbol: '♈', start: 0,   width: 25, color: '#F4A9A8' },
+      { name: 'Taurus',      symbol: '♉', start: 25,  width: 37, color: '#C8E6C9' },
+      { name: 'Gemini',      symbol: '♊', start: 62,  width: 28, color: '#FFF9C4' },
+      { name: 'Cancer',      symbol: '♋', start: 90,  width: 20, color: '#B3E5FC' },
+      { name: 'Leo',         symbol: '♌', start: 110, width: 36, color: '#F4A9A8' },
+      { name: 'Virgo',       symbol: '♍', start: 146, width: 44, color: '#C8E6C9' },
+      { name: 'Libra',       symbol: '♎', start: 190, width: 23, color: '#FFF9C4' },
+      { name: 'Scorpio',     symbol: '♏', start: 213, width: 7,  color: '#B3E5FC' },
+      { name: 'Ophiuchus',   symbol: '⛎', start: 220, width: 18, color: '#D4B8E0' },
+      { name: 'Sagittarius', symbol: '♐', start: 238, width: 33, color: '#F4A9A8' },
+      { name: 'Capricorn',   symbol: '♑', start: 271, width: 28, color: '#C8E6C9' },
+      { name: 'Aquarius',    symbol: '♒', start: 299, width: 24, color: '#FFF9C4' },
+      { name: 'Pisces',      symbol: '♓', start: 323, width: 37, color: '#B3E5FC' },
+    ];
+
+    
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'

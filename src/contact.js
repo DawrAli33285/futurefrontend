@@ -17,69 +17,29 @@ export default function ContactPage() {
   const faqs = [
     {
       id: 1,
-      question: "Why are my signs different?",
-      answer: (
-        <>
-          <p className="mb-4">
-            Your signs are different because{' '}
-            <a href="https://masteringthezodiac.com#learnmore" className="text-blue-600 hover:underline">
-              true sidereal astrology
-            </a>{' '}
-            uses the <strong>actual location of the planets in the sky</strong>. Mainstream western astrology (tropical) doesn't use where the planets actually are - it uses a{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology#vs-tropical" className="text-blue-600 hover:underline">
-              seasonal calendar system
-            </a>{' '}
-            instead.
-          </p>
-          <p>
-            We believe the true sidereal chart is the most foundational chart in astrology. It shows what constellations the planets were actually in at the time of your birth - the same sky our ancestors looked at for thousands of years before simplified calendar systems.
-          </p>
-        </>
-      )
+      question: "Do I need to know astrology to use this?",
+      answer: <p>No. The report does the translation for you. You just need to read the words and try the practices.</p>
     },
     {
       id: 2,
-      question: "Do we use degrees with true sidereal astrology?",
-      answer: (
-        <>
-          <p className="mb-4">
-            You can. However, we personally don't use degrees with true sidereal. Since true sidereal uses the <strong>actual uneven sizes of the constellations</strong>, degrees become ambiguous. Degrees are useful when signs are an even 30-degrees, but in true sidereal the signs are different sizes, so degrees don't have practical meaning.
-          </p>
-          <p>
-            If you purchase the{' '}
-            <a href="https://masteringthezodiac.com/sidereal-report" className="text-blue-600 hover:underline">
-              report
-            </a>{' '}
-            and would like to see degrees, we can generate your chart with degrees upon request.
-          </p>
-        </>
-      )
+      question: "What if I don't understand the aspect symbols?",
+      answer: <p>Your report will include plain‑language interpretations (e.g., "Harmonious energy flow"). The cheat sheet above is just for deeper curiosity.</p>
     },
     {
       id: 3,
-      question: "How is the report different from personal readings?",
-      answer: (
-        <>
-          <p className="mb-4">
-            <strong>The Report:</strong> A comprehensive printout of all your placements with detailed interpretations. Perfect for understanding your personality, strengths, and challenges.
-          </p>
-          <p className="mb-4">
-            <strong>Personal Readings:</strong> Focused on your unique life path and how to align with it for greater fulfillment. Provides personalized guidance for working with your chart.
-          </p>
-          <p>
-            Choose the{' '}
-            <a href="https://masteringthezodiac.com/sidereal-report" className="text-blue-600 hover:underline">
-              report
-            </a>{' '}
-            for detailed self-knowledge, or a{' '}
-            <a href="https://masteringthezodiac.com/sidereal-astrology-readings" className="text-blue-600 hover:underline">
-              reading
-            </a>{' '}
-            for customized life path guidance.
-          </p>
-        </>
-      )
-    }
+      question: "How do I know which transit is most important?",
+      answer: <p>Look for <strong>Very Strong</strong> or <strong>Strong</strong> ratings, and tight orbs. Those are the headlines. The rest is fine print.</p>
+    },
+    {
+      id: 4,
+      question: "What if I have no transits on a given day?",
+      answer: <p>That's rare. Even weak transits create background texture. But if a day feels quiet, that's the energy: rest, integration, preparation.</p>
+    },
+    {
+      id: 5,
+      question: "Can I use this for planning my week?",
+      answer: <p>Absolutely. The Natal Weekly Report will give you one embodied practice per week. Do it. It's designed to help you receive the transmission consciously.</p>
+    },
   ];
 
   const toggleFaq = (id) => {
@@ -190,8 +150,8 @@ export default function ContactPage() {
             
             <p className="mb-4 text-gray-800 leading-relaxed">
               E-mail{' '}
-              <a href="mailto:contact@masteringthezodiac.com" className="text-blue-600 hover:underline">
-                contact@masteringthezodiac.com
+              <a href="mailto:TrueSkyPsychology@gmail.com" className="text-blue-600 hover:underline">
+              TrueSkyPsychology@gmail.com
               </a>
             </p>
 
@@ -270,50 +230,10 @@ export default function ContactPage() {
 
       
           <div>
-            <div className="flex gap-6 mb-12">
-              <a
-                href="https://www.youtube.com/masteringthezodiac"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                <Youtube className="w-12 h-12" />
-              </a>
-              <a
-                href="https://www.facebook.com/masteringthezodiac"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                <Facebook className="w-12 h-12" />
-              </a>
-              <a
-                href="https://www.instagram.com/masteringthezodiac"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                <Instagram className="w-12 h-12" />
-              </a>
-            </div>
+       
 
-            <h2 className="text-2xl font-normal mb-4 mt-12">
-              <a href="/insiders" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                Join Newsletter
-              </a>
-            </h2>
-
-            <h2 className="text-2xl font-normal mb-4">
-              <a href="/partners" target="_blank" rel="nofollow noopener noreferrer" className="text-blue-600 hover:underline">
-                Affiliate Program
-              </a>
-            </h2>
-
-            <h2 className="text-2xl font-normal">
-              <a href="https://donate.stripe.com/7sI00WdEAaX250s28y" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                Donate
-              </a>
-            </h2>
+           
+         
           </div>
         </div>
       </div>

@@ -517,23 +517,22 @@ useEffect(() => {
 
   const getZodiacSigns = () => {
     return [
-      { name: 'Aries', symbol: '♈', start: 0, color: '#FF6B6B' },
-      { name: 'Taurus', symbol: '♉', start: 30, color: '#4ECDC4' },
-      { name: 'Gemini', symbol: '♊', start: 60, color: '#FFE66D' },
-      { name: 'Cancer', symbol: '♋', start: 90, color: '#95E1D3' },
-      { name: 'Leo', symbol: '♌', start: 120, color: '#F38181' },
-      { name: 'Virgo', symbol: '♍', start: 150, color: '#AA96DA' },
-      { name: 'Libra', symbol: '♎', start: 180, color: '#FCBAD3' },
-      { name: 'Scorpio', symbol: '♏', start: 210, color: '#A8D8EA' },
-      { name: 'Ophiuchus', symbol: '⛎', start: 240, color: '#9B59B6' },
-      { name: 'Sagittarius', symbol: '♐', start: 263, color: '#FFD93D' },
-      { name: 'Capricorn', symbol: '♑', start: 293, color: '#6BCB77' },
-      { name: 'Aquarius', symbol: '♒', start: 321, color: '#4D96FF' },
-      { name: 'Pisces', symbol: '♓', start: 351, color: '#C8B6FF' },
-    ]
-    
-    
+      { name: 'Aries',       symbol: '♈', start: 0,   width: 25, color: '#F4A9A8' },
+      { name: 'Taurus',      symbol: '♉', start: 25,  width: 37, color: '#C8E6C9' },
+      { name: 'Gemini',      symbol: '♊', start: 62,  width: 28, color: '#FFF9C4' },
+      { name: 'Cancer',      symbol: '♋', start: 90,  width: 20, color: '#B3E5FC' },
+      { name: 'Leo',         symbol: '♌', start: 110, width: 36, color: '#F4A9A8' },
+      { name: 'Virgo',       symbol: '♍', start: 146, width: 44, color: '#C8E6C9' },
+      { name: 'Libra',       symbol: '♎', start: 190, width: 23, color: '#FFF9C4' },
+      { name: 'Scorpio',     symbol: '♏', start: 213, width: 7,  color: '#B3E5FC' },
+      { name: 'Ophiuchus',   symbol: '⛎', start: 220, width: 18, color: '#D4B8E0' },
+      { name: 'Sagittarius', symbol: '♐', start: 238, width: 33, color: '#F4A9A8' },
+      { name: 'Capricorn',   symbol: '♑', start: 271, width: 28, color: '#C8E6C9' },
+      { name: 'Aquarius',    symbol: '♒', start: 299, width: 24, color: '#FFF9C4' },
+      { name: 'Pisces',      symbol: '♓', start: 323, width: 37, color: '#B3E5FC' },
+    ];
   };
+
   
   
   const handleRemoveChart = async(chartId) => {
@@ -1102,15 +1101,16 @@ useEffect(()=>{
 
               <div id="chart-content" className="w-full aspect-square max-w-full mb-6">
                 <svg viewBox={`0 0 ${size} ${size}`} className="drop-shadow-lg w-full h-full">
-                  {zodiacSigns.map((sign, idx) => {
-                     const nextSign = zodiacSigns[(idx + 1) % zodiacSigns.length]; 
-                    return (
-                      <g key={sign.name}>
-                        <path d={getArcPath(sign.start, nextSign.start, innerRadius, outerRadius)} fill={sign.color} stroke="white" strokeWidth="2" opacity="0.85" />
-                        <text x={getPosition(sign.start + 15, (outerRadius + innerRadius) / 2).x} y={getPosition(sign.start + 15, (outerRadius + innerRadius) / 2).y} fontSize="32" fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="middle">{sign.symbol}</text>
-                      </g>
-                    );
-                  })}
+                {zodiacSigns.map((sign) => {
+  const midDeg = sign.start + sign.width / 2;
+  const glyphSize = sign.width < 15 ? 18 : 32;
+  return (
+    <g key={sign.name}>
+      <path d={getArcPath(sign.start, sign.start + sign.width, innerRadius, outerRadius)} fill={sign.color} stroke="white" strokeWidth="2" opacity="0.85" />
+      <text x={getPosition(midDeg, (outerRadius + innerRadius) / 2).x} y={getPosition(midDeg, (outerRadius + innerRadius) / 2).y} fontSize={glyphSize} fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="middle" style={{ fontFamily: 'serif' }}>{sign.symbol}</text>
+    </g>
+  );
+})}
 
                   {Array.from({ length: 360 }, (_, i) => i).filter(i => i % 5 === 0).map(deg => {
                     const isMain = deg % 30 === 0;
@@ -1229,34 +1229,36 @@ useEffect(()=>{
             </>
           ) : (
             <svg viewBox="0 0 600 600" className="w-full h-full">
-       
-            {zodiacSigns.map((sign, idx) => {
-              const nextSign = zodiacSigns[(idx + 1) % 12];
+            {zodiacSigns.map((sign) => {
               const startAngle = sign.start - 90;
-              const endAngle = startAngle + 30;
-              const path = describeArc(300, 300, 280, startAngle, endAngle);
-              
+              const endAngle = startAngle + sign.width;
+              const largeArc = sign.width > 180 ? 1 : 0;
+              const midAngle = startAngle + sign.width / 2;
+              const outerR = 280, innerR = 240;
+              const s1o = polarToCartesian(300, 300, outerR, startAngle);
+              const e1o = polarToCartesian(300, 300, outerR, endAngle);
+              const s1i = polarToCartesian(300, 300, innerR, endAngle);
+              const e1i = polarToCartesian(300, 300, innerR, startAngle);
+              const pathD = ['M', s1o.x, s1o.y, 'A', outerR, outerR, 0, largeArc, 1, e1o.x, e1o.y,
+                'L', s1i.x, s1i.y, 'A', innerR, innerR, 0, largeArc, 0, e1i.x, e1i.y, 'Z'].join(' ');
+              const glyphSize = sign.width < 15 ? 14 : 24;
               return (
                 <g key={sign.name}>
-                  <path d={path} fill={sign.color} stroke="#fff" strokeWidth="2" />
+                  <path d={pathD} fill={sign.color} stroke="#fff" strokeWidth="2" />
                   <text
-                    x={300 + Math.cos((startAngle + 15) * Math.PI / 180) * 250}
-                    y={300 + Math.sin((startAngle + 15) * Math.PI / 180) * 250}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fontSize="24"
-                    fontWeight="bold"
-                    fill="white"
+                    x={300 + Math.cos(midAngle * Math.PI / 180) * 260}
+                    y={300 + Math.sin(midAngle * Math.PI / 180) * 260}
+                    textAnchor="middle" dominantBaseline="middle"
+                    fontSize={glyphSize} fontWeight="bold" fill="white"
+                    style={{ fontFamily: 'serif' }}
                   >
                     {sign.symbol}
                   </text>
                 </g>
               );
             })}
-        
-            <circle cx="300" cy="300" r="240" fill="white" stroke="#ccc" strokeWidth="2" />
           
-           
+            <circle cx="300" cy="300" r="240" fill="white" stroke="#ccc" strokeWidth="2" />
           </svg>
           )}
         </div>
@@ -1900,34 +1902,34 @@ setFormData({
           <div className="relative w-full max-w-lg mx-auto" style={{ aspectRatio: '1/1' }}>
               <svg viewBox="0 0 600 600" className="w-full h-full">
                
-                {zodiacSigns.map((sign, index) => {
-                  const startAngle = sign.start - 90;
-                  const nextSign = zodiacSigns[(index + 1) % zodiacSigns.length];
-                  let signWidth = nextSign.start - sign.start;
-                  if (signWidth <= 0) {
-                    signWidth = 360 - sign.start + nextSign.start;
-                  }
-                  const endAngle = startAngle + signWidth;
-                  const path = describeArc(300, 300, 290, startAngle, endAngle);
-                  
-                  return (
-                    <g key={sign.name}>
-                      <path d={path} fill={sign.color} stroke="#fff" strokeWidth="1" />
-                      <text
-                        x={300 + Math.cos((startAngle + signWidth/2) * Math.PI / 180) * 295}
-                        y={300 + Math.sin((startAngle + signWidth/2) * Math.PI / 180) * 295}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fontSize="18"
-                        fontWeight="bold"
-                        fill="#333"
-                      >
-                        {sign.symbol}
-                      </text>
-                    </g>
-                  );
-                })}
-
+              {zodiacSigns.map((sign) => {
+  const startAngle = sign.start - 90;
+  const endAngle = startAngle + sign.width;
+  const largeArc = sign.width > 180 ? 1 : 0;
+  const midAngle = startAngle + sign.width / 2;
+  const outerR = 290, innerR = 258;
+  const s1o = polarToCartesian(300, 300, outerR, startAngle);
+  const e1o = polarToCartesian(300, 300, outerR, endAngle);
+  const s1i = polarToCartesian(300, 300, innerR, endAngle);
+  const e1i = polarToCartesian(300, 300, innerR, startAngle);
+  const pathD = ['M', s1o.x, s1o.y, 'A', outerR, outerR, 0, largeArc, 1, e1o.x, e1o.y,
+    'L', s1i.x, s1i.y, 'A', innerR, innerR, 0, largeArc, 0, e1i.x, e1i.y, 'Z'].join(' ');
+  const glyphSize = sign.width < 15 ? 11 : 18;
+  return (
+    <g key={sign.name}>
+      <path d={pathD} fill={sign.color} stroke="#fff" strokeWidth="1" />
+      <text
+        x={300 + Math.cos(midAngle * Math.PI / 180) * 274}
+        y={300 + Math.sin(midAngle * Math.PI / 180) * 274}
+        textAnchor="middle" dominantBaseline="middle"
+        fontSize={glyphSize} fontWeight="bold" fill="#333"
+        style={{ fontFamily: 'serif' }}
+      >
+        {sign.symbol}
+      </text>
+    </g>
+  );
+})}
                 
                 <circle cx="300" cy="300" r="258" fill="white" stroke="#ccc" strokeWidth="1" />
                 {Array.from({ length: 360 }).map((_, degree) => {
@@ -2060,38 +2062,34 @@ setFormData({
                 })}
 
                
-                {zodiacSigns.map((sign, index) => {
-                  const angle = (sign.start + 15) - 90;
-                  const radius = 155;
-                  const x = 300 + Math.cos(angle * Math.PI / 180) * radius;
-                  const y = 300 + Math.sin(angle * Math.PI / 180) * radius;
+{zodiacSigns.map((sign, index) => {
+  const startAngle = sign.start - 90;
+  const endAngle = startAngle + sign.width;
+  const largeArc = sign.width > 180 ? 1 : 0;
+  const midAngle = startAngle + sign.width / 2;
+  const outerR = 230, innerR = 80;
+  const s1o = polarToCartesian(300, 300, outerR, startAngle);
+  const e1o = polarToCartesian(300, 300, outerR, endAngle);
+  const s1i = polarToCartesian(300, 300, innerR, endAngle);
+  const e1i = polarToCartesian(300, 300, innerR, startAngle);
+  const housePath = ['M', s1o.x, s1o.y, 'A', outerR, outerR, 0, largeArc, 1, e1o.x, e1o.y,
+    'L', s1i.x, s1i.y, 'A', innerR, innerR, 0, largeArc, 0, e1i.x, e1i.y, 'Z'].join(' ');
+  const labelX = 300 + Math.cos(midAngle * Math.PI / 180) * 155;
+  const labelY = 300 + Math.sin(midAngle * Math.PI / 180) * 155;
 
-                  const startAngle = sign.start - 90;
-                  const endAngle = startAngle + 30;
-                  const housePath = describeArc(300, 300, 230, startAngle, endAngle, 80);
-
-                  return (
-                    <g key={`house-segment-${index}`}>
-                      <path
-                        d={housePath}
-                        fill={sign.color}
-                        fillOpacity="0.3"
-                        stroke="none"
-                      />
-                      <text
-                        x={x} y={y}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fontSize="16"
-                        fill="#333"
-                        fontWeight="bold"
-                      >
-                        {index + 1}
-                      </text>
-                    </g>
-                  );
-                })}
-
+  return (
+    <g key={`house-segment-${index}`}>
+      <path d={housePath} fill={sign.color} fillOpacity="0.3" stroke="none" />
+      <text
+        x={labelX} y={labelY}
+        textAnchor="middle" dominantBaseline="middle"
+        fontSize="16" fill="#333" fontWeight="bold"
+      >
+        {index + 1}
+      </text>
+    </g>
+  );
+})}
                 {displayPlanets && Object.entries(displayPlanets).map(([planetName, planetData]) => {
                   const angle = parseFloat(planetData.longitude) - 90;
                   const radius = 205;

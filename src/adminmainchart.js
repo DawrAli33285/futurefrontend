@@ -304,25 +304,25 @@ const [subscribed,setSubsribed]=useState(false)
   }, [chartData, settings]);
 
 
-const getZodiacSigns = () => {
-  return [
-    { name: 'Aries', symbol: '♈', start: 0, color: '#FF6B6B' },
-    { name: 'Taurus', symbol: '♉', start: 30, color: '#4ECDC4' },
-    { name: 'Gemini', symbol: '♊', start: 60, color: '#FFE66D' },
-    { name: 'Cancer', symbol: '♋', start: 90, color: '#95E1D3' },
-    { name: 'Leo', symbol: '♌', start: 120, color: '#F38181' },
-    { name: 'Virgo', symbol: '♍', start: 150, color: '#AA96DA' },
-    { name: 'Libra', symbol: '♎', start: 180, color: '#FCBAD3' },
-    { name: 'Scorpio', symbol: '♏', start: 210, color: '#A8D8EA' },
-    { name: 'Ophiuchus', symbol: '⛎', start: 240, color: '#9B59B6' },
-    { name: 'Sagittarius', symbol: '♐', start: 263, color: '#FFD93D' },
-    { name: 'Capricorn', symbol: '♑', start: 293, color: '#6BCB77' },
-    { name: 'Aquarius', symbol: '♒', start: 321, color: '#4D96FF' },
-    { name: 'Pisces', symbol: '♓', start: 351, color: '#C8B6FF' },
-  ]
-  
-  
-};
+  const getZodiacSigns = () => {
+    // IAU-based ecliptic proportions for 13 signs (total = 360°)
+    // Ophiuchus sits between Scorpio and Sagittarius
+    return [
+      { name: 'Aries',       symbol: '♈', start: 0,      width: 25, color: '#F4A9A8' }, // Fire
+      { name: 'Taurus',      symbol: '♉', start: 25,     width: 37, color: '#C8E6C9' }, // Earth
+      { name: 'Gemini',      symbol: '♊', start: 62,     width: 28, color: '#FFF9C4' }, // Air
+      { name: 'Cancer',      symbol: '♋', start: 90,     width: 20, color: '#B3E5FC' }, // Water
+      { name: 'Leo',         symbol: '♌', start: 110,    width: 36, color: '#F4A9A8' }, // Fire
+      { name: 'Virgo',       symbol: '♍', start: 146,    width: 44, color: '#C8E6C9' }, // Earth
+      { name: 'Libra',       symbol: '♎', start: 190,    width: 23, color: '#FFF9C4' }, // Air
+      { name: 'Scorpio',     symbol: '♏', start: 213,    width: 7,  color: '#B3E5FC' }, // Water
+      { name: 'Ophiuchus',   symbol: '⛎', start: 220,    width: 18, color: '#D4B8E0' }, // 13th
+      { name: 'Sagittarius', symbol: '♐', start: 238,    width: 33, color: '#F4A9A8' }, // Fire
+      { name: 'Capricorn',   symbol: '♑', start: 271,    width: 28, color: '#C8E6C9' }, // Earth
+      { name: 'Aquarius',    symbol: '♒', start: 299,    width: 24, color: '#FFF9C4' }, // Air
+      { name: 'Pisces',      symbol: '♓', start: 323,    width: 37, color: '#B3E5FC' }, // Water
+    ];
+  };
 
 const zodiacSigns = getZodiacSigns();
 
@@ -1726,31 +1726,51 @@ setChartData(chart)
 
       <svg viewBox="0 0 600 600" className="w-full h-full">
       
-        {zodiacSigns.map((sign, index) => {
-          const startAngle = sign.start - 90;
-          const nextSign = zodiacSigns[(index + 1) % zodiacSigns.length];
-          let signWidth = nextSign.start - sign.start;
-          if (signWidth <= 0) {
-            signWidth = 360 - sign.start + nextSign.start;
-          }
-          const endAngle = startAngle + signWidth;
-          const path = describeArc(300, 300, 280, startAngle, endAngle);
-          return (
-            <g key={sign.name}>
-              <path d={path} fill={sign.color} stroke="#fff" strokeWidth="2" />
-              <text
-                x={300 + Math.cos((startAngle + signWidth/2) * Math.PI / 180) * 265}
-                y={300 + Math.sin((startAngle + signWidth/2) * Math.PI / 180) * 265}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="20"
-                fontWeight="bold"
-              >
-                {sign.symbol}
-              </text>
-            </g>
-          );
-        })}
+      {zodiacSigns.map((sign, index) => {
+    const startAngle = sign.start - 90;
+    const endAngle   = startAngle + sign.width; // uses explicit width per sign
+    const largeArc   = sign.width > 180 ? 1 : 0;
+    const outerR = 290;
+    const innerR = 240;
+    const midAngle = startAngle + sign.width / 2;
+
+    const s1o = polarToCartesian(300, 300, outerR, startAngle);
+    const e1o = polarToCartesian(300, 300, outerR, endAngle);
+    const s1i = polarToCartesian(300, 300, innerR, endAngle);
+    const e1i = polarToCartesian(300, 300, innerR, startAngle);
+
+    const pathD = [
+      'M', s1o.x, s1o.y,
+      'A', outerR, outerR, 0, largeArc, 1, e1o.x, e1o.y,
+      'L', s1i.x, s1i.y,
+      'A', innerR, innerR, 0, largeArc, 0, e1i.x, e1i.y,
+      'Z'
+    ].join(' ');
+
+    const symR = (outerR + innerR) / 2; // 265
+    const sx = 300 + Math.cos(midAngle * Math.PI / 180) * symR;
+    const sy = 300 + Math.sin(midAngle * Math.PI / 180) * symR;
+
+    // Shrink glyph for very narrow signs (Scorpio = 7°)
+    const glyphSize = sign.width < 15 ? 13 : 22;
+
+    return (
+      <g key={sign.name}>
+        <path d={pathD} fill={sign.color} stroke="#ccc" strokeWidth="1" />
+        <text
+          x={sx} y={sy}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={glyphSize}
+          fontWeight="bold"
+          fill="#333"
+          style={{ fontFamily: 'serif' }}
+        >
+          {sign.symbol}
+        </text>
+      </g>
+    );
+  })}
 
         <circle cx="300" cy="300" r="260" fill="white" stroke="#ccc" strokeWidth="1" />
         
