@@ -70,7 +70,7 @@ const router = createBrowserRouter([
       { path: '/charts', element: <App /> },
       { path: '/learn', element: <App /> },
       {path:'/research',element:<Readings/>},
-      { path: '/login', element: <TrueSkyLanding /> },
+      { path: '/software', element: <TrueSkyLanding /> },
       { path: '/more', element: <App /> },
       { path: '/contact', element: <ContactPage /> },
       { path: '/true-signs', element: <App /> },

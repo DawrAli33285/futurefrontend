@@ -351,7 +351,7 @@ export default function NatalWeeklyReportPage() {
               <li>✓ Retrograde &amp; eclipse alerts</li>
               <li>✓ Personalized weekly affirmations</li>
             </ul>
-            <a href="/login" className="block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded transition-colors text-sm">
+            <a href="/software" className="block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded transition-colors text-sm">
               Sign Up → Login &amp; Subscribe
             </a>
           </div>
@@ -371,7 +371,7 @@ export default function NatalWeeklyReportPage() {
               <li>✓ Retrograde &amp; eclipse alerts</li>
               <li>✓ Personalized weekly affirmations</li>
             </ul>
-            <a href="/login" className="block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded transition-colors text-sm">
+            <a href="/software" className="block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded transition-colors text-sm">
               Sign Up → Login &amp; Subscribe
             </a>
           </div>
@@ -379,7 +379,7 @@ export default function NatalWeeklyReportPage() {
 
         <p className="text-center text-gray-400 text-xs mb-16">
           Already subscribed to the chart generator? The Natal Weekly Report is included —{" "}
-          <a href="/login" className="text-indigo-500 hover:underline">log in to confirm</a>.
+          <a href="/software" className="text-indigo-500 hover:underline">log in to confirm</a>.
         </p>
 
         <div className="border-t border-gray-300 mb-10" />

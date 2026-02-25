@@ -116,7 +116,7 @@ function Layout() {
     { name: 'CHARTS', path: '/charts', hasSubmenu: true },
     { name: 'LEARN', path: '/learn', hasSubmenu: true },
     { name: 'RESEARCH', path: '/research', hasSubmenu: false },
-    { name: 'LOGIN', path: '/login', hasSubmenu: false },
+    { name: 'LOGIN', path: '/software', hasSubmenu: false },
     { name: 'CONTACT', path: '/contact', hasSubmenu: false },
   ];
 
