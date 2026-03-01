@@ -391,12 +391,7 @@ function Readings() {
           <p className="text-xl mb-8 opacity-90">
             Your true cosmic blueprint is waiting to be discovered
           </p>
-          <p className="text-sm mb-6 opacity-80">
-            Have questions?{' '}
-            <a href="/contact" target="_blank" rel="noopener noreferrer" className="underline hover:text-indigo-200">
-              Contact Annamaria
-            </a>
-          </p>
+      
         </div>
       </div>
     </div>

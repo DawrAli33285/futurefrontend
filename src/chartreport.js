@@ -261,9 +261,7 @@ export default function NatalWeeklyReportPage() {
           Natal Weekly Report
         </h1>
         <div className="border-t border-gray-300 mb-8" />
-        <p className="text-center text-gray-500 italic mb-10 max-w-2xl mx-auto">
-          "Astrology is most powerful when it meets you exactly where you are — every single week." — Athen Chimenti
-        </p>
+        
         <p className="text-center text-gray-700 max-w-3xl mx-auto mb-14 leading-relaxed">
           The Natal Weekly Report is a personalized weekly email written specifically for your true sidereal natal chart.
           Each report translates the current sky into language that is meaningful and actionable for <em>you</em> — not
@@ -277,8 +275,7 @@ export default function NatalWeeklyReportPage() {
           {[
             { icon: <Star size={18} />, title: "Weekly Planetary Transits — Personalized to You", body: "See exactly how the current planetary movements are activating your natal chart and what themes to expect each day of the week." },
             { icon: <Zap size={18} />, title: "Retrogrades, Eclipses & Key Cosmic Events", body: "Never be caught off guard. Each report highlights major astrological events and explains how they affect your chart specifically." },
-            { icon: <BarChart2 size={18} />, title: "Monthly Forecasts & Predictions", body: "Delivered at the start of each month, your forecast gives you a broader view so you can plan the weeks ahead with intention." },
-            { icon: <Mail size={18} />, title: "Personalized Guidance & Affirmations", body: "Each report closes with a personalized reflection tied to your chart, helping you integrate the week's energy consciously." },
+          
           ].map((f, i) => (
             <div key={i} className="flex gap-4 items-start">
               <div className="text-indigo-500 mt-1 flex-shrink-0">{f.icon}</div>
@@ -341,21 +338,7 @@ export default function NatalWeeklyReportPage() {
         <div className="border-t border-gray-300 mb-12" />
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-6">
 
-          <div className="border border-gray-200 rounded-xl shadow-sm p-8 text-center">
-            <p className="uppercase tracking-widest text-xs text-indigo-400 font-semibold mb-2">Natal Weekly Report</p>
-            <p className="text-4xl font-light text-gray-900 mb-1">$XX<span className="text-lg text-gray-400">/mo</span></p>
-            <p className="text-gray-400 text-xs mb-6">Billed monthly · Cancel anytime</p>
-            <ul className="text-gray-600 text-sm space-y-2 mb-8 text-left">
-              <li>✓ Weekly personalized transit email</li>
-              <li>✓ Monthly forecast in your inbox</li>
-              <li>✓ Retrograde &amp; eclipse alerts</li>
-              <li>✓ Personalized weekly affirmations</li>
-            </ul>
-            <a href="/software" className="block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded transition-colors text-sm">
-              Sign Up → Login &amp; Subscribe
-            </a>
-          </div>
-
+       
           <div className="border-2 border-indigo-500 rounded-xl shadow-lg p-8 text-center relative">
             <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full">
               Best Value
@@ -383,10 +366,7 @@ export default function NatalWeeklyReportPage() {
         </p>
 
         <div className="border-t border-gray-300 mb-10" />
-        <p className="text-center text-gray-600">
-          Have questions?{" "}
-          <a href="#contact" className="text-indigo-600 hover:underline">Contact Athen</a>
-        </p>
+       
       </div>
     </div>
   );

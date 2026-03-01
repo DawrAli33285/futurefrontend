@@ -429,9 +429,7 @@ export default function OphiuchusInAstrology() {
                 <div className="my-10 flex justify-center">
                   <div className="max-w-2xl w-full">
                  
-                    <p className="text-sm text-gray-600 text-center mt-3 italic">
-                      The complete 13-sign zodiac wheel including Ophiuchus
-                    </p>
+                   
                   </div>
                 </div>
 

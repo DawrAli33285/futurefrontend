@@ -400,7 +400,7 @@ export default function TrueSkyLanding() {
           </div>
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: "32px" }}>
             <h3 style={{ fontSize: "18px", fontWeight: 800, fontFamily: "'Outfit',sans-serif", marginBottom: "8px", color: "#fff" }}>Get in Touch</h3>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "13px", marginBottom: "20px" }}>Have questions? Reach out to our team.</p>
+
          <Link to='/contact'>
          
          <p  style={{ display: "inline-block", border: "1px solid rgba(94,76,230,0.5)", color: "#9B8FFF", padding: "12px 28px", borderRadius: "10px", fontSize: "14px", fontWeight: 600, textDecoration: "none", fontFamily: "'Outfit',sans-serif" }}>
