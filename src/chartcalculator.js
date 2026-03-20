@@ -95,14 +95,23 @@ const ChartCalculator = () => {
                 ? '12:00' 
                 : `${String(formData.hour || 12).padStart(2, '0')}:${String(formData.minute || 0).padStart(2, '0')}`;
     
-            const payload = {
-                birth_date: formattedDate,
-                birth_time: formattedTime,
-                latitude: formData.latitude,
-                longitude: formData.longitude,
-                timezone: '+00:00'
-            };
-    
+
+
+                const offsetMinutes = new Date().getTimezoneOffset();
+                const offsetHours = -offsetMinutes / 60;
+                const sign = offsetHours >= 0 ? '+' : '-';
+                const absHours = Math.abs(Math.floor(offsetHours));
+                const absMins = Math.abs((offsetHours % 1) * 60);
+                const timezone = `${sign}${String(absHours).padStart(2, '0')}:${String(absMins).padStart(2, '0')}`;
+                
+                const payload = {
+                    birth_date: formattedDate,
+                    birth_time: formattedTime,
+                    latitude: formData.latitude,
+                    longitude: formData.longitude,
+                    timezone  
+                };
+
             const response = await axios.post(`${BASE_URL}/chart/natal`, payload);
     
         
@@ -120,7 +129,7 @@ const ChartCalculator = () => {
                         longitude: formData.longitude,
                         name: formData.location
                     },
-                    timezone: '+00:00'
+                    timezone
                 },
                 personName: formData.name
             };
