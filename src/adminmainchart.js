@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { BASE_URL } from './baseurl';
+import { DateTime, IANAZone } from 'luxon';
 import LocationSuggestionField from './components/locationsuggestionfield';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -304,6 +305,36 @@ const [subscribed,setSubsribed]=useState(false)
   }, [chartData, settings]);
 
 
+
+  // ADD THIS — new code
+const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, hour, minute) => {
+  try {
+      const res = await fetch(
+          `https://timeapi.io/api/timezone/coordinate?latitude=${latitude}&longitude=${longitude}`
+      );
+      const data = await res.json();
+      const tzName = data.timeZone;
+      if (!tzName || !IANAZone.isValidZone(tzName)) return '+00:00';
+      const localDt = DateTime.fromObject(
+          {
+              year: parseInt(year),
+              month: parseInt(month) + 1,
+              day: parseInt(day),
+              hour: parseInt(hour) || 12,
+              minute: parseInt(minute) || 0,
+              second: 0
+          },
+          { zone: tzName }
+      );
+      if (!localDt.isValid) return '+00:00';
+      return localDt.toFormat('ZZ');
+  } catch (err) {
+      console.error('Error resolving timezone:', err);
+      return '+00:00';
+  }
+};
+
+
   const getZodiacSigns = () => {
     // IAU-based ecliptic proportions for 13 signs (total = 360°)
     // Ophiuchus sits between Scorpio and Sagittarius
@@ -402,7 +433,15 @@ const zodiacSigns = getZodiacSigns();
       const monthIndex = months.indexOf(formData.month) + 1;
       const birthDate = `${formData.year}-${String(monthIndex).padStart(2, '0')}-${String(formData.day).padStart(2, '0')}`;
       const birthTime = `${String(formData.hour).padStart(2, '0')}:${String(formData.minute).padStart(2, '0')}`;
-      
+      const resolvedTz = await resolveHistoricalTimezone(
+        formData.latitude || 40.7128,
+        formData.longitude || -74.0060,
+        formData.year,
+        months.indexOf(formData.month),
+        formData.day,
+        formData.hour,
+        formData.minute
+    );
       const response = await fetch(`${BASE_URL}/chart/transit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -411,7 +450,15 @@ const zodiacSigns = getZodiacSigns();
           birth_time: birthTime,
           latitude: formData.latitude || 40.7128,
           longitude: formData.longitude || -74.0060,
-          timezone: timezone,
+          timezone: await resolveHistoricalTimezone(
+            formData.latitude || 40.7128,
+            formData.longitude || -74.0060,
+            formData.year,
+            months.indexOf(formData.month),
+            formData.day,
+            formData.hour,
+            formData.minute
+        ),
           transit_date: new Date().toISOString().split('T')[0],
           transit_time: "12:00",
           zodiac_system: settings?.zodiacSystem || 'Tropical',
@@ -442,15 +489,28 @@ const zodiacSigns = getZodiacSigns();
       
       if (result.success && result.data) {
        
-        result.data.birthInfo = {
+    
+      // Parse offset to get UTC time for display
+      const offsetMatch = resolvedTz.match(/^([+-])(\d{2}):(\d{2})$/);
+      let displayHour = parseInt(formData.hour);
+      let displayMinute = parseInt(formData.minute);
+      if (offsetMatch) {
+          const sign = offsetMatch[1] === '+' ? 1 : -1;
+          const offsetMins = sign * (parseInt(offsetMatch[2]) * 60 + parseInt(offsetMatch[3]));
+          const totalMins = displayHour * 60 + displayMinute - offsetMins;
+          displayHour = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
+          displayMinute = ((totalMins % 1440) + 1440) % 1440 % 60;
+      }
+      
+      result.data.birthInfo = {
           name: formData.name,
           day: formData.day,
           month: formData.month,
           year: formData.year,
-          hour: formData.hour,
-          minute: formData.minute,
+          hour: String(displayHour).padStart(2, '0'),
+          minute: String(displayMinute).padStart(2, '0'),
           location: formData.location
-        };
+      };
         
         setChartResponse(result.data);
         setChartData(result.data);
@@ -515,7 +575,8 @@ const zodiacSigns = getZodiacSigns();
         natal: {
           planets: chartResponse.natal?.planets || {},
           ascendant: chartResponse.natal?.ascendant || {},
-          houses: natalHouses
+          houses: natalHouses,
+          midheaven: chartResponse.natal?.midheaven,
         },
         progressed: {
           planets: chartResponse.progressed?.planets || {},
@@ -2066,11 +2127,11 @@ setChartData(chart)
       
         <div className="mb-8">
           <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
-            Midheaven in {chartData.natal.houses[9]?.sign || 'N/A'}
+          <h3>Midheaven in {chartData.natal.midheaven?.sign || 'N/A'}</h3>
           </h3>
           <div className="bg-blue-50 p-4 rounded-lg">
             <p className="text-gray-700 leading-relaxed">
-              {getMidheavenInterpretation(chartData.natal.houses[9]?.sign)}
+            {getMidheavenInterpretation(chartData.natal.midheaven?.sign)}
             </p>
           </div>
         </div>

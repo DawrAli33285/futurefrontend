@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { BASE_URL } from '../baseurl';
 import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
+import { DateTime, IANAZone } from 'luxon';
 
 const TransitChart = () => {
   const [animateType, setAnimateType] = useState('Animate');
@@ -261,6 +262,36 @@ const natalPlanets = chartData ?
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+
+
+  const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, hour, minute) => {
+    try {
+      const res = await fetch(
+        `https://timeapi.io/api/timezone/coordinate?latitude=${latitude}&longitude=${longitude}`
+      );
+      const data = await res.json();
+      const tzName = data.timeZone;
+      if (!tzName || !IANAZone.isValidZone(tzName)) return '+00:00';
+      const localDt = DateTime.fromObject(
+        {
+          year: parseInt(year),
+          month: parseInt(month) + 1,
+          day: parseInt(day),
+          hour: parseInt(hour) || 12,
+          minute: parseInt(minute) || 0,
+          second: 0
+        },
+        { zone: tzName }
+      );
+      if (!localDt.isValid) return '+00:00';
+      return localDt.toFormat('ZZ');
+    } catch (err) {
+      console.error('Error resolving timezone:', err);
+      return '+00:00';
+    }
+  };
+
 
   useEffect(() => {
     const fetchBirthLocationSuggestions = async () => {
@@ -535,6 +566,7 @@ if(e?.response?.data?.error){
     }
     setShowReport(true);
   };
+
   const handleCalculate = async () => {
     setLoading(true);
     setError(null);
@@ -543,6 +575,33 @@ if(e?.response?.data?.error){
       const monthIndex = months.indexOf(formData.month) + 1;
       const transitDate = `${formData.year}-${String(monthIndex).padStart(2, '0')}-${String(formData.day).padStart(2, '0')}`;
       const transitTime = `${String(formData.hour).padStart(2, '0')}:${String(formData.minute).padStart(2, '0')}`;
+  
+      // Parse birth date parts for timezone resolution
+      const [bYear, bMonth, bDay] = formData.birthDate.split('-').map(Number);
+      const [bHour, bMinute] = formData.birthTime.split(':').map(Number);
+  
+      const resolvedTz = await resolveHistoricalTimezone(
+        parseFloat(formData.birthLatitude),
+        parseFloat(formData.birthLongitude),
+        bYear,
+        bMonth - 1,  // 0-based month index
+        bDay,
+        bHour,
+        bMinute
+      );
+  
+      // Convert local birth time to UTC for display
+      const offsetMatch = resolvedTz.match(/^([+-])(\d{2}):(\d{2})$/);
+      let displayHour = bHour;
+      let displayMinute = bMinute;
+      if (offsetMatch) {
+        const sign = offsetMatch[1] === '+' ? 1 : -1;
+        const offsetMins = sign * (parseInt(offsetMatch[2]) * 60 + parseInt(offsetMatch[3]));
+        const totalMins = displayHour * 60 + displayMinute - offsetMins;
+        displayHour = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
+        displayMinute = ((totalMins % 1440) + 1440) % 1440 % 60;
+      }
+      const displayBirthTime = `${String(displayHour).padStart(2, '0')}:${String(displayMinute).padStart(2, '0')}`;
       
       const response = await fetch(`${BASE_URL}/chart/transit`, {
         method: 'POST',
@@ -554,12 +613,12 @@ if(e?.response?.data?.error){
           birth_time: formData.birthTime,
           latitude: parseFloat(formData.birthLatitude),
           longitude: parseFloat(formData.birthLongitude),
-          timezone: birthTimezone,  
+          timezone: resolvedTz,
           transit_date: transitDate,
           transit_time: transitTime,
           transit_latitude: parseFloat(formData.birthLatitude),
           transit_longitude: parseFloat(formData.birthLongitude),
-          transit_timezone: 'UTC' 
+          transit_timezone: 'UTC'
         })
       });
   
@@ -571,10 +630,9 @@ if(e?.response?.data?.error){
       const result = await response.json();
       
       if (result.success) {
-      
         result.data.birthInfo = {
           birthDate: formData.birthDate,
-          birthTime: formData.birthTime,
+          birthTime: displayBirthTime,  // UTC display time
           birthLocation: formData.birthLocation
         };
         
@@ -586,16 +644,14 @@ if(e?.response?.data?.error){
           minute: formData.minute,
           location: formData.location
         };
-        
         setChartResponse(result.data);
         setChartData(result.data);
       } else {
         throw new Error(result.message || 'API returned unsuccessful response');
       }
-      
+
       setError(null);
-      
-  
+
       setFormData({
         ...formData,
         day: '',
@@ -610,6 +666,7 @@ if(e?.response?.data?.error){
         birthLatitude: '',
         birthLongitude: ''
       });
+
     } catch (err) {
       setError(err.message);
       console.error('Error fetching chart data:', err);
@@ -617,6 +674,8 @@ if(e?.response?.data?.error){
       setLoading(false);
     }
   };
+
+
 
  
   const handleView = () => {
@@ -2444,14 +2503,15 @@ const getHouseInterpretation = (houseNum) => {
 
 <div className="mb-8">
   <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
-    Midheaven in {chartData.natal.houses[9]?.sign || 'N/A'}
+    Midheaven in {chartData.natal.midheaven?.sign || chartData.natal.houses[9]?.sign || 'N/A'}
   </h3>
   <div className="bg-blue-50 p-4 rounded-lg">
     <p className="text-gray-700 leading-relaxed">
-      {getMidheavenInterpretation(chartData.natal.houses[9]?.sign)}
+      {getMidheavenInterpretation(chartData.natal.midheaven?.sign || chartData.natal.houses[9]?.sign)}
     </p>
   </div>
 </div>
+
 
 
 <div className="mb-8">

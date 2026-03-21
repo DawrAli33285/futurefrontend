@@ -5,6 +5,7 @@ import { BASE_URL } from '../baseurl';
 import { useStripe } from '@stripe/react-stripe-js';
 import LocationSuggestionField from './locationsuggestionfield';
 import  { useRef ,useEffect} from 'react';
+import { DateTime, IANAZone } from 'luxon';
 import {toast,ToastContainer} from 'react-toastify'
 const SynastryWheel = () => {
   const [showReport, setShowReport] = useState(false);
@@ -43,6 +44,36 @@ const [locationLoading, setLocationLoading] = useState(false);
 const locationRef = useRef(null);
 const stripe=useStripe();
  
+
+
+const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, hour, minute) => {
+  try {
+    const res = await fetch(
+      `https://timeapi.io/api/timezone/coordinate?latitude=${latitude}&longitude=${longitude}`
+    );
+    const data = await res.json();
+    const tzName = data.timeZone;
+    if (!tzName || !IANAZone.isValidZone(tzName)) return '+00:00';
+    const localDt = DateTime.fromObject(
+      {
+        year: parseInt(year),
+        month: parseInt(month) + 1,
+        day: parseInt(day),
+        hour: parseInt(hour) || 12,
+        minute: parseInt(minute) || 0,
+        second: 0
+      },
+      { zone: tzName }
+    );
+    if (!localDt.isValid) return '+00:00';
+    return localDt.toFormat('ZZ');
+  } catch (err) {
+    console.error('Error resolving timezone:', err);
+    return '+00:00';
+  }
+};
+
+
 const calculateHouse = (longitude, houses) => {
   if (!houses || houses.length === 0) return 1;
   
@@ -535,6 +566,17 @@ const getHouseInterpretation = (houseNum) => {
           console.warn('Could not fetch location coordinates, using defaults:', locError);
         }
       }
+
+      const resolvedTz = await resolveHistoricalTimezone(
+        latitude,
+        longitude,
+        person1Data.year,
+        monthNameToNumber(person1Data.month) - 1, // month index (0-based like AdminChart)
+        person1Data.day,
+        person1Data.hour,
+        person1Data.minute
+      );
+
   
       const requestBody = {
         person1: {
@@ -545,7 +587,7 @@ const getHouseInterpretation = (houseNum) => {
           minute: parseInt(person1Data.minute),
           latitude: latitude,
           longitude: longitude,
-          timezone: timezone
+          timezone: resolvedTz
         },
         settings: {
           zodiacSystem: settings?.zodiacSystem || 'Tropical',
@@ -569,17 +611,38 @@ const getHouseInterpretation = (houseNum) => {
         throw new Error(`API Error: ${response.status}`);
       }
   
-      const data = await response.json();
-    
-      setSynastryData(data);
-      
-     
-      if (data.data && data.data.person1) {
-        setChartResponse({
-          ...data.data.person1,
-          chart_type: data.data.chart_type
-        });
-      }
+    // AFTER:
+const data = await response.json();
+console.log("SYNASTRY CHART DATA")
+console.log(data)
+
+// Convert local time to UTC for display — same as AdminChart
+const offsetMatch = resolvedTz.match(/^([+-])(\d{2}):(\d{2})$/);
+let displayHour = parseInt(person1Data.hour);
+let displayMinute = parseInt(person1Data.minute);
+if (offsetMatch) {
+  const sign = offsetMatch[1] === '+' ? 1 : -1;
+  const offsetMins = sign * (parseInt(offsetMatch[2]) * 60 + parseInt(offsetMatch[3]));
+  const totalMins = displayHour * 60 + displayMinute - offsetMins;
+  displayHour = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
+  displayMinute = ((totalMins % 1440) + 1440) % 1440 % 60;
+}
+
+setSynastryData(data);
+
+if (data.data && data.data.person1) {
+  setChartResponse({
+    ...data.data.person1,
+    chart_type: data.data.chart_type
+  });
+}
+
+// Update displayed time to UTC so it matches main chart report
+setPerson1Data(prev => ({
+  ...prev,
+  hour: String(displayHour).padStart(2, '0'),
+  minute: String(displayMinute).padStart(2, '0')
+}));
       
     } catch (err) {
       setError(err.message || 'Failed to calculate chart');
@@ -2024,18 +2087,18 @@ const handleViewReport = () => {
           </div>
         )}
 
-        {synastryData?.data?.person1?.houses?.[9]?.sign && (
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
-              Midheaven in {synastryData.data.person1.houses[9].sign}
-            </h3>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <p className="text-gray-700 leading-relaxed">
-                {getMidheavenInterpretation(synastryData.data.person1.houses[9].sign)}
-              </p>
-            </div>
-          </div>
-        )}
+{synastryData?.data?.person1?.midheaven?.sign && (
+  <div className="mb-8">
+    <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
+      Midheaven in {synastryData.data.person1.midheaven.sign}
+    </h3>
+    <div className="bg-blue-50 p-4 rounded-lg">
+      <p className="text-gray-700 leading-relaxed">
+        {getMidheavenInterpretation(synastryData.data.person1.midheaven.sign)}
+      </p>
+    </div>
+  </div>
+)}
 
         {synastryData?.data?.person1?.houses && synastryData.data.person1.houses.length > 0 && (
           <div className="mb-8">

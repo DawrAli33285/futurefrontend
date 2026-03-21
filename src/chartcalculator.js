@@ -4,6 +4,7 @@ import AstrologyChart from './components/astrologychart';
 import AstrologyPlacements from './components/astrologyplacement';
 import { Link } from 'react-router-dom';
 import LocationSuggestionField from './components/locationsuggestionfield';
+import { DateTime, IANAZone } from 'luxon';
 import { BASE_URL } from './baseurl';
 
 const ChartCalculator = () => {
@@ -61,6 +62,9 @@ const ChartCalculator = () => {
     };
 
     const handleLocationChange = (valueOrObject) => {
+        if (typeof valueOrObject === 'object' && valueOrObject.latitude) {
+            console.log('Location selected:', valueOrObject.name, valueOrObject.latitude, valueOrObject.longitude);
+        }
         if (typeof valueOrObject === 'string') {
             setFormData(prev => ({
                 ...prev,
@@ -96,14 +100,22 @@ const ChartCalculator = () => {
                 : `${String(formData.hour || 12).padStart(2, '0')}:${String(formData.minute || 0).padStart(2, '0')}`;
     
 
+                console.log('Coordinates being used:', formData.latitude, formData.longitude);
 
-                const offsetMinutes = new Date().getTimezoneOffset();
-                const offsetHours = -offsetMinutes / 60;
-                const sign = offsetHours >= 0 ? '+' : '-';
-                const absHours = Math.abs(Math.floor(offsetHours));
-                const absMins = Math.abs((offsetHours % 1) * 60);
-                const timezone = `${sign}${String(absHours).padStart(2, '0')}:${String(absMins).padStart(2, '0')}`;
-                
+                const timezone = await resolveHistoricalTimezone(
+                    formData.latitude,
+                    formData.longitude,
+                    formData.year,
+                    formData.month,
+                    formData.day,
+                    formData.hour,
+                    formData.minute
+                );
+
+
+                console.log('Resolved timezone:', timezone);
+console.log('Payload being sent:', { birth_date: formattedDate, birth_time: formattedTime, timezone });
+
                 const payload = {
                     birth_date: formattedDate,
                     birth_time: formattedTime,
@@ -144,6 +156,49 @@ const ChartCalculator = () => {
     };
 
 
+
+    // ADD THIS (new code, nothing to remove)
+    const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, hour, minute) => {
+        try {
+            // Try API 1: timeapi.io — reliable, CORS-friendly, free
+            const res = await fetch(
+                `https://timeapi.io/api/timezone/coordinate?latitude=${latitude}&longitude=${longitude}`
+            );
+            const data = await res.json();
+            console.log('Timezone API response:', data);
+    
+            const tzName = data.timeZone;
+            if (!tzName || !IANAZone.isValidZone(tzName)) {
+                console.warn('Invalid timezone from API:', tzName);
+                return '+00:00';
+            }
+    
+            const localDt = DateTime.fromObject(
+                {
+                    year: parseInt(year),
+                    month: parseInt(month) + 1,
+                    day: parseInt(day),
+                    hour: parseInt(hour) || 12,
+                    minute: parseInt(minute) || 0,
+                    second: 0
+                },
+                { zone: tzName }
+            );
+    
+            if (!localDt.isValid) {
+                console.warn('Invalid DateTime:', localDt.invalidReason);
+                return '+00:00';
+            }
+    
+            const offset = localDt.toFormat('ZZ');
+            console.log(`Timezone: ${tzName} → offset on birth date: ${offset}`);
+            return offset;
+    
+        } catch (err) {
+            console.error('Timezone API failed:', err);
+            return '+00:00';
+        }
+    };
 
     const zodiacConstellations = [
         { name: 'Aries', symbol: '♈', start: 28.687, end: 53.417, color: '#FF6B6B' },

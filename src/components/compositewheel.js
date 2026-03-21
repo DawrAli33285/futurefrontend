@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BASE_URL } from '../baseurl';
 import { ToastContainer,toast } from 'react-toastify';
 import axios from 'axios';
+import { DateTime, IANAZone } from 'luxon';
 const CompositeChartWheel = () => {
   const [chartResponse,setChartResponse]=useState({})
 
@@ -69,7 +70,37 @@ const [timezoneLoading, setTimezoneLoading] = useState(false);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
- 
+
+  
+
+  const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, hour, minute) => {
+  try {
+    const res = await fetch(
+      `https://timeapi.io/api/timezone/coordinate?latitude=${latitude}&longitude=${longitude}`
+    );
+    const data = await res.json();
+    const tzName = data.timeZone;
+    if (!tzName || !IANAZone.isValidZone(tzName)) return '+00:00';
+    const localDt = DateTime.fromObject(
+      {
+        year: parseInt(year),
+        month: parseInt(month) + 1,
+        day: parseInt(day),
+        hour: parseInt(hour) || 12,
+        minute: parseInt(minute) || 0,
+        second: 0
+      },
+      { zone: tzName }
+    );
+    if (!localDt.isValid) return '+00:00';
+    return localDt.toFormat('ZZ');
+  } catch (err) {
+    console.error('Error resolving timezone:', err);
+    return '+00:00';
+  }
+};
+
+
   useEffect(() => {
     const fetchSuggestions = async () => {
       const value = formData.person1_location;
@@ -449,6 +480,26 @@ useEffect(() => {
         return;
       }
   
+      const resolvedTz1 = await resolveHistoricalTimezone(
+        formData.person1_latitude,
+        formData.person1_longitude,
+        formData.person1_year,
+        parseInt(formData.person1_month) - 1,
+        formData.person1_day,
+        formData.person1_hour || 0,
+        formData.person1_minute || 0
+      );
+      
+      const resolvedTz2 = await resolveHistoricalTimezone(
+        formData.person2_latitude,
+        formData.person2_longitude,
+        formData.person2_year,
+        parseInt(formData.person2_month) - 1,
+        formData.person2_day,
+        formData.person2_hour || 0,
+        formData.person2_minute || 0
+      );
+      
       const payload = {
         person1_year: parseInt(formData.person1_year),
         person1_month: parseInt(formData.person1_month),
@@ -457,8 +508,8 @@ useEffect(() => {
         person1_minute: parseInt(formData.person1_minute) || 0,
         person1_latitude: formData.person1_latitude,
         person1_longitude: formData.person1_longitude,
-        person1_timezone: formData.person1_timezone,
-       
+        person1_timezone: resolvedTz1,
+      
         person2_year: parseInt(formData.person2_year),
         person2_month: parseInt(formData.person2_month),
         person2_day: parseInt(formData.person2_day),
@@ -466,7 +517,7 @@ useEffect(() => {
         person2_minute: parseInt(formData.person2_minute) || 0,
         person2_latitude: formData.person2_latitude,
         person2_longitude: formData.person2_longitude,
-        person2_timezone: formData.person2_timezone
+        person2_timezone: resolvedTz2
       };
   
       const response = await fetch(`${BASE_URL}/chart/composite`, {
@@ -481,26 +532,59 @@ useEffect(() => {
 
 
 
-      if (result.success) {
-       
-        const formattedData = {
-          person1: {
-            ...result.data.person1,
-            aspects: result.data.person1?.aspects || result.data.aspects || {}
-          },
-          person2: result.data.person2 ? {
-            ...result.data.person2,
-            aspects: result.data.person2?.aspects || {}
-          } : null,
-          composite: result.data.composite ? {
-            ...result.data.composite,
-            aspects: result.data.composite?.aspects || result.data.aspects || {}
-          } : null
-        };
-        
-        setChartData(formattedData);
-        setChartResponse(formattedData.person1 || formattedData.composite);
-      } else {
+     // AFTER:
+if (result.success) {
+
+  // Convert person1 local time to UTC for display
+  const offsetMatch1 = resolvedTz1.match(/^([+-])(\d{2}):(\d{2})$/);
+  let displayHour1 = parseInt(formData.person1_hour) || 0;
+  let displayMinute1 = parseInt(formData.person1_minute) || 0;
+  if (offsetMatch1) {
+    const sign = offsetMatch1[1] === '+' ? 1 : -1;
+    const offsetMins = sign * (parseInt(offsetMatch1[2]) * 60 + parseInt(offsetMatch1[3]));
+    const totalMins = displayHour1 * 60 + displayMinute1 - offsetMins;
+    displayHour1 = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
+    displayMinute1 = ((totalMins % 1440) + 1440) % 1440 % 60;
+  }
+
+  // Convert person2 local time to UTC for display
+  const offsetMatch2 = resolvedTz2.match(/^([+-])(\d{2}):(\d{2})$/);
+  let displayHour2 = parseInt(formData.person2_hour) || 0;
+  let displayMinute2 = parseInt(formData.person2_minute) || 0;
+  if (offsetMatch2) {
+    const sign = offsetMatch2[1] === '+' ? 1 : -1;
+    const offsetMins = sign * (parseInt(offsetMatch2[2]) * 60 + parseInt(offsetMatch2[3]));
+    const totalMins = displayHour2 * 60 + displayMinute2 - offsetMins;
+    displayHour2 = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
+    displayMinute2 = ((totalMins % 1440) + 1440) % 1440 % 60;
+  }
+
+  const formattedData = {
+    person1: {
+      ...result.data.person1,
+      aspects: result.data.person1?.aspects || result.data.aspects || {},
+      birth_info: {
+        ...result.data.person1?.birth_info,
+        time: `${String(displayHour1).padStart(2, '0')}:${String(displayMinute1).padStart(2, '0')}`
+      }
+    },
+    person2: result.data.person2 ? {
+      ...result.data.person2,
+      aspects: result.data.person2?.aspects || {},
+      birth_info: {
+        ...result.data.person2?.birth_info,
+        time: `${String(displayHour2).padStart(2, '0')}:${String(displayMinute2).padStart(2, '0')}`
+      }
+    } : null,
+    composite: result.data.composite ? {
+      ...result.data.composite,
+      aspects: result.data.composite?.aspects || result.data.aspects || {}
+    } : null
+  };
+
+  setChartData(formattedData);
+  setChartResponse(formattedData.person1 || formattedData.composite);
+} else {
         setError(result.error || 'Failed to generate chart');
       }
     } catch (err) {
@@ -2297,18 +2381,19 @@ setFormData({
         )}
 
      
-        {displayData?.houses?.[9]?.sign && (
-          <div className="mb-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
-              Midheaven in {displayData.houses[9].sign}
-            </h3>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <p className="text-gray-700 leading-relaxed">
-                {getMidheavenInterpretation(displayData.houses[9].sign)}
-              </p>
-            </div>
-          </div>
-        )}
+
+{(displayData?.midheaven?.sign || displayData?.houses?.[9]?.sign) && (
+  <div className="mb-8">
+    <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
+      Midheaven in {displayData?.midheaven?.sign || displayData?.houses?.[9]?.sign}
+    </h3>
+    <div className="bg-blue-50 p-4 rounded-lg">
+      <p className="text-gray-700 leading-relaxed">
+        {getMidheavenInterpretation(displayData?.midheaven?.sign || displayData?.houses?.[9]?.sign)}
+      </p>
+    </div>
+  </div>
+)}
 
        
         {displayData?.houses && displayData.houses.length > 0 && (
