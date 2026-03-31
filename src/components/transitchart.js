@@ -740,7 +740,9 @@ if(e?.response?.data?.error){
         natal: {
           planets: chartResponse.natal?.planets || {},
           ascendant: chartResponse.natal?.ascendant || {},
-          houses: natalHouses
+          houses: natalHouses,
+          aspects: chartResponse.natal?.aspects || [],
+          midheaven: chartResponse.natal?.midheaven,
         },
         progressed: {
           planets: chartResponse.progressed?.planets || {},
@@ -2434,7 +2436,7 @@ const getHouseInterpretation = (houseNum) => {
       <span className="text-3xl" style={{ color: planetColors['Sun'] }}>☉</span>
       <div>
         <h4 className="font-bold text-lg text-gray-800">
-          Sun in {chartData.natal.planets.Sun?.sign} - House {calculateHouse(parseFloat(chartData.natal.planets.Sun?.longitude), chartData.natal.houses)}
+          Sun in {chartData.natal.planets.Sun?.sign} - House {chartData.natal.planets.Sun?.house}
         </h4>
         <p className="text-sm text-gray-600">{chartData.natal.planets.Sun?.position}</p>
       </div>
@@ -2444,7 +2446,7 @@ const getHouseInterpretation = (houseNum) => {
         <strong>Sun in {chartData.natal.planets.Sun?.sign}:</strong> {getSunSignInterpretation(chartData.natal.planets.Sun?.sign)}
       </p>
       <p className="text-gray-700 leading-relaxed">
-        <strong>Sun in House {calculateHouse(parseFloat(chartData.natal.planets.Sun?.longitude), chartData.natal.houses)}:</strong> {getSunHouseInterpretation(calculateHouse(parseFloat(chartData.natal.planets.Sun?.longitude), chartData.natal.houses))}
+        <strong>Sun in House {chartData.natal.planets.Sun?.house}:</strong> {getSunHouseInterpretation(chartData.natal.planets.Sun?.house)}
       </p>
     </div>
   </div>
@@ -2454,7 +2456,7 @@ const getHouseInterpretation = (houseNum) => {
       <span className="text-3xl" style={{ color: planetColors['Moon'] }}>☽</span>
       <div>
         <h4 className="font-bold text-lg text-gray-800">
-          Moon in {chartData.natal.planets.Moon?.sign} - House {calculateHouse(parseFloat(chartData.natal.planets.Moon?.longitude), chartData.natal.houses)}
+          Moon in {chartData.natal.planets.Moon?.sign} - House {chartData.natal.planets.Moon?.house}
         </h4>
         <p className="text-sm text-gray-600">{chartData.natal.planets.Moon?.position}</p>
       </div>
@@ -2464,7 +2466,7 @@ const getHouseInterpretation = (houseNum) => {
         <strong>Moon in {chartData.natal.planets.Moon?.sign}:</strong> {getMoonSignInterpretation(chartData.natal.planets.Moon?.sign)}
       </p>
       <p className="text-gray-700 leading-relaxed">
-        <strong>Moon in House {calculateHouse(parseFloat(chartData.natal.planets.Moon?.longitude), chartData.natal.houses)}:</strong> {getMoonHouseInterpretation(calculateHouse(parseFloat(chartData.natal.planets.Moon?.longitude), chartData.natal.houses))}
+        <strong>Moon in House {chartData.natal.planets.Moon?.house}:</strong> {getMoonHouseInterpretation(chartData.natal.planets.Moon?.house)}
       </p>
     </div>
   </div>
@@ -2483,19 +2485,19 @@ const getHouseInterpretation = (houseNum) => {
         </span>
         <div>
           <h4 className="font-bold text-lg text-gray-800">
-            {planet} in {data.sign} - House {calculateHouse(parseFloat(data.longitude), chartData.natal.houses)}
+          {planet} in {data.sign} - House {data.house}
           </h4>
           <p className="text-sm text-gray-600">{data.position}</p>
         </div>
       </div>
       <div className="space-y-3">
-        <p className="text-gray-700 leading-relaxed">
-          <strong>{planet} in {data.sign}:</strong> {getPlanetSignInterpretation(planet, data.sign)}
-        </p>
-        <p className="text-gray-700 leading-relaxed">
-          <strong>{planet} in House {calculateHouse(parseFloat(data.longitude), chartData.natal.houses)}:</strong> {getPlanetHouseInterpretation(planet, calculateHouse(parseFloat(data.longitude), chartData.natal.houses))}
-        </p>
-      </div>
+  <p className="text-gray-700 leading-relaxed">
+    <strong>{planet} in {data.sign}:</strong> {getPlanetSignInterpretation(planet, data.sign)}
+  </p>
+  <p className="text-gray-700 leading-relaxed">
+    <strong>{planet} in House {data.house}:</strong> {getPlanetHouseInterpretation(planet, data.house)}
+  </p>
+</div>
     </div>
   ))}
 </div>
@@ -2555,7 +2557,7 @@ const getHouseInterpretation = (houseNum) => {
               <div>
                 <h4 className="font-bold text-gray-800">{planet}</h4>
                 <p className="text-xs text-gray-600">
-                  {data.position} in {data.sign} • House {calculateHouse(parseFloat(data.longitude), chartData.natal.houses)}
+                {data.position} in {data.sign} • House {data.house}
                 </p>
               </div>
             </div>

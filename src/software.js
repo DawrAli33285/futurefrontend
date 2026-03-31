@@ -4,8 +4,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { BASE_URL } from './baseurl';
 
 const CLIENT_ID = '90321078061-0170dr3h7mknf595o674b7ctu70av45u.apps.googleusercontent.com';
-const REDIRECT_URI = 'https://trueskypsychology.com/software';
-// const REDIRECT_URI = 'http://localhost:3000/software';
+// const REDIRECT_URI = 'https://trueskypsychology.com/software';
+const REDIRECT_URI = 'http://localhost:3000/software';
 
 
 const StarField = () => (

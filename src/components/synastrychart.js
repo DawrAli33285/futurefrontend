@@ -74,34 +74,6 @@ const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, 
 };
 
 
-const calculateHouse = (longitude, houses) => {
-  if (!houses || houses.length === 0) return 1;
-  
-  
-  let normLong = longitude % 360;
-  if (normLong < 0) normLong += 360;
-  
-  for (let i = 0; i < houses.length; i++) {
-    const currentHouse = houses[i];
-    const nextHouse = houses[(i + 1) % houses.length];
-    
-    let currentCusp = parseFloat(currentHouse.longitude);
-    let nextCusp = parseFloat(nextHouse.longitude);
-    
-  
-    if (nextCusp < currentCusp) {
-      if (normLong >= currentCusp || normLong < nextCusp) {
-        return currentHouse.house;
-      }
-    } else {
-      if (normLong >= currentCusp && normLong < nextCusp) {
-        return currentHouse.house;
-      }
-    }
-  }
-  
-  return 1;
-};
 
 const planetColors = {
   Sun: '#FFD700',
@@ -154,7 +126,7 @@ const planetColors = {
     
     return Object.entries(planets).map(([name, data]) => {
       const longitude = parseFloat(data.longitude);
-      const house = calculateHouse(longitude, houses);
+      const house =data.house 
   
       return {
         name,
@@ -2011,7 +1983,7 @@ const handleViewReport = () => {
                 <span className="text-3xl" style={{ color: planetColors['Sun'] }}>☉</span>
                 <div>
                   <h4 className="font-bold text-lg text-gray-800">
-                    Sun in {synastryData.data.person1.planets.Sun.sign} - House {calculateHouse(parseFloat(synastryData.data.person1.planets.Sun.longitude), synastryData.data.person1.houses)}
+                    Sun in {synastryData.data.person1.planets.Sun.sign} - House {synastryData.data.person1.planets.Sun.house}
                   </h4>
                   <p className="text-sm text-gray-600">{synastryData.data.person1.planets.Sun.position}</p>
                 </div>
@@ -2021,7 +1993,7 @@ const handleViewReport = () => {
                   <strong>Sun in {synastryData.data.person1.planets.Sun.sign}:</strong> {getSunSignInterpretation(synastryData.data.person1.planets.Sun.sign)}
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  <strong>Sun in House {calculateHouse(parseFloat(synastryData.data.person1.planets.Sun.longitude), synastryData.data.person1.houses)}:</strong> {getSunHouseInterpretation(calculateHouse(parseFloat(synastryData.data.person1.planets.Sun.longitude), synastryData.data.person1.houses))}
+                  <strong>Sun in House {synastryData.data.person1.planets.Sun.house}:</strong> {getSunHouseInterpretation(synastryData.data.person1.planets.Sun.house)}
                 </p>
               </div>
             </div>
@@ -2031,7 +2003,7 @@ const handleViewReport = () => {
                 <span className="text-3xl" style={{ color: planetColors['Moon'] }}>☽</span>
                 <div>
                   <h4 className="font-bold text-lg text-gray-800">
-                    Moon in {synastryData.data.person1.planets.Moon.sign} - House {calculateHouse(parseFloat(synastryData.data.person1.planets.Moon.longitude), synastryData.data.person1.houses)}
+                    Moon in {synastryData.data.person1.planets.Moon.sign} - House {synastryData.data.person1.planets.Moon.house}
                   </h4>
                   <p className="text-sm text-gray-600">{synastryData.data.person1.planets.Moon.position}</p>
                 </div>
@@ -2041,7 +2013,7 @@ const handleViewReport = () => {
                   <strong>Moon in {synastryData.data.person1.planets.Moon.sign}:</strong> {getMoonSignInterpretation(synastryData.data.person1.planets.Moon.sign)}
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  <strong>Moon in House {calculateHouse(parseFloat(synastryData.data.person1.planets.Moon.longitude), synastryData.data.person1.houses)}:</strong> {getMoonHouseInterpretation(calculateHouse(parseFloat(synastryData.data.person1.planets.Moon.longitude), synastryData.data.person1.houses))}
+                  <strong>Moon in House {synastryData.data.person1.planets.Moon.house}:</strong> {getMoonHouseInterpretation(synastryData.data.person1.planets.Moon.house)}
                 </p>
               </div>
             </div>
@@ -2069,19 +2041,19 @@ const handleViewReport = () => {
                     </span>
                     <div>
                       <h4 className="font-bold text-lg text-gray-800">
-                        {planet} in {data.sign} - House {calculateHouse(parseFloat(data.longitude), synastryData.data.person1.houses)}
+                      {planet} in {data.sign} - House {data.house}
                       </h4>
                       <p className="text-sm text-gray-600">{formatPlanetPosition(data.position, data.longitude, data.sign)}</p>
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <p className="text-gray-700 leading-relaxed">
-                      <strong>{planet} in {data.sign}:</strong> {getPlanetSignInterpretation(planet, data.sign)}
-                    </p>
-                    <p className="text-gray-700 leading-relaxed">
-                      <strong>{planet} in House {calculateHouse(parseFloat(data.longitude), synastryData.data.person1.houses)}:</strong> {getPlanetHouseInterpretation(planet, calculateHouse(parseFloat(data.longitude), synastryData.data.person1.houses))}
-                    </p>
-                  </div>
+  <p className="text-gray-700 leading-relaxed">
+    <strong>{planet} in {data.sign}:</strong> {getPlanetSignInterpretation(planet, data.sign)}
+  </p>
+  <p className="text-gray-700 leading-relaxed">
+    <strong>{planet} in House {data.house}:</strong> {getPlanetHouseInterpretation(planet, data.house)}
+  </p>
+</div>
                 </div>
               ))}
           </div>

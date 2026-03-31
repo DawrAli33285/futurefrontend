@@ -69,22 +69,27 @@ const [subscribed,setSubsribed]=useState(false)
   const calculateHouse = (longitude, houses) => {
     if (!houses || houses.length === 0) return 1;
     
+    // Normalize longitude to 0-360
+    const lon = ((longitude % 360) + 360) % 360;
+    
     for (let i = 0; i < houses.length; i++) {
-      const currentHouse = houses[i].longitude;
-      const nextHouse = houses[(i + 1) % houses.length].longitude;
+      const currentHouse = parseFloat(houses[i].longitude);
+      const nextHouse = parseFloat(houses[(i + 1) % houses.length].longitude);
       
-      if (nextHouse > currentHouse) {
-        if (longitude >= currentHouse && longitude < nextHouse) {
-          return houses[i].house;
-        }
+      // Normalize both boundaries
+      const curr = ((currentHouse % 360) + 360) % 360;
+      const next = ((nextHouse % 360) + 360) % 360;
+      
+      if (next > curr) {
+        if (lon >= curr && lon < next) return houses[i].house;
       } else {
-        if (longitude >= currentHouse || longitude < nextHouse) {
-          return houses[i].house;
-        }
+        // Wraps around 0° (e.g. 350° to 20°)
+        if (lon >= curr || lon < next) return houses[i].house;
       }
     }
     return 1;
   };
+
 
   const getPlanetsFromData = () => {
     if (!chartData) return [];
@@ -112,7 +117,7 @@ const [subscribed,setSubsribed]=useState(false)
             name: name,
             degree: parseFloat(data.longitude),
             sign: data.sign,
-            house: calculateHouse(parseFloat(data.longitude), chartData.natal.houses),
+            house: data.house || calculateHouse(parseFloat(data.longitude), chartData.natal.houses),
             color: planetColors[name],
             natal: true,
             progressed: false,
@@ -132,7 +137,7 @@ const [subscribed,setSubsribed]=useState(false)
             name: name,
             degree: parseFloat(data.longitude),
             sign: data.sign,
-            house: calculateHouse(parseFloat(data.longitude), chartData.natal.houses),
+            house: data.house || calculateHouse(parseFloat(data.longitude), chartData.natal.houses),
             color: planetColors[name],
             natal: false,
             progressed: true,
@@ -152,7 +157,7 @@ const [subscribed,setSubsribed]=useState(false)
             name: name,
             degree: parseFloat(data.longitude),
             sign: data.sign,
-            house: calculateHouse(parseFloat(data.longitude), chartData.natal.houses),
+            house: data.house || calculateHouse(parseFloat(data.longitude), chartData.natal.houses),
             color: planetColors[name],
             natal: false,
             progressed: false,
@@ -316,17 +321,19 @@ const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, 
       const tzName = data.timeZone;
       if (!tzName || !IANAZone.isValidZone(tzName)) return '+00:00';
       const localDt = DateTime.fromObject(
-          {
-              year: parseInt(year),
-              month: parseInt(month) + 1,
-              day: parseInt(day),
-              hour: parseInt(hour) || 12,
-              minute: parseInt(minute) || 0,
-              second: 0
-          },
-          { zone: tzName }
-      );
+        {
+            year: parseInt(year),
+            month: parseInt(month),  // ← month is already 1-based here
+            day: parseInt(day),
+            hour: parseInt(hour) || 12,
+            minute: parseInt(minute) || 0,
+            second: 0
+        },
+        { zone: tzName }
+    );
+
       if (!localDt.isValid) return '+00:00';
+      console.log('Resolved timezone:', tzName, '→ offset:', localDt.toFormat('ZZ'));
       return localDt.toFormat('ZZ');
   } catch (err) {
       console.error('Error resolving timezone:', err);
@@ -335,25 +342,26 @@ const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, 
 };
 
 
-  const getZodiacSigns = () => {
-    // IAU-based ecliptic proportions for 13 signs (total = 360°)
-    // Ophiuchus sits between Scorpio and Sagittarius
-    return [
-      { name: 'Aries',       symbol: '♈', start: 0,      width: 25, color: '#F4A9A8' }, // Fire
-      { name: 'Taurus',      symbol: '♉', start: 25,     width: 37, color: '#C8E6C9' }, // Earth
-      { name: 'Gemini',      symbol: '♊', start: 62,     width: 28, color: '#FFF9C4' }, // Air
-      { name: 'Cancer',      symbol: '♋', start: 90,     width: 20, color: '#B3E5FC' }, // Water
-      { name: 'Leo',         symbol: '♌', start: 110,    width: 36, color: '#F4A9A8' }, // Fire
-      { name: 'Virgo',       symbol: '♍', start: 146,    width: 44, color: '#C8E6C9' }, // Earth
-      { name: 'Libra',       symbol: '♎', start: 190,    width: 23, color: '#FFF9C4' }, // Air
-      { name: 'Scorpio',     symbol: '♏', start: 213,    width: 7,  color: '#B3E5FC' }, // Water
-      { name: 'Ophiuchus',   symbol: '⛎', start: 220,    width: 18, color: '#D4B8E0' }, // 13th
-      { name: 'Sagittarius', symbol: '♐', start: 238,    width: 33, color: '#F4A9A8' }, // Fire
-      { name: 'Capricorn',   symbol: '♑', start: 271,    width: 28, color: '#C8E6C9' }, // Earth
-      { name: 'Aquarius',    symbol: '♒', start: 299,    width: 24, color: '#FFF9C4' }, // Air
-      { name: 'Pisces',      symbol: '♓', start: 323,    width: 37, color: '#B3E5FC' }, // Water
-    ];
-  };
+const getZodiacSigns = () => {
+  // Widths derived from IAU sidereal boundaries — matches True Sky exactly
+  // Pisces wraps: 351–360 (9°) + 0–29 (29°) = 38° total, displayed as start=351
+  return [
+    { name: 'Aries',       symbol: '♈', start:  29, width: 28, color: '#F4A9A8' },
+    { name: 'Taurus',      symbol: '♉', start:  57, width: 30, color: '#C8E6C9' },
+    { name: 'Gemini',      symbol: '♊', start:  87, width: 31, color: '#FFF9C4' },
+    { name: 'Cancer',      symbol: '♋', start: 118, width: 20, color: '#B3E5FC' },
+    { name: 'Leo',         symbol: '♌', start: 138, width: 36, color: '#F4A9A8' },
+    { name: 'Virgo',       symbol: '♍', start: 174, width: 44, color: '#C8E6C9' },
+    { name: 'Libra',       symbol: '♎', start: 218, width: 23, color: '#FFF9C4' },
+    { name: 'Scorpio',     symbol: '♏', start: 241, width:  7, color: '#1a1a2e' },
+    { name: 'Ophiuchus',   symbol: '⛎', start: 248, width: 18, color: '#D4B8E0' },
+    { name: 'Sagittarius', symbol: '♐', start: 266, width: 33, color: '#F4A9A8' },
+    { name: 'Capricorn',   symbol: '♑', start: 299, width: 28, color: '#C8E6C9' },
+    { name: 'Aquarius',    symbol: '♒', start: 327, width: 24, color: '#FFF9C4' },
+    { name: 'Pisces',      symbol: '♓', start: 351, width: 38, color: '#B3E5FC' },
+  ];
+};
+
 
 const zodiacSigns = getZodiacSigns();
 
@@ -437,11 +445,11 @@ const zodiacSigns = getZodiacSigns();
         formData.latitude || 40.7128,
         formData.longitude || -74.0060,
         formData.year,
-        months.indexOf(formData.month),
+        months.indexOf(formData.month) + 1,
         formData.day,
         formData.hour,
         formData.minute
-    );
+      );
       const response = await fetch(`${BASE_URL}/chart/transit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -450,15 +458,7 @@ const zodiacSigns = getZodiacSigns();
           birth_time: birthTime,
           latitude: formData.latitude || 40.7128,
           longitude: formData.longitude || -74.0060,
-          timezone: await resolveHistoricalTimezone(
-            formData.latitude || 40.7128,
-            formData.longitude || -74.0060,
-            formData.year,
-            months.indexOf(formData.month),
-            formData.day,
-            formData.hour,
-            formData.minute
-        ),
+          timezone: resolvedTz,
           transit_date: new Date().toISOString().split('T')[0],
           transit_time: "12:00",
           zodiac_system: settings?.zodiacSystem || 'Tropical',
@@ -481,53 +481,32 @@ const zodiacSigns = getZodiacSigns();
         })
       });
       
+     
       if (!response.ok) {
         throw new Error('Failed to calculate chart');
       }
       
       const result = await response.json();
-      
+      console.log("RESPONSE IS")
+      console.log(result.data)
       if (result.success && result.data) {
        
     
       // Parse offset to get UTC time for display
-      const offsetMatch = resolvedTz.match(/^([+-])(\d{2}):(\d{2})$/);
-      let displayHour = parseInt(formData.hour);
-      let displayMinute = parseInt(formData.minute);
-      if (offsetMatch) {
-          const sign = offsetMatch[1] === '+' ? 1 : -1;
-          const offsetMins = sign * (parseInt(offsetMatch[2]) * 60 + parseInt(offsetMatch[3]));
-          const totalMins = displayHour * 60 + displayMinute - offsetMins;
-          displayHour = Math.floor(((totalMins % 1440) + 1440) % 1440 / 60);
-          displayMinute = ((totalMins % 1440) + 1440) % 1440 % 60;
-      }
-      
       result.data.birthInfo = {
-          name: formData.name,
-          day: formData.day,
-          month: formData.month,
-          year: formData.year,
-          hour: String(displayHour).padStart(2, '0'),
-          minute: String(displayMinute).padStart(2, '0'),
-          location: formData.location
-      };
-        
+        name: formData.name,
+        day: formData.day,
+        month: formData.month,
+        year: formData.year,
+        hour: String(formData.hour).padStart(2, '0'),
+        minute: String(formData.minute).padStart(2, '0'),
+        location: formData.location
+    };
         setChartResponse(result.data);
         setChartData(result.data);
         
      
-        setFormData({
-          ...formData,
-          name: '',
-          day: '',
-          month: 'January',
-          year: '',
-          hour: '',
-          minute: '',
-          location: '',
-          latitude: null,
-          longitude: null,
-        });
+       
       } else {
         throw new Error('Invalid response from server');
       }
@@ -577,6 +556,7 @@ const zodiacSigns = getZodiacSigns();
           ascendant: chartResponse.natal?.ascendant || {},
           houses: natalHouses,
           midheaven: chartResponse.natal?.midheaven,
+          aspects: chartResponse.natal?.aspects || [],
         },
         progressed: {
           planets: chartResponse.progressed?.planets || {},
@@ -605,18 +585,7 @@ const zodiacSigns = getZodiacSigns();
       
       toast.success("Chart saved sucessfully",{containerId:"mainchart"})
       setError(null)
-      setFormData({
-        name: '',
-        day: '',
-        month: 'January',
-        year: '',
-        hour: '',
-        minute: '',
-        location: '',
-        latitude: null,
-        longitude: null,
-        chartName:''
-      })
+    
       setChartResponse({})
       
       setSavedCharts([...savedCharts, response.data.chart])
@@ -1732,8 +1701,13 @@ setChartData(chart)
                   {selectedPlanet.name} in {selectedPlanet.sign}:
                 </h4>
                 <p className="text-gray-700">
-                  Your {selectedPlanet.name} in {selectedPlanet.sign} influences your personality and life path. This placement shapes how you express the qualities associated with {selectedPlanet.name}.
-                </p>
+  {selectedPlanet.name === 'Sun' 
+    ? getSunSignInterpretation(selectedPlanet.sign)
+    : selectedPlanet.name === 'Moon'
+    ? getMoonSignInterpretation(selectedPlanet.sign)
+    : getPlanetSignInterpretation(selectedPlanet.name, selectedPlanet.sign)}
+</p>
+
               </div>
 
               <div>
@@ -1741,8 +1715,12 @@ setChartData(chart)
                   {selectedPlanet.name} in House {selectedPlanet.house}:
                 </h4>
                 <p className="text-gray-700">
-                  {selectedPlanet.name} in your {selectedPlanet.house}th house affects specific areas of your life. This house placement shows where the energy of {selectedPlanet.name} manifests most strongly in your experience.
-                </p>
+  {selectedPlanet.name === 'Sun'
+    ? getSunHouseInterpretation(selectedPlanet.house)
+    : selectedPlanet.name === 'Moon'
+    ? getMoonHouseInterpretation(selectedPlanet.house)
+    : getPlanetHouseInterpretation(selectedPlanet.name, selectedPlanet.house)}
+</p>
               </div>
             </div>
           </div>
@@ -1886,47 +1864,34 @@ setChartData(chart)
         })}
 
       
-        {Array.from({ length: 12 }).map((_, index) => {
-          const angle = (index * 30) - 90;
-          const x1 = 300 + Math.cos(angle * Math.PI / 180) * 240;
-          const y1 = 300 + Math.sin(angle * Math.PI / 180) * 240;
-          const x2 = 300 + Math.cos(angle * Math.PI / 180) * 100;
-          const y2 = 300 + Math.sin(angle * Math.PI / 180) * 100;
-
-          return (
-            <line
-              key={index}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="#999"
-              strokeWidth="1"
-            />
-          );
-        })}
+{(chartData?.natal?.houses || []).map((house, index) => {
+  const angle = parseFloat(house.longitude) - 90;
+  const x1 = 300 + Math.cos(angle * Math.PI / 180) * 240;
+  const y1 = 300 + Math.sin(angle * Math.PI / 180) * 240;
+  const x2 = 300 + Math.cos(angle * Math.PI / 180) * 100;
+  const y2 = 300 + Math.sin(angle * Math.PI / 180) * 100;
+  return (
+    <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#999" strokeWidth="1" />
+  );
+})}
 
         
-        {Array.from({ length: 12 }).map((_, index) => {
-          const angle = (index * 30 + 15) - 90;
-          const x = 300 + Math.cos(angle * Math.PI / 180) * 220;
-          const y = 300 + Math.sin(angle * Math.PI / 180) * 220;
-
-          return (
-            <text
-              key={index}
-              x={x}
-              y={y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize="14"
-              fill="#666"
-            >
-              {index + 1}
-            </text>
-          );
-        })}
-
+      {(chartData?.natal?.houses || []).map((house, index) => {
+  const currentAngle = parseFloat(house.longitude);
+  const nextAngle = parseFloat(
+    (chartData.natal.houses[(index + 1) % 12]).longitude
+  );
+  // Midpoint between this cusp and the next
+  let mid = currentAngle + ((nextAngle - currentAngle + 360) % 360) / 2;
+  const angle = mid - 90;
+  const x = 300 + Math.cos(angle * Math.PI / 180) * 220;
+  const y = 300 + Math.sin(angle * Math.PI / 180) * 220;
+  return (
+    <text key={index} x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize="14" fill="#666">
+      {house.house}
+    </text>
+  );
+})} 
         
         {planets.filter(p => p.natal || p.progressed || p.transit).map((planet, index) => {
           const angle = planet.degree - 90;
@@ -2057,7 +2022,7 @@ setChartData(chart)
               <span className="text-3xl" style={{ color: planetColors['Sun'] }}>☉</span>
               <div>
                 <h4 className="font-bold text-lg text-gray-800">
-                  Sun in {chartData.natal.planets.Sun?.sign} - House {calculateHouse(parseFloat(chartData.natal.planets.Sun?.longitude), chartData.natal.houses)}
+                Sun in {chartData.natal.planets.Sun?.sign} - House {chartData.natal.planets.Sun?.house}
                 </h4>
                 <p className="text-sm text-gray-600">{chartData.natal.planets.Sun?.position}</p>
               </div>
@@ -2067,7 +2032,7 @@ setChartData(chart)
                 <strong>Sun in {chartData.natal.planets.Sun?.sign}:</strong> {getSunSignInterpretation(chartData.natal.planets.Sun?.sign)}
               </p>
               <p className="text-gray-700 leading-relaxed">
-                <strong>Sun in House {calculateHouse(parseFloat(chartData.natal.planets.Sun?.longitude), chartData.natal.houses)}:</strong> {getSunHouseInterpretation(calculateHouse(parseFloat(chartData.natal.planets.Sun?.longitude), chartData.natal.houses))}
+              <strong>Sun in House {chartData.natal.planets.Sun?.house}:</strong>
               </p>
             </div>
           </div>
@@ -2078,7 +2043,7 @@ setChartData(chart)
               <span className="text-3xl" style={{ color: planetColors['Moon'] }}>☽</span>
               <div>
                 <h4 className="font-bold text-lg text-gray-800">
-                  Moon in {chartData.natal.planets.Moon?.sign} - House {calculateHouse(parseFloat(chartData.natal.planets.Moon?.longitude), chartData.natal.houses)}
+                  Moon in {chartData.natal.planets.Moon?.sign} - House {chartData.natal.planets.Moon?.house}
                 </h4>
                 <p className="text-sm text-gray-600">{chartData.natal.planets.Moon?.position}</p>
               </div>
@@ -2088,7 +2053,7 @@ setChartData(chart)
                 <strong>Moon in {chartData.natal.planets.Moon?.sign}:</strong> {getMoonSignInterpretation(chartData.natal.planets.Moon?.sign)}
               </p>
               <p className="text-gray-700 leading-relaxed">
-                <strong>Moon in House {calculateHouse(parseFloat(chartData.natal.planets.Moon?.longitude), chartData.natal.houses)}:</strong> {getMoonHouseInterpretation(calculateHouse(parseFloat(chartData.natal.planets.Moon?.longitude), chartData.natal.houses))}
+              <h4>Moon in {chartData.natal.planets.Moon?.sign} - House {chartData.natal.planets.Moon?.house}</h4>
               </p>
             </div>
           </div>
@@ -2107,7 +2072,7 @@ setChartData(chart)
                 </span>
                 <div>
                   <h4 className="font-bold text-lg text-gray-800">
-                    {planet} in {data.sign} - House {calculateHouse(parseFloat(data.longitude), chartData.natal.houses)}
+                    {planet} in {data.sign} - House {data.house}
                   </h4>
                   <p className="text-sm text-gray-600">{data.position}</p>
                 </div>
@@ -2117,7 +2082,7 @@ setChartData(chart)
                   <strong>{planet} in {data.sign}:</strong> {getPlanetSignInterpretation(planet, data.sign)}
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  <strong>{planet} in House {calculateHouse(parseFloat(data.longitude), chartData.natal.houses)}:</strong> {getPlanetHouseInterpretation(planet, calculateHouse(parseFloat(data.longitude), chartData.natal.houses))}
+                <strong>{planet} in House {data.house}:</strong>
                 </p>
               </div>
             </div>
@@ -2126,9 +2091,9 @@ setChartData(chart)
 
       
         <div className="mb-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
-          <h3>Midheaven in {chartData.natal.midheaven?.sign || 'N/A'}</h3>
-          </h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
+  Midheaven in {chartData.natal.midheaven?.sign || 'N/A'}
+</h3>
           <div className="bg-blue-50 p-4 rounded-lg">
             <p className="text-gray-700 leading-relaxed">
             {getMidheavenInterpretation(chartData.natal.midheaven?.sign)}
@@ -2142,7 +2107,12 @@ setChartData(chart)
             <h3 className="text-xl font-bold text-gray-800 mb-4 border-b-2 border-purple-500 pb-2">
               Major Aspects
             </h3>
-            {chartData.aspects.natal_to_progressed?.slice(0, 15).map((aspect, idx) => (
+           
+            {(chartData.natal?.aspects || [])
+  .slice(0, 15)
+  .map((aspect, idx) => (
+
+    
               <div key={idx} className="mb-4 bg-gray-50 p-4 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-semibold text-gray-800">

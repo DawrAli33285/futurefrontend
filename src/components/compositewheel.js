@@ -2303,7 +2303,7 @@ setFormData({
                 <span className="text-3xl" style={{ color: planetColors['Sun'] }}>☉</span>
                 <div>
                   <h4 className="font-bold text-lg text-gray-800">
-                    Sun in {displayData.planets.Sun.sign} - House {calculateHouse(parseFloat(displayData.planets.Sun.longitude), displayData.houses)}
+                  Sun in {displayData.planets.Sun.sign} - House {displayData.planets.Sun.house}
                   </h4>
                   <p className="text-sm text-gray-600">{displayData.planets.Sun.position}</p>
                 </div>
@@ -2313,8 +2313,9 @@ setFormData({
                   <strong>Sun in {displayData.planets.Sun.sign}:</strong> {getSunSignInterpretation(displayData.planets.Sun.sign)}
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  <strong>Sun in House {calculateHouse(parseFloat(displayData.planets.Sun.longitude), displayData.houses)}:</strong> {getSunHouseInterpretation(calculateHouse(parseFloat(displayData.planets.Sun.longitude), displayData.houses))}
-                </p>
+  <strong>Sun in House {displayData.planets.Sun.house}:</strong>
+  {getSunHouseInterpretation(displayData.planets.Sun.house)}
+</p>
               </div>
             </div>
 
@@ -2322,9 +2323,9 @@ setFormData({
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-3xl" style={{ color: planetColors['Moon'] }}>☽</span>
                 <div>
-                  <h4 className="font-bold text-lg text-gray-800">
-                    Moon in {displayData.planets.Moon.sign} - House {calculateHouse(parseFloat(displayData.planets.Moon.longitude), displayData.houses)}
-                  </h4>
+                <h4 className="font-bold text-lg text-gray-800">
+  Moon in {displayData.planets.Moon.sign} - House {displayData.planets.Moon.house}
+</h4>
                   <p className="text-sm text-gray-600">{displayData.planets.Moon.position}</p>
                 </div>
               </div>
@@ -2333,7 +2334,7 @@ setFormData({
                   <strong>Moon in {displayData.planets.Moon.sign}:</strong> {getMoonSignInterpretation(displayData.planets.Moon.sign)}
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  <strong>Moon in House {calculateHouse(parseFloat(displayData.planets.Moon.longitude), displayData.houses)}:</strong> {getMoonHouseInterpretation(calculateHouse(parseFloat(displayData.planets.Moon.longitude), displayData.houses))}
+                <strong>Moon in House {displayData.planets.Moon.house}:</strong> {getMoonHouseInterpretation(displayData.planets.Moon.house)}
                 </p>
               </div>
             </div>
@@ -2362,7 +2363,7 @@ setFormData({
                     </span>
                     <div>
                       <h4 className="font-bold text-lg text-gray-800">
-                        {planet} in {data.sign} - House {calculateHouse(parseFloat(data.longitude), displayData.houses)}
+                      {planet} in {data.sign} - House {data.house}
                       </h4>
                       <p className="text-sm text-gray-600">{data.position}</p>
                     </div>
@@ -2372,7 +2373,7 @@ setFormData({
                       <strong>{planet} in {data.sign}:</strong> {getPlanetSignInterpretation(planet, data.sign)}
                     </p>
                     <p className="text-gray-700 leading-relaxed">
-                      <strong>{planet} in House {calculateHouse(parseFloat(data.longitude), displayData.houses)}:</strong> {getPlanetHouseInterpretation(planet, calculateHouse(parseFloat(data.longitude), displayData.houses))}
+                    <strong>{planet} in House {data.house}:</strong> {getPlanetHouseInterpretation(planet, data.house)}
                     </p>
                   </div>
                 </div>
