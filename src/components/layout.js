@@ -124,11 +124,11 @@ function Layout() {
     ABOUT: [
       { name: 'Sidereal Astrology', path: '/sidereal-astrology' },
       { name: 'Meet Andrea', path: '/team' },
-      {name:'Sacred Psychology',path:'/sacred'}
+ 
     ],
     CHARTS: [
       { name: 'Chart Calculator', path: '/chart-calculator' },
-      { name: 'Natal Weekly Report', path: '/chart-report' },
+   
     ],
     LEARN:[
 
@@ -136,7 +136,8 @@ function Layout() {
       {name:"Soul System",path:'/soul-system'},
       {name:"Sacred Psychology",path:'/sacredpsychology'},
       {name:"True Sky Framework",path:'/trueskyframework'},
-      {name:"Astrology101",path:'/astrology101'}
+      {name:"True Sky Psychology App",path:'/trueskyphiolosphyapp'}
+   
     ],
     MORE:[
         {name:'Latest NewsLetter', path:'/newsletter'},

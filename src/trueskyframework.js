@@ -3,7 +3,9 @@ import React from 'react'
 export default function TrueSkyFramework() {
     return (
         <>
-        <iframe src="https://gamma.app/embed/j7ou1n45gd6emok"  style={{ width: '100%', height: '100vh', border: 'none', display: 'block' }} allow="fullscreen" title="True Sky Psychology Framework Natal Weekly Reports"></iframe>
+        <iframe style={{ width: '100%', height: '100vh', border: 'none', display: 'block' }} src="https://gamma.app/embed/6azkqa74o466091"  allow="fullscreen" title="TRUE SKY PSYCHOLOGY
+FRAMEWORK"></iframe>
+
         </>
     )
 }
