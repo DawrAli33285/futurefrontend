@@ -256,7 +256,7 @@ export default function NatalWeeklyReportPage() {
     <div className="min-h-screen bg-white">
       <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
 
-        {/* ── Hero ── */}
+      
         <h1 className="text-[26px] md:text-[32px] font-light text-center mb-6 uppercase tracking-wide">
           Natal Weekly Report
         </h1>
@@ -268,7 +268,7 @@ export default function NatalWeeklyReportPage() {
           generic horoscope content, but real insights tied directly to your planetary positions, delivered every week.
         </p>
 
-        {/* ── Features ── */}
+       
         <h2 className="text-xl font-light text-center uppercase tracking-wide mb-8">What Each Weekly Email Includes</h2>
         <div className="border-t border-gray-300 mb-10" />
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-16">
@@ -287,7 +287,6 @@ export default function NatalWeeklyReportPage() {
           ))}
         </div>
 
-        {/* ── Sample Report Preview ── */}
         <h2 className="text-xl font-light text-center uppercase tracking-wide mb-3">Sample Weekly Report</h2>
         <p className="text-center text-gray-500 text-sm mb-8 max-w-xl mx-auto">
           This is exactly what subscribers receive in their inbox each week — personalized to their own natal chart.
@@ -296,14 +295,14 @@ export default function NatalWeeklyReportPage() {
 
         <div className="max-w-5xl mx-auto border border-gray-200 rounded-2xl overflow-hidden shadow-lg mb-20">
 
-          {/* Report header */}
+       
           <div className="bg-gradient-to-r from-indigo-900 to-indigo-700 px-6 py-8 text-white text-center">
             <p className="text-xs uppercase tracking-widest text-indigo-300 mb-2">True Sidereal Astrology</p>
             <h3 className="text-2xl font-light tracking-wide mb-1">🌟 Your Natal Weekly Report</h3>
             <p className="text-indigo-200 text-sm">Week of November 9 – 15, 2025</p>
           </div>
 
-          {/* Chart wheel placeholder */}
+        
           <div className="bg-indigo-50 border-b border-gray-100 px-6 py-8 flex flex-col items-center gap-3">
             <div className="w-40 h-40 rounded-full border-4 border-indigo-200 flex items-center justify-center bg-white shadow-inner">
               <div className="w-28 h-28 rounded-full border-2 border-indigo-100 flex items-center justify-center">
@@ -313,7 +312,7 @@ export default function NatalWeeklyReportPage() {
             <p className="text-indigo-400 text-xs uppercase tracking-widest">Your Natal Chart Wheel</p>
           </div>
 
-          {/* Daily breakdown */}
+          
           <div className="px-4 md:px-6 py-8 bg-gray-50">
             <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-5">📅 Daily Transit Breakdown</p>
             <div className="space-y-3">
@@ -324,7 +323,7 @@ export default function NatalWeeklyReportPage() {
           </div>
         </div>
 
-        {/* ── How It Works ── */}
+       
         <h2 className="text-xl font-light text-center uppercase tracking-wide mb-8">How It Works</h2>
         <div className="border-t border-gray-300 mb-10" />
         <div className="max-w-2xl mx-auto mb-16 space-y-4 text-gray-700">
@@ -334,7 +333,7 @@ export default function NatalWeeklyReportPage() {
           <p><span className="font-semibold">4.</span> Cancel anytime. No contracts, no commitments.</p>
         </div>
 
-        {/* ── Pricing ── */}
+      
         <div className="border-t border-gray-300 mb-12" />
         <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-6">
 

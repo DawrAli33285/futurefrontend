@@ -117,7 +117,7 @@ export default function BirthdateModal() {
           </button> */}
         </div>
 
-        {/* Content */}
+       
         <div className="p-6">
           <p className="text-gray-600 mb-4">
             Please enter your birth date to get personalized astrological insights.
@@ -136,7 +136,7 @@ export default function BirthdateModal() {
             />
           </div>
 
-          {/* Buttons */}
+       
           <div className="flex gap-3">
             {/* <button
               onClick={handleClose}

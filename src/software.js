@@ -242,7 +242,7 @@ export default function TrueSkyLanding() {
 
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
 
-        {/* HERO */}
+       
         <section style={{ textAlign: "center", padding: "100px 0 80px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(94,76,230,0.15)", border: "1px solid rgba(94,76,230,0.3)", borderRadius: "100px", padding: "6px 16px 6px 10px", fontSize: "12px", fontWeight: 600, color: "#9B8FFF", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "32px" }}>
             ⬡ Premium Membership
@@ -260,7 +260,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* FEATURES */}
+     
         <section style={{ padding: "60px 0" }}>
           <p style={{ textAlign: "center", fontSize: "13px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5E4CE6", marginBottom: "16px" }}>WHAT YOU GET</p>
           <h2 style={{ textAlign: "center", fontSize: "clamp(28px,4vw,40px)", fontWeight: 800, fontFamily: "'Outfit',sans-serif", letterSpacing: "-0.03em", marginBottom: "48px", color: "#fff" }}>Get full access with Premium</h2>
@@ -274,7 +274,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* SCREENSHOTS — real images from Gamma */}
+      
         {screenshots.map((item, i) => (
           <div key={i} style={{ display: "flex", gap: "48px", alignItems: "center", flexDirection: i % 2 === 1 ? "row-reverse" : "row", marginBottom: "80px", flexWrap: "wrap", padding: "20px 0" }}>
             <div style={{ flex: "1 1 280px" }}>
@@ -287,7 +287,7 @@ export default function TrueSkyLanding() {
           </div>
         ))}
 
-        {/* HOW IT WORKS */}
+      
         <section style={{ padding: "60px 0" }}>
           <p style={{ textAlign: "center", fontSize: "13px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5E4CE6", marginBottom: "16px" }}>PROCESS</p>
           <h2 style={{ textAlign: "center", fontSize: "clamp(28px,4vw,40px)", fontWeight: 800, fontFamily: "'Outfit',sans-serif", letterSpacing: "-0.03em", marginBottom: "48px", color: "#fff" }}>How It Works</h2>
@@ -307,7 +307,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* FREE vs PAID */}
+       
         <section style={{ padding: "60px 0" }}>
           <p style={{ textAlign: "center", fontSize: "13px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5E4CE6", marginBottom: "16px" }}>PLANS</p>
           <h2 style={{ textAlign: "center", fontSize: "clamp(28px,4vw,40px)", fontWeight: 800, fontFamily: "'Outfit',sans-serif", letterSpacing: "-0.03em", marginBottom: "48px", color: "#fff" }}>Free vs Premium</h2>
@@ -336,7 +336,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* WEEKLY REPORT */}
+     
         <section style={{ padding: "60px 0" }}>
           <p style={{ textAlign: "center", fontSize: "13px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#5E4CE6", marginBottom: "16px" }}>WEEKLY REPORTS</p>
           <h2 style={{ textAlign: "center", fontSize: "clamp(28px,4vw,40px)", fontWeight: 800, fontFamily: "'Outfit',sans-serif", letterSpacing: "-0.03em", marginBottom: "16px", color: "#fff" }}>What's in Your Weekly Natal Report</h2>
@@ -356,7 +356,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* FREE RESOURCES */}
+        
         <section style={{ padding: "60px 0" }}>
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", padding: "40px" }}>
             <h2 style={{ fontSize: "clamp(24px,3vw,32px)", fontWeight: 800, fontFamily: "'Outfit',sans-serif", letterSpacing: "-0.03em", marginBottom: "8px", color: "#fff" }}>Free Learning Resources</h2>
@@ -382,7 +382,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* CTA */}
+       
         <section style={{ margin: "20px 0 60px", background: "linear-gradient(135deg,rgba(94,76,230,0.3),rgba(94,76,230,0.1))", border: "1px solid rgba(94,76,230,0.4)", borderRadius: "24px", padding: "60px 40px", textAlign: "center", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at center,rgba(94,76,230,0.2) 0%,transparent 70%)", pointerEvents: "none" }} />
           <h2 style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, fontFamily: "'Outfit',sans-serif", letterSpacing: "-0.03em", color: "#fff", marginBottom: "12px", position: "relative" }}>Start Your Journey</h2>
@@ -392,7 +392,7 @@ export default function TrueSkyLanding() {
           </div>
         </section>
 
-        {/* ALREADY A MEMBER */}
+      
         <section style={{ padding: "0 0 80px", display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: "20px" }}>
           <div style={{ background: "linear-gradient(135deg,rgba(94,76,230,0.25),rgba(94,76,230,0.1))", border: "1px solid rgba(94,76,230,0.35)", borderRadius: "20px", padding: "32px" }}>
             <h3 style={{ fontSize: "18px", fontWeight: 800, fontFamily: "'Outfit',sans-serif", marginBottom: "20px", color: "#fff" }}>Log In to Your Account</h3>
