@@ -69,21 +69,21 @@ const [subscribed,setSubsribed]=useState(false)
   const calculateHouse = (longitude, houses) => {
     if (!houses || houses.length === 0) return 1;
     
-    // Normalize longitude to 0-360
+    
     const lon = ((longitude % 360) + 360) % 360;
     
     for (let i = 0; i < houses.length; i++) {
       const currentHouse = parseFloat(houses[i].longitude);
       const nextHouse = parseFloat(houses[(i + 1) % houses.length].longitude);
       
-      // Normalize both boundaries
+    
       const curr = ((currentHouse % 360) + 360) % 360;
       const next = ((nextHouse % 360) + 360) % 360;
       
       if (next > curr) {
         if (lon >= curr && lon < next) return houses[i].house;
       } else {
-        // Wraps around 0° (e.g. 350° to 20°)
+     
         if (lon >= curr || lon < next) return houses[i].house;
       }
     }
@@ -311,7 +311,7 @@ const [subscribed,setSubsribed]=useState(false)
 
 
 
-  // ADD THIS — new code
+ 
 const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, hour, minute) => {
   try {
       const res = await fetch(
@@ -323,7 +323,7 @@ const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, 
       const localDt = DateTime.fromObject(
         {
             year: parseInt(year),
-            month: parseInt(month),  // ← month is already 1-based here
+            month: parseInt(month),  
             day: parseInt(day),
             hour: parseInt(hour) || 12,
             minute: parseInt(minute) || 0,
@@ -343,8 +343,7 @@ const resolveHistoricalTimezone = async (latitude, longitude, year, month, day, 
 
 
 const getZodiacSigns = () => {
-  // Widths derived from IAU sidereal boundaries — matches True Sky exactly
-  // Pisces wraps: 351–360 (9°) + 0–29 (29°) = 38° total, displayed as start=351
+ 
   return [
     { name: 'Aries',       symbol: '♈', start:  29, width: 28, color: '#F4A9A8' },
     { name: 'Taurus',      symbol: '♉', start:  57, width: 30, color: '#C8E6C9' },
@@ -492,7 +491,7 @@ const zodiacSigns = getZodiacSigns();
       if (result.success && result.data) {
        
     
-      // Parse offset to get UTC time for display
+   
       result.data.birthInfo = {
         name: formData.name,
         day: formData.day,
@@ -1767,7 +1766,7 @@ setChartData(chart)
       
       {zodiacSigns.map((sign, index) => {
     const startAngle = sign.start - 90;
-    const endAngle   = startAngle + sign.width; // uses explicit width per sign
+    const endAngle   = startAngle + sign.width; 
     const largeArc   = sign.width > 180 ? 1 : 0;
     const outerR = 290;
     const innerR = 240;
@@ -1786,11 +1785,10 @@ setChartData(chart)
       'Z'
     ].join(' ');
 
-    const symR = (outerR + innerR) / 2; // 265
+    const symR = (outerR + innerR) / 2;
     const sx = 300 + Math.cos(midAngle * Math.PI / 180) * symR;
     const sy = 300 + Math.sin(midAngle * Math.PI / 180) * symR;
 
-    // Shrink glyph for very narrow signs (Scorpio = 7°)
     const glyphSize = sign.width < 15 ? 13 : 22;
 
     return (
@@ -1881,7 +1879,7 @@ setChartData(chart)
   const nextAngle = parseFloat(
     (chartData.natal.houses[(index + 1) % 12]).longitude
   );
-  // Midpoint between this cusp and the next
+  
   let mid = currentAngle + ((nextAngle - currentAngle + 360) % 360) / 2;
   const angle = mid - 90;
   const x = 300 + Math.cos(angle * Math.PI / 180) * 220;

@@ -576,7 +576,7 @@ if(e?.response?.data?.error){
       const transitDate = `${formData.year}-${String(monthIndex).padStart(2, '0')}-${String(formData.day).padStart(2, '0')}`;
       const transitTime = `${String(formData.hour).padStart(2, '0')}:${String(formData.minute).padStart(2, '0')}`;
   
-      // Parse birth date parts for timezone resolution
+      
       const [bYear, bMonth, bDay] = formData.birthDate.split('-').map(Number);
       const [bHour, bMinute] = formData.birthTime.split(':').map(Number);
   
@@ -584,13 +584,13 @@ if(e?.response?.data?.error){
         parseFloat(formData.birthLatitude),
         parseFloat(formData.birthLongitude),
         bYear,
-        bMonth - 1,  // 0-based month index
+        bMonth - 1,  
         bDay,
         bHour,
         bMinute
       );
   
-      // Convert local birth time to UTC for display
+     
       const offsetMatch = resolvedTz.match(/^([+-])(\d{2}):(\d{2})$/);
       let displayHour = bHour;
       let displayMinute = bMinute;
@@ -632,7 +632,7 @@ if(e?.response?.data?.error){
       if (result.success) {
         result.data.birthInfo = {
           birthDate: formData.birthDate,
-          birthTime: displayBirthTime,  // UTC display time
+          birthTime: displayBirthTime,  
           birthLocation: formData.birthLocation
         };
         

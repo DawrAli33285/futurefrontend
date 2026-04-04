@@ -532,10 +532,10 @@ useEffect(() => {
 
 
 
-     // AFTER:
+     
 if (result.success) {
 
-  // Convert person1 local time to UTC for display
+ 
   const offsetMatch1 = resolvedTz1.match(/^([+-])(\d{2}):(\d{2})$/);
   let displayHour1 = parseInt(formData.person1_hour) || 0;
   let displayMinute1 = parseInt(formData.person1_minute) || 0;
@@ -547,7 +547,7 @@ if (result.success) {
     displayMinute1 = ((totalMins % 1440) + 1440) % 1440 % 60;
   }
 
-  // Convert person2 local time to UTC for display
+ 
   const offsetMatch2 = resolvedTz2.match(/^([+-])(\d{2}):(\d{2})$/);
   let displayHour2 = parseInt(formData.person2_hour) || 0;
   let displayMinute2 = parseInt(formData.person2_minute) || 0;

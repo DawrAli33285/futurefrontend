@@ -583,12 +583,11 @@ const getHouseInterpretation = (houseNum) => {
         throw new Error(`API Error: ${response.status}`);
       }
   
-    // AFTER:
+ 
 const data = await response.json();
 console.log("SYNASTRY CHART DATA")
 console.log(data)
 
-// Convert local time to UTC for display — same as AdminChart
 const offsetMatch = resolvedTz.match(/^([+-])(\d{2}):(\d{2})$/);
 let displayHour = parseInt(person1Data.hour);
 let displayMinute = parseInt(person1Data.minute);
@@ -609,7 +608,7 @@ if (data.data && data.data.person1) {
   });
 }
 
-// Update displayed time to UTC so it matches main chart report
+
 setPerson1Data(prev => ({
   ...prev,
   hour: String(displayHour).padStart(2, '0'),
