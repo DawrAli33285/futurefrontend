@@ -111,7 +111,7 @@ function App() {
             TRUE SKY PSYCHOLOGY
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8">
-            Integrating True Sidereal Astrology with Sacred Psychology
+          The Sacred Integration of True Sidereal Astrology, Alchemical Psychology, and Biofield Energetics.
           </p>
           <button
             onClick={() => {

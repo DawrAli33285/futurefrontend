@@ -9,6 +9,16 @@ export default function BirthdateModal() {
   const [loading, setLoading] = useState(true);
 
  
+
+  useEffect(() => {
+    checkUserBirthDate();
+ 
+    const handleLogin = () => checkUserBirthDate();
+    window.addEventListener('userLoggedIn', handleLogin);
+    
+    return () => window.removeEventListener('userLoggedIn', handleLogin);
+  }, []);
+
   useEffect(() => {
 
     checkUserBirthDate();

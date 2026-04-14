@@ -116,18 +116,22 @@ function Layout() {
     { name: 'CHARTS', path: '/charts', hasSubmenu: true },
     { name: 'LEARN', path: '/learn', hasSubmenu: true },
     { name: 'RESEARCH', path: '/research', hasSubmenu: false },
-    { name: 'LOGIN', path: '/software', hasSubmenu: false },
+    
     { name: 'CONTACT', path: '/contact', hasSubmenu: false },
   ];
 
   const submenuItems = {
     ABOUT: [
-      { name: 'Sidereal Astrology', path: '/sidereal-astrology' },
+      { name: 'Alchemical Astrology', path: '/alchemical-astrology' },
       { name: 'Meet Andrea', path: '/team' },
  
     ],
     CHARTS: [
       { name: 'Chart Calculator', path: '/chart-calculator' },
+      {name:'Transit Chart',path:'/transitchart'},
+      {name:'Main Chart',path:'/mainchart'},
+      {name:'Composite Chart',path:'/compositechart'},
+      {name:"Synastry Chart",path:'/synastrychart'}
    
     ],
     LEARN:[
@@ -151,7 +155,7 @@ function Layout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900">
+    <div className="min-h-screen flex flex-col ">
    <ScrollMiddleware/>
   
       <header className="bg-white shadow-md relative z-50">

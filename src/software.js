@@ -4,8 +4,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { BASE_URL } from './baseurl';
 
 const CLIENT_ID = '90321078061-0170dr3h7mknf595o674b7ctu70av45u.apps.googleusercontent.com';
-const REDIRECT_URI = 'https://trueskypsychology.com/software';
-
+// const REDIRECT_URI = 'https://trueskypsychology.com/software';
+const REDIRECT_URI = 'http://localhost:3000/software';
 const HexIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="4.2 68.8 1016.3 886.6" overflow="visible" style={{ display: 'inline-block', marginRight: 4 }}>
     <g fill="none" stroke="currentColor" strokeWidth="55" strokeLinecap="round" strokeLinejoin="round">
@@ -82,7 +82,9 @@ export default function TrueSkyLanding() {
         localStorage.setItem('userInfo', JSON.stringify(info));
         localStorage.setItem('token', JSON.stringify(loginOrCreate.data.token));
         setUserInfo(info);
-        setTimeout(() => navigate('/admin/main'), 500);
+        const returnTo = localStorage.getItem('loginReturnTo');
+        localStorage.removeItem('loginReturnTo');
+        setTimeout(() => navigate(returnTo || '/mainchart'), 500);
       }
     } catch (err) {
       console.error(err);

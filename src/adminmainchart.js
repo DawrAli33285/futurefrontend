@@ -20,7 +20,7 @@ const [loadingMore, setLoadingMore] = useState(false);
 const [timezoneList, setTimezoneList] = useState([]);
 const [timezoneLoading, setTimezoneLoading] = useState(false);
 const [chartResponse,setChartResponse]=useState({}) 
-const [subscribed,setSubsribed]=useState(false)
+
 
   const [formData, setFormData] = useState({
     name: '',
@@ -65,6 +65,43 @@ const [subscribed,setSubsribed]=useState(false)
     'Neptune': '#1E90FF',
     'Pluto': '#8B008B'
   };
+
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.includes('access_token')) {
+      const params = new URLSearchParams(hash.substring(1));
+      const accessToken = params.get('access_token');
+      if (accessToken) {
+        const handleLogin = async () => {
+          try {
+            const response = await fetch('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+              headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            if (response.ok) {
+              const userData = await response.json();
+              const info = {
+                id: userData.id,
+                name: userData.name,
+                email: userData.email,
+                imageUrl: userData.picture ? userData.picture.replace('=s96-c', '=s200-c') : null,
+                accessToken,
+              };
+              const loginOrCreate = await axios.post(`${BASE_URL}/googleLogin`, info);
+              localStorage.setItem('userInfo', JSON.stringify(info));
+              localStorage.setItem('token', JSON.stringify(loginOrCreate.data.token));
+              window.history.replaceState({}, document.title, window.location.pathname);
+              window.dispatchEvent(new Event('userLoggedIn'));
+              getMainChart();
+            }
+          } catch (err) {
+            console.error('Login error:', err);
+          }
+        };
+        handleLogin();
+      }
+    }
+  }, []);
 
   const calculateHouse = (longitude, houses) => {
     if (!houses || houses.length === 0) return 1;
@@ -521,9 +558,22 @@ const zodiacSigns = getZodiacSigns();
   const handleView = () => {
    
   };
-
   const handleSave = async() => {
     try{
+      const rawToken = localStorage.getItem('token');
+      if (!rawToken) {
+        const currentUrl = window.location.origin + window.location.pathname;
+        const params = new URLSearchParams({
+          client_id: '90321078061-0170dr3h7mknf595o674b7ctu70av45u.apps.googleusercontent.com',
+          redirect_uri: currentUrl,
+          response_type: 'token',
+          scope: 'email profile',
+          prompt: 'select_account',
+        });
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+        return;
+      }
+
       if (Object.keys(chartResponse).length === 0) {
         setError('Please Calculate new chart');
         return;
@@ -534,7 +584,7 @@ const zodiacSigns = getZodiacSigns();
         return;
       }
       
-      let token=localStorage.getItem('token')
+      let token=rawToken
       token=JSON.parse(token)
       
       const natalHouses = chartResponse.natal?.houses || [];
@@ -576,7 +626,7 @@ const zodiacSigns = getZodiacSigns();
         }
       };
       
-      let response=await axios.post(`${BASE_URL}/saveChart`,saveChart,{
+      let response=await axios.post(`${BASE_URL}  aveChart`,saveChart,{
         headers:{
           Authorization:`Bearer ${token}`
         }
@@ -680,21 +730,7 @@ if(e?.response?.data?.error){
     fetchTimezones();
   }, []);
 
-  const checkOut=async()=>{
-    try{
-      let token=localStorage.getItem('token')
-      token=JSON.parse(token)
-  let response=await axios.get(`${BASE_URL}/subscribe`,{
-    headers:{
-      Authorization:`Bearer ${token}`
-    }
-  })
-  window.location.href=response.data.url
  
-    }catch(e){
-   
-    }
-  }
   
 
   const generatePDF = () => {
@@ -769,44 +805,15 @@ if(e?.response?.data?.error){
 
 
   useEffect(()=>{
-getMainChart();
-getActiveSettings();
-getSubscribed();
+if(localStorage.getItem('token')){
+  getMainChart();
+}
+
   },[])
 
 
-  const getSubscribed=async()=>{
-    try{
-      let token=localStorage.getItem('token')
-      token=JSON.parse(token)
-let response=await axios.get(`${BASE_URL}/getSubscribed`,{
-  headers:{
-    Authorization:`Bearer ${token}`
-  }
-})
 
-setSubsribed(response.data.found)
-    }catch(e){
 
-    }
-  }
-  const getActiveSettings=async()=>{
-    try{
-      let token=localStorage.getItem('token')
-      token=JSON.parse(token)
-      
-      let response=await axios.get(`${BASE_URL}/active`,{
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-      })
-
-     
-      setSettings(response.data.data)
-    }catch(e){
-      
-    }
-  }
 
 
 
@@ -1560,11 +1567,11 @@ setChartData(chart)
 
           <div className="flex justify-center">
             <button
-              onClick={subscribed?handleSave:checkOut}
+              onClick={handleSave}
       
               className="w-full bg-purple-100 hover:bg-purple-200 text-gray-800 font-medium py-3 rounded transition-colors"
             >
-              Save {subscribed?'⌘':'🔒'}
+              Save {'⌘'}
             </button>
           </div>
 
@@ -1655,10 +1662,10 @@ setChartData(chart)
        
           <div className="flex justify-center">
             <button
-              onClick={subscribed?handleViewReport:checkOut}
+              onClick={handleViewReport}
               className="w-full bg-purple-100 hover:bg-purple-200 text-gray-800 font-medium py-3 rounded transition-colors"
             >
-              View Report {subscribed?'⌘':'🔒'}
+              View Report {'⌘'}
             </button>
           </div>
         </div>

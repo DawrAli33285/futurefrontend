@@ -48,6 +48,7 @@ import SacredPsychology from './SacredPsychology';
 import TrueSkyFramework from './trueskyframework';
 import Astrology101 from './astrology101';
 import Trueskyphilosphyapp from './trueskyphilosphyapp';
+import AlchemicalAstrology from './alchemicalastrology';
 
 //const stripePromise = loadStripe('pk_live_51SOf9PF2ZpC0D5XRyQ0zxZt7dD1NjS35N96b4MbZVnzdl2LbrUNi23MUsm2ubgkw91R1dVcplSxLOXivDZf9EhkN005twLIZcj');
 const stripePromise = loadStripe('pk_test_51SOf9XJvg5goDQYJPE0RiLj0MkFU8S3RQpQd3nPEDjD4W8nmXNv3RDkFcsmhN5Mg9k4uQOuLhR3AAvkX4IeecPfN00b7KHAY7s');
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
       { path: '/', element: <App /> },
       { path: '/about', element: <App /> },
       { path: '/charts', element: <App /> },
+      {path:'/alchemical-astrology',element:<AlchemicalAstrology/>},
       { path: '/learn', element: <App /> },
       {path:'/trueskyphiolosphyapp', element:<Trueskyphilosphyapp/>},
       {path:'/research',element:<Readings/>},
@@ -100,16 +102,18 @@ const router = createBrowserRouter([
       { path:'/siderealastrology', element: <SiderealAstrologyPage />},
       {path:'/sidereal-signs',element:<SiderealSignCalculator/>},
       {path:'/ophiuchus-in-astrology',element:<OphiuchusInAstrology/>},
-      
+      { path: '/mainchart', element: <AdminWithBirthdateModal element={<AdminMain />} /> },
+      { path: '/transitchart', element: <AdminWithBirthdateModal element={<TransitPage />} /> },
+      { path: '/graph', element: <AdminWithBirthdateModal element={<TransitGraphPage />} /> },
+      { path: '/synastrychart', element: <AdminWithBirthdateModal element={<SynastryPage />} /> },
+      { path: '/compositechart', element: <AdminWithBirthdateModal element={<CompositePage />} /> },
     ],
   },
   {
     path: '/admin',
     element: <AdminLayout />,
     children: [
-      { path: '/admin/main', element: <AdminWithBirthdateModal element={<AdminMain />} /> },
-      { path: '/admin/transit', element: <AdminWithBirthdateModal element={<TransitPage />} /> },
-      { path: '/admin/graph', element: <AdminWithBirthdateModal element={<TransitGraphPage />} /> },
+     
       { path: '/admin/return', element: <AdminWithBirthdateModal element={<AdminMain />} /> },
       { path: '/admin/settings', element: <AdminWithBirthdateModal element={<AdminSettings />} /> },
       { path: '/admin/synastry', element: <AdminWithBirthdateModal element={<SynastryPage />} /> },
